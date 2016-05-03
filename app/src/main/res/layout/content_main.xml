@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/The_Indian_Route_trnsprnt"
+        android:background="@drawable/logo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
