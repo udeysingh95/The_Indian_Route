@@ -17,6 +17,7 @@ public class MyApplication extends AppCompatActivity{
         setContentView(R.layout.myapplication);
 
         try{
+
             Intent in = getIntent();
             Toast.makeText(getApplicationContext(),"Welcome: " +in.getStringExtra("NAME"),Toast.LENGTH_SHORT).show();
         }catch (Exception e){
