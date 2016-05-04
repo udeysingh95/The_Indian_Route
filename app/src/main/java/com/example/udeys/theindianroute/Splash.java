@@ -1,16 +1,15 @@
 package com.example.udeys.theindianroute;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * Created by udeys on 5/3/2016.
  */
+
 public class Splash extends Activity {
     ImageView im1 , im2 , im3 , im4 , im5;
     @Override

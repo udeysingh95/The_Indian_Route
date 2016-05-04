@@ -52,15 +52,16 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout2">
 
-        <ImageButton
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
             android:layout_width="200dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:id="@+id/imageButton"
-            android:background="@drawable/facebook_button"
             android:layout_below="@+id/linearLayout2"
             android:layout_alignRight="@+id/imageView2"
             android:layout_alignEnd="@+id/imageView2" />
+
+
     </LinearLayout>
 
     <TextView
