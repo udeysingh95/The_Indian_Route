@@ -3,18 +3,8 @@ package com.example.udeys.theindianroute;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 
 /**
  * Created by Siddharth Malhotra on 5/4/2016.
