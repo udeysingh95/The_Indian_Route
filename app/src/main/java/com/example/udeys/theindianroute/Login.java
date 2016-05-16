@@ -32,7 +32,8 @@ public class Login extends Activity {
                 String name = profile.getName().toString();
                 in.putExtra("NAME",name);
                 startActivity(in);
-            }/*
+            }
+            /*
             GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(
                     loginResult.getAccessToken(),
                     //AccessToken.getCurrentAccessToken(),
