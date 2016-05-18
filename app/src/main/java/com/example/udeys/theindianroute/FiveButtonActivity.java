@@ -1,7 +1,7 @@
 package com.example.udeys.theindianroute;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarBadge;
@@ -9,8 +9,9 @@ import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnTabSelectedListener;
 
 /**
- * Created by Malhotra G on 5/16/2016.
+ * Created by Siddharth Malhotra G on 5/16/2016.
  */
+
 public class FiveButtonActivity extends AppCompatActivity {
     private BottomBar bottomBar;
 
