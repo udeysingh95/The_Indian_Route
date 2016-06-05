@@ -43,12 +43,14 @@ public class SampleFragment extends Fragment {
             rl = (RelativeLayout) inflater.inflate(R.layout.favourite, container, false);
         } else if (getArguments().getString(STARTING_TEXT).equals("Content for locations.")) {
             rl = (RelativeLayout) inflater.inflate(R.layout.location_map, container, false);
-        } else if (getArguments().getString(STARTING_TEXT).equals("Content for recents.")) {
+        } else if (getArguments().getString(STARTING_TEXT).equals("Content for recent.")) {
+            new Timeline();
             rl = (RelativeLayout) inflater.inflate(R.layout.timeline, container, false);
         } else if (getArguments().getString(STARTING_TEXT).equals("Content for user.")) {
             rl = (RelativeLayout) inflater.inflate(R.layout.profile, container, false);
         }
 
         return rl;
+        //return null;
     }
 }

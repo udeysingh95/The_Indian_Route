@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarBadge;
 import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnTabSelectedListener;
 
@@ -56,7 +55,7 @@ public class FiveButtonActivity extends AppCompatActivity {
         bottomBar = BottomBar.attach(this, savedInstanceState);
 
         bottomBar.setFragmentItems(getFragmentManager(), R.id.fragment_container,
-                new BottomBarFragment(SampleFragment.newInstance("Content for recents."), R.drawable.ic_update_white_24dp, "Recents"),
+                new BottomBarFragment(SampleFragment.newInstance("Content for recent."), R.drawable.ic_update_white_24dp, "Recents"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for food."), R.drawable.ic_local_dining_white_24dp, "Food"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for favorites."), R.drawable.ic_favorite_white_24dp, "Favorites"),
                 new BottomBarFragment(SampleFragment.newInstance("Content for locations."), R.drawable.ic_location_on_white_24dp, "Location"),
@@ -82,17 +81,17 @@ public class FiveButtonActivity extends AppCompatActivity {
         });
 
         // Make a Badge for the first tab, with red background color and a value of "4".
-        BottomBarBadge unreadMessages = bottomBar.makeBadgeForTabAt(1, "#E91E63", 4);
+        //BottomBarBadge unreadMessages = bottomBar.makeBadgeForTabAt(1, "#E91E63", 4);
 
         // Control the badge's visibility
-        unreadMessages.show();
+        //unreadMessages.show();
         //unreadMessages.hide();
 
         // Change the displayed count for this badge.
         //unreadMessages.setCount(4);
 
         // Change the show / hide animation duration.
-        unreadMessages.setAnimationDuration(200);
+        //unreadMessages.setAnimationDuration(200);
 
         // If you want the badge be shown always after unselecting the tab that contains it.
         //unreadMessages.setAutoShowAfterUnSelection(true);
