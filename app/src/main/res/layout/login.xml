@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="#ccc">
 
     <ImageView
         android:layout_width="100dp"
@@ -26,12 +26,15 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:id="@+id/username"
+            android:hint="username"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2" />
+            android:id="@+id/password"
+            android:hint="password"
+            android:inputType="textPassword"/>
 
         <Button
             android:layout_width="194dp"
@@ -40,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:layout_gravity="center"
-            android:id="@+id/button" />
+            android:id="@+id/login" />
     </LinearLayout>
 
     <LinearLayout
