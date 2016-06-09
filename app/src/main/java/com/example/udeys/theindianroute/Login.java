@@ -102,22 +102,22 @@ public class Login extends Activity {
         username = (EditText) findViewById(R.id.username);
         passsword = (EditText) findViewById(R.id.password);
         log = (Button) findViewById(R.id.login);
-        user = username.getText().toString();
-        pass = passsword.getText().toString();
+
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user = username.getText().toString();
+                pass = passsword.getText().toString();
+                LoginTask l = new LoginTask();
+                l.execute(user, pass);
+            }
+        });
 
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, callback);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pDialog.setMessage("Please Wait..");
-                showDialog();
-                LoginTask l = new LoginTask();
-                l.execute(user, pass);
-            }
-        });
+
 
     }
 
@@ -173,7 +173,6 @@ public class Login extends Activity {
         protected void onPostExecute(String result) {
             String s = result.trim();
             if (s.equalsIgnoreCase("success")) {
-                hideDialog();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -185,7 +184,7 @@ public class Login extends Activity {
 
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "doesn't exist", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -193,16 +192,5 @@ public class Login extends Activity {
         }
     }
 
-    private void showDialog() {
-        if (!pDialog.isShowing()) {
-            pDialog.show();
-        }
-    }
-
-    private void hideDialog() {
-        if (!pDialog.isShowing()) {
-            pDialog.dismiss();
-        }
-    }
 
 }
