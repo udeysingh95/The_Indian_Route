@@ -1,11 +1,9 @@
 package com.example.udeys.theindianroute;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Patterns;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,22 +17,23 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Pair;
 
 /**
  * Created by udeys on 5/3/2016.
@@ -44,7 +43,6 @@ public class Login extends Activity {
     Button log;
     EditText username, passsword;
     String user, pass;
-    private ProgressDialog pDialog;
 
     private CallbackManager callbackManager = null;
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -93,6 +91,11 @@ public class Login extends Activity {
 
         }
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +109,10 @@ public class Login extends Activity {
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = username.getText().toString();
-                pass = passsword.getText().toString();
-                LoginTask l = new LoginTask();
-                l.execute(user, pass);
+                user = username.getText().toString().trim();
+                pass = passsword.getText().toString().trim();
+                makeJsonArrayReq();
+
             }
         });
 
@@ -119,6 +122,9 @@ public class Login extends Activity {
         loginButton.registerCallback(callbackManager, callback);
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -127,69 +133,70 @@ public class Login extends Activity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    class LoginTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String username, password;
-            username = params[0];
-            password = params[1];
-            String serverURL = "http://indianroute.roms4all.com/login.php";
+    /**
+     * Making Json Array request
+     */
+    private void makeJsonArrayReq() {
+        /*
+         * Bind Parameters
+         * */
+        final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
+            add(new Pair<>("username", user));
+            add(new Pair<>("password", pass));
+        }};
 
-            InputStream is = null;
+        /**
+        * fuel library is used for sending and receiving response from server
+        * */
+        Fuel.post("http://indianroute.roms4all.com/login.php", params).responseString(new Handler<String>() {
+            @Override
+            public void success(@NotNull Request request, @NotNull Response response, String s) {
+                updateUI(null, s);
+            }
 
-            List<NameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair("username", username));
-            nameValuePairs.add(new BasicNameValuePair("password", password));
+            @Override
+            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+
+                updateUI(fuelError, null);
+            }
+
+        });
+
+    }
 
 
-            String result = null;
+    private void decodeJson(String result) {
+        try {
+            JSONArray jArr = new JSONArray(result);
+            String name = null,image=null;
+            for (int count = 0; count < jArr.length(); count++) {
+                JSONObject obj = jArr.getJSONObject(count);
+                name = obj.getString("username");
+                image = obj.getString("image");
+            }
+            /*
+            * Toast for testing response from server
+            * Remove to manipulate JSON here
+            * */
+            Toast.makeText(Login.this, "username : " + name+" image: "+image, Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-            try {
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(serverURL);
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpClient.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
+    private void updateUI(final FuelError error, final String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (error == null) {
+                    decodeJson(result);
+                } else {
+                    Log.e("Error", "error: " + error.getException().getMessage());
+                    Toast.makeText(Login.this, "" + error.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                result = sb.toString();
-
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-
             }
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            String s = result.trim();
-            if (s.equalsIgnoreCase("success")) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "doesn't exist", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-        }
+        });
     }
 
 
