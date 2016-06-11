@@ -1,34 +1,41 @@
 package com.example.udeys.theindianroute;
 
-import android.app.Activity;
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
 
-public class Register extends AppCompatActivity implements View.OnClickListener{
+import org.jetbrains.annotations.NotNull;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.Pair;
+
+public class Register extends AppCompatActivity implements View.OnClickListener {
 
     EditText name, uname, passowrd, repassword, email;
-    Button register;
+    Button reg;
     protected static int res = 0;
+    Bitmap bitmap;
+    String base64;
     AsyncTask<Void, Void, Void> sender;
     public static boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +47,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         repassword = (EditText) findViewById(R.id.repassword);
         email = (EditText) findViewById(R.id.email);
 
-        register = (Button) findViewById(R.id.register);
-        register.setOnClickListener(this);
+        reg = (Button) findViewById(R.id.register);
+
+        reg.setOnClickListener(this);
 
 
     }
 
 
-
-
     @Override
     public void onClick(View v) {
-        String nm, unm, pass, eml , repass ,device_token;
+        String nm, unm, pass, eml, repass, device_token;
 
         nm = name.getText().toString();
         unm = uname.getText().toString();
@@ -59,6 +65,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         eml = email.getText().toString();
         repass = repassword.getText().toString();
         device_token = "hello";
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.facebook_button);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+        byte[] b = os.toByteArray();
+        base64 = Base64.encodeToString(b, Base64.DEFAULT);
 
 
         /*
@@ -72,105 +83,58 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         * validated data send to the server.
         * flag boolean varidable to check the response from the server.
         * */
-        flag = hit_data(nm , unm , pass, eml , device_token);
+        hit_data(nm, unm, pass, eml, device_token);
 
-        if(flag == true){
-            /*
-            * User is registered successfully.
-            * now change the intent to the Main Activity.
-            *
-            * */
-            Toast.makeText(getApplicationContext() , "done" , Toast.LENGTH_SHORT).show();
-        }
     }
 
-    public boolean hit_data(final String name , final String username, final String email , final String password ,final String device_token){
-
-
-        sender = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-
-                Register(Register.this , username , name , email , password , device_token);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                sender = null;
-            }
-        };
-        sender.execute(null, null, null);
-
-        if(res == 1 )
-            return true;
-        else
-            return  false;
-    }
-
-
-    void Register(Context c, String username, String name, String email, String passowrd , String device_token) {
-
-        String serverURL = "http://indianroute.roms4all.com/register.php";
-        Map<String, String> params = new HashMap<>();
-
-        params.put("username", username);
-        params.put("name", name);
-        params.put("user_email", email);
-        params.put("user_password", passowrd);
-        params.put("picture", "images/1.jpg");
-        params.put("device_token", device_token);
-
-        post(serverURL, params, c);
-
-        }
-
-    private static int post(String serverurl, Map<String, String> params, Context c) {
-        URL u = null;
+    public void hit_data(final String name, final String username, final String email, final String password, final String device_token) {
         try {
-            u = new URL(serverurl);
-        } catch (MalformedURLException e) {
-            //  e.printStackTrace();
-        }
-        StringBuilder sb = new StringBuilder();
-        Iterator<Map.Entry<String, String>> it = params.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> p = it.next();
-            sb.append(p.getKey()).append("=").append(p.getValue());
-            if (it.hasNext()) {
-                sb.append("&");
-            }
-        }
+       /*
+         * Bind Parameters
+         * */
+            final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
+                add(new Pair<>("username", username));
+                add(new Pair<>("name", name));
+                add(new Pair<>("user_email", email));
+                add(new Pair<>("user_password", password));
+                add(new Pair<>("picture", base64));
+                add(new Pair<>("device_token", device_token));
+            }};
 
-        String body = sb.toString();
-        byte[] bytes = body.getBytes();
-        HttpURLConnection uc = null;
-        try {
-            uc = (HttpURLConnection) u.openConnection();
-            uc.setDoOutput(true);
-            uc.setUseCaches(false);
-            uc.setFixedLengthStreamingMode(bytes.length);
-            uc.setRequestMethod("POST");
-            uc.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-            OutputStream out = uc.getOutputStream();
-            out.write(bytes);
-            out.close();
-            int status = uc.getResponseCode();
-            if (status != 200) {
-                Log.d("invalid request code", "status s" + status);
-                res = 0;
-            } else {
-                res = 1;
-            }
+            /**
+             * fuel library is used for sending and receiving response from server
+             * */
+            Fuel.post("http://indianroute.roms4all.com/register.php", params).responseString(new Handler<String>() {
+                @Override
+                public void success(@NotNull Request request, @NotNull Response response, String s) {
+                    updateUI(null, s);
+                }
 
-        } catch (IOException e) {
-            Log.d("error", e.getMessage());
+                @Override
+                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+                    updateUI(fuelError, null);
+                }
+
+            });
+        }catch (Exception e){
+            Toast.makeText(Register.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-        return res;
 
     }
+
+    private void updateUI(final FuelError error, final String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (error == null) {
+                    Toast.makeText(Register.this, ""+result, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("Error", "error: " + error.getException().getMessage());
+                    Toast.makeText(Register.this, "" + error.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 
 }
