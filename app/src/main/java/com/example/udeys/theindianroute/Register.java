@@ -2,38 +2,29 @@ package com.example.udeys.theindianroute;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.github.kittinunf.fuel.Fuel;
-import com.github.kittinunf.fuel.core.FuelError;
-import com.github.kittinunf.fuel.core.Handler;
-import com.github.kittinunf.fuel.core.Request;
-import com.github.kittinunf.fuel.core.Response;
-
-import org.jetbrains.annotations.NotNull;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import kotlin.Pair;
+import cz.msebera.android.httpclient.Header;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     EditText name, uname, passowrd, repassword, email;
     Button reg;
     protected static int res = 0;
-    Bitmap bitmap;
-    String base64;
-    AsyncTask<Void, Void, Void> sender;
+    Bitmap bp;
+    String bas;
     public static boolean flag = false;
 
     @Override
@@ -65,13 +56,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         eml = email.getText().toString();
         repass = repassword.getText().toString();
         device_token = "hello";
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.facebook_button);
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-        byte[] b = os.toByteArray();
-        base64 = Base64.encodeToString(b, Base64.DEFAULT);
-
-
         /*
         * validation goes here
         * */
@@ -89,52 +73,40 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     public void hit_data(final String name, final String username, final String email, final String password, final String device_token) {
         try {
-       /*
-         * Bind Parameters
-         * */
-            final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
-                add(new Pair<>("username", username));
-                add(new Pair<>("name", name));
-                add(new Pair<>("user_email", email));
-                add(new Pair<>("user_password", password));
-                add(new Pair<>("picture", base64));
-                add(new Pair<>("device_token", device_token));
-            }};
+            AsyncHttpClient client = new AsyncHttpClient();
+            /*
+            * Bind parameters here
+            * */
+            RequestParams params = new RequestParams();
+            try {
+                params.put("username", username);
+                params.put("name", name);
+                params.put("user_email", email);
+                params.put("user_password", password);
+                params.put("notification", "1");
+                params.put("device_token", device_token);
 
-            /**
-             * fuel library is used for sending and receiving response from server
-             * */
-            Fuel.post("http://indianroute.roms4all.com/register.php", params).responseString(new Handler<String>() {
-                @Override
-                public void success(@NotNull Request request, @NotNull Response response, String s) {
-                    updateUI(null, s);
-                }
-
-                @Override
-                public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-                    updateUI(fuelError, null);
-                }
-
-            });
-        }catch (Exception e){
-            Toast.makeText(Register.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void updateUI(final FuelError error, final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (error == null) {
-                    Toast.makeText(Register.this, ""+result, Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e("Error", "error: " + error.getException().getMessage());
-                    Toast.makeText(Register.this, "" + error.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            } catch (Exception e) {
+                Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+            client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String res) {
+                            Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                            Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
-
-
 }
+
+
+

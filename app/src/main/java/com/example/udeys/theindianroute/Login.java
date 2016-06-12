@@ -17,23 +17,19 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.github.kittinunf.fuel.Fuel;
-import com.github.kittinunf.fuel.core.FuelError;
-import com.github.kittinunf.fuel.core.Handler;
-import com.github.kittinunf.fuel.core.Request;
-import com.github.kittinunf.fuel.core.Response;
+
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import cz.msebera.android.httpclient.Header;
 
-import kotlin.Pair;
 
 /**
  * Created by udeys on 5/3/2016.
@@ -137,66 +133,57 @@ public class Login extends Activity {
      * Making Json Array request
      */
     private void makeJsonArrayReq() {
-        /*
-         * Bind Parameters
-         * */
-        final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
-            add(new Pair<>("username", user));
-            add(new Pair<>("password", pass));
-        }};
 
-        /**
-        * fuel library is used for sending and receiving response from server
-        * */
-        Fuel.post("http://indianroute.roms4all.com/login.php", params).responseString(new Handler<String>() {
-            @Override
-            public void success(@NotNull Request request, @NotNull Response response, String s) {
-                updateUI(null, s);
+        try {
+            /*
+            * Asynchttpclient libary
+            * */
+            AsyncHttpClient client = new AsyncHttpClient();
+            /*
+            * Bind Parameters
+            * */
+            RequestParams params = new RequestParams();
+            try {
+                params.put("username", user);
+                params.put("password", pass);
+
+            } catch (Exception e) {
+                Toast.makeText(Login.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+            client.post("http://indianroute.roms4all.com/login.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String res) {
+                            decodeJson(res);
+                        }
 
-            @Override
-            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
-
-                updateUI(fuelError, null);
-            }
-
-        });
-
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                            Toast.makeText(Login.this, "" + res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(Login.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
-
+    /*
+    * decode json array here which is coming as response from server
+    * */
     private void decodeJson(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
-            String name = null,image=null;
+            String name = null;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 name = obj.getString("username");
-                image = obj.getString("image");
             }
-            /*
-            * Toast for testing response from server
-            * Remove to manipulate JSON here
-            * */
-            Toast.makeText(Login.this, "username : " + name+" image: "+image, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "username : " + name, Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    private void updateUI(final FuelError error, final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (error == null) {
-                    decodeJson(result);
-                } else {
-                    Log.e("Error", "error: " + error.getException().getMessage());
-                    Toast.makeText(Login.this, "" + error.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
 
