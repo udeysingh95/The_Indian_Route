@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/recent_item"
-        android:icon="@drawable/ic_update_white_24dp"
+        android:icon="@drawable/ic_action_search"
         android:title="Recents" />
     <item
         android:id="@+id/search_item"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/ic_action_favorite"
         android:title="Search" />
     <item
         android:id="@+id/location_item"
-        android:icon="@drawable/ic_location_on_white_24dp"
+        android:icon="@drawable/ic_action_search"
         android:title="Location" />
     <item
         android:id="@+id/favorite_item"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/ic_action_search"
         android:title="Favorire" />
     <item
         android:id="@+id/user_item"
-        android:icon="@drawable/ic_update_white_24dp"
+        android:icon="@drawable/ic_action_go_to_today"
         android:title="Profile" />
 </menu>

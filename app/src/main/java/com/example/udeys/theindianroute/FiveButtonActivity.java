@@ -55,11 +55,11 @@ public class FiveButtonActivity extends AppCompatActivity {
         bottomBar = BottomBar.attach(this, savedInstanceState);
 
         bottomBar.setFragmentItems(getFragmentManager(), R.id.fragment_container,
-                new BottomBarFragment(SampleFragment.newInstance("Content for recent."), R.drawable.ic_update_white_24dp, "home"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for food."), R.drawable.ic_local_dining_white_24dp, "notification"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for favorites."), R.drawable.ic_favorite_white_24dp, "post"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for locations."), R.drawable.ic_location_on_white_24dp, "profile"),
-                new BottomBarFragment(SampleFragment.newInstance("Content for user."), R.drawable.ic_favorite_white_24dp, "travel")
+                new BottomBarFragment(SampleFragment.newInstance("Content for recent."), R.drawable.ic_action_favorite, "home")
+                //new BottomBarFragment(SampleFragment.newInstance("Content for food."), R.drawable.ic_local_dining_white_24dp, "notification"),
+                //new BottomBarFragment(SampleFragment.newInstance("Content for favorites."), R.drawable.ic_favorite_white_24dp, "post"),
+               // new BottomBarFragment(SampleFragment.newInstance("Content for locations."), R.drawable.ic_location_on_white_24dp, "profile"),
+               // new BottomBarFragment(SampleFragment.newInstance("Content for user."), R.drawable.ic_favorite_white_24dp, "travel")
         );
 
         // Setting colors for different tabs when there's more than three of them.
