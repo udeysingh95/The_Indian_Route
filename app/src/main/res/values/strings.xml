@@ -27,4 +27,6 @@
     <string name="play_again">Play Again</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="action_search">Search</string>
 </resources>
