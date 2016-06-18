@@ -10,10 +10,8 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,16 +26,25 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
-    ListView datalist;
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    ListView datalist;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View view = inflater.inflate(R.layout.homefragment, container, false);
-        datalist = (ListView) view.findViewById(R.id.listView);
+        datalist = (ListView) view.findViewById(R.id.users_posts);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        return view;
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         datalist.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -51,13 +58,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
         });
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         Typeface cFont = Typeface.createFromAsset(getActivity().getAssets(), "SAMARN__.TTF");
         Typeface fontAwesome = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
-        PostAdapter = new PostAdapter(getActivity(), R.layout.timelinerowlayout, cFont,fontAwesome);
-        datalist.setAdapter(PostAdapter);
+        PostAdapter = new PostAdapter(getActivity(), R.layout.timelinerowlayout, cFont, fontAwesome);
         swipeRefreshLayout.setOnRefreshListener(this);
-
         /**
          * Showing Swipe Refresh animation on activity create
          * As animation won't start on onCreate, post runnable is used
@@ -70,12 +74,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                     }
                                 }
         );
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
 
     }
 
