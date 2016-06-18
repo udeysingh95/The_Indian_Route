@@ -30,14 +30,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     ListView datalist;
+    View view;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        View view = inflater.inflate(R.layout.homefragment, container, false);
-        datalist = (ListView) view.findViewById(R.id.users_posts);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        view = inflater.inflate(R.layout.homefragment, container, false);
         return view;
     }
 
@@ -45,6 +44,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        datalist = (ListView) view.findViewById(R.id.users_posts);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         datalist.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         Typeface cFont = Typeface.createFromAsset(getActivity().getAssets(), "SAMARN__.TTF");
         Typeface fontAwesome = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
         PostAdapter = new PostAdapter(getActivity(), R.layout.timelinerowlayout, cFont, fontAwesome);
+        datalist.setAdapter(PostAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         /**
          * Showing Swipe Refresh animation on activity create
