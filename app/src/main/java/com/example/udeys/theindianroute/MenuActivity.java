@@ -27,7 +27,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         initFragments();
 
         hm = (ImageButton) findViewById(R.id.home);
-        srch = (ImageButton) findViewById(R.id.search);
+        srch = (ImageButton) findViewById(R.id.trip);
         pst = (ImageButton) findViewById(R.id.post);
         notif = (ImageButton) findViewById(R.id.notification);
         prfl = (ImageButton) findViewById(R.id.profile);
@@ -36,6 +36,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         hm.setOnClickListener(this);
         srch.setOnClickListener(this);
         pst.setOnClickListener(this);
+        notif.setOnClickListener(this);
+        prfl.setOnClickListener(this);
 
     }
 
@@ -51,15 +53,27 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
-            case R.id.search:
+            case R.id.trip:
                  ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new SearchFragment());
+                ft.replace(R.id.fragment_1, new TripFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.post:
                 ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new TripFragment());
+                ft.replace(R.id.fragment_1, new PostFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+                break;
+            case R.id.notification:
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new NotificationFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+                break;
+            case R.id.profile:
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new ProfileFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;

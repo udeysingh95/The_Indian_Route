@@ -21,16 +21,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/home"
             android:background="#ccc"
+            android:id="@+id/home"
             android:src="@drawable/ic_action_important"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/search"
             android:background="#ccc"
+            android:id="@+id/trip"
             android:src="@drawable/ic_action_split"/>
 
         <ImageButton
