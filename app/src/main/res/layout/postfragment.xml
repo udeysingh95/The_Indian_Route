@@ -10,4 +10,8 @@
         android:layout_height="wrap_content"
         android:text="Post Fragment" />
 
+    <include
+        android:id="@+id/surface"
+        layout="@layout/main" />
+
 </LinearLayout>
