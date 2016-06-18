@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,13 +49,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id){
             case R.id.home:
-                 ft = getFragmentManager().beginTransaction();
+                ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new HomeFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.trip:
-                 ft = getFragmentManager().beginTransaction();
+                ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new TripFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();

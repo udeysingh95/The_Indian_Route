@@ -118,9 +118,6 @@ public class Login extends Activity {
         loginButton.registerCallback(callbackManager, callback);
 
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -136,7 +133,7 @@ public class Login extends Activity {
 
         try {
             /*
-            * Asynchttpclient libary
+            * Asynchttpclient library
             * */
             AsyncHttpClient client = new AsyncHttpClient();
             /*
@@ -153,6 +150,7 @@ public class Login extends Activity {
             client.post("http://indianroute.roms4all.com/login.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
+                            //called when response HTTP status is "200"
                             decodeJson(res);
                         }
 
