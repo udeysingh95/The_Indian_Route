@@ -24,6 +24,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        initFragments();
+
         hm = (ImageButton) findViewById(R.id.home);
         srch = (ImageButton) findViewById(R.id.search);
         pst = (ImageButton) findViewById(R.id.post);
@@ -33,6 +35,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         hm.setOnClickListener(this);
         srch.setOnClickListener(this);
+        pst.setOnClickListener(this);
 
     }
 
@@ -54,7 +57,21 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
+            case R.id.post:
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new TripFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+                break;
         }
 
+    }
+
+    private void initFragments() {
+        ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.fragment_1,new HomeFragment());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        //ft.hide(mGalleryFragment);
+        ft.commit();
     }
 }
