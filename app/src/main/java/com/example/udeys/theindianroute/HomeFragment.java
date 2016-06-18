@@ -20,19 +20,6 @@ public class HomeFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.homefragment, container, false);
 
-        Button btnSayHi_Fragment = (Button) view.findViewById(R.id.search);
-
-        btnSayHi_Fragment.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-
-
-
-            }
-        });
 
         return view;
 
