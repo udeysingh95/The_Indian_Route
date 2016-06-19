@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.utils.PostAdapter;
 import com.example.udeys.theindianroute.utils.posts;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -92,10 +93,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void bindData() {
 
-
         try {
+            RequestParams params = new RequestParams();
+            params.put("user_id",22);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_post.php", new TextHttpResponseHandler() {
+            client.get("http://indianroute.roms4all.com/fetch_post.php",params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);
@@ -125,7 +127,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             String check_in;
             String userprofilePicture;
             String post_id;
-            int reaction;
+            int reaction,state;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 username = obj.getString("username");
@@ -135,7 +137,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 userprofilePicture = obj.getString("userprofilePicture");
                 post_id = obj.getString("post_id");
                 reaction = Integer.valueOf(obj.getString("reaction"));
-                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction);
+                state = Integer.valueOf(obj.getString("state"));
+                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction,state);
                 swipeRefreshLayout.setRefreshing(false);
                 PostAdapter.add(posts);
             }

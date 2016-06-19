@@ -21,9 +21,9 @@ import java.util.List;
  * Created by Gitesh on 14-06-2016.
  */
 public class PostAdapter extends ArrayAdapter {
-    int liker = 0;
     List list = new ArrayList();
     Typeface samarn, fa;
+    int state;
 
 
     public PostAdapter(Context context, int resource, Typeface cFont, Typeface FontAwesome) {
@@ -70,28 +70,13 @@ public class PostAdapter extends ArrayAdapter {
         }
 
         final posts posts = (posts) this.getItem(position);
+        state = posts.getstate();
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(posts.getUsername());
         postHolder.reaction.setTypeface(fa);
         postHolder.reaction.setTextColor(Color.BLACK);
         postHolder.reaction.setTextSize(24);
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
-        postHolder.reaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (liker == 0) {
-                    postHolder.reaction.setText(R.string.icon_heart_filled);
-                    postHolder.reaction.setTextColor(Color.RED);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
-                    liker = 1;
-                } else {
-                    postHolder.reaction.setText(R.string.icon_heart_empty);
-                    postHolder.reaction.setTextColor(Color.BLACK);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
-                    liker = 0;
-                }
-            }
-        });
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(24);
         Picasso.with(getContext())
@@ -101,7 +86,10 @@ public class PostAdapter extends ArrayAdapter {
                 .load(posts.getPictue()).resize(250, 300).centerCrop()
                 .into(postHolder.userPostImage);
 
-
+        if(state==1){
+            postHolder.reaction.setText(R.string.icon_heart_filled);
+            postHolder.reaction.setTextColor(Color.RED);
+        }
         return row;
     }
 
