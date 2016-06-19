@@ -113,8 +113,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (Exception e) {
             Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void decodeJson(String result) {
@@ -127,7 +125,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             String check_in;
             String userprofilePicture;
             String post_id;
-            int reaction,state;
+            int reaction,state,comment;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 username = obj.getString("username");
@@ -138,7 +136,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 post_id = obj.getString("post_id");
                 reaction = Integer.valueOf(obj.getString("reaction"));
                 state = Integer.valueOf(obj.getString("state"));
-                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction,state);
+                comment = Integer.valueOf(obj.getString("comment"));
+                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction,state,comment);
                 swipeRefreshLayout.setRefreshing(false);
                 PostAdapter.add(posts);
             }

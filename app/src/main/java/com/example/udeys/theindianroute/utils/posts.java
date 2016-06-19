@@ -10,6 +10,10 @@ public class posts {
     String check_in;
     String userProfilePicture;
     String post_id;
+
+
+
+    int comment;
     int reaction;
     int state;
 
@@ -20,7 +24,7 @@ public class posts {
                  String userProfilePicture,
                  String post_id,
                  int reaction,
-                 int state) {
+                 int state,int comment) {
         this.setUsername(username);
         this.setStory(story);
         this.setPictue(pictue);
@@ -29,6 +33,7 @@ public class posts {
         this.setPost_id(post_id);
         this.setReaction(reaction);
         this.setstate(state);
+        this.setComment(comment);
 
     }
 
@@ -91,7 +96,14 @@ public class posts {
         return state;
     }
 
-    public void setstate(int like_state) {
-        this.state = like_state;
+    public void setstate(int state) {
+        this.state = state;
+    }
+    public int getComment() {
+        return comment;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
     }
 }
