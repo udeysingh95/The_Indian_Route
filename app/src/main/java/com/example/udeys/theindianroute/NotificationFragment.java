@@ -15,7 +15,6 @@ public class NotificationFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
 
         view = inflater.inflate(R.layout.notificationfragment, container, false);
         return view;

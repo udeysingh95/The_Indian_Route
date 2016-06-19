@@ -85,7 +85,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_1, new HomeFragment());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        //ft.hide(mGalleryFragment);
         ft.commit();
     }
 

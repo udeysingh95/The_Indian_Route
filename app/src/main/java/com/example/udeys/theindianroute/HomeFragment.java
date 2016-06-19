@@ -104,7 +104,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                             Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
