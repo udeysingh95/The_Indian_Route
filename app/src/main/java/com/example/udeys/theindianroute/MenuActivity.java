@@ -106,7 +106,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
