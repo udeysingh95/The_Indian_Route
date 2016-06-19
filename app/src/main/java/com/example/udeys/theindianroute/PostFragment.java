@@ -1,18 +1,24 @@
 package com.example.udeys.theindianroute;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
@@ -25,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,12 +42,13 @@ import java.util.Date;
  */
 
 public class PostFragment extends Fragment implements SurfaceHolder.Callback, View.OnClickListener {
-
     static final int FOTO_MODE = 0;
     View view;
     double lat;
     double lon;
     Button bt;
+    String file;
+    Uri imageUri;
     private LocationManager locationManager;
     private SurfaceView surefaceView;
     private SurfaceHolder surefaceHolder;
@@ -49,14 +57,21 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
     private String make;
     private String model;
     private String imei;
+    private String filename = "";
     Camera.PictureCallback pictureCallBack = new Camera.PictureCallback() {
 
         public void onPictureTaken(byte[] data, Camera camera) {
             if (data != null) {
                 Intent imgIntent = new Intent();
-                storeByteImage(data);
-                camera.startPreview();
-                getActivity().setResult(FOTO_MODE, imgIntent);
+                if (storeByteImage(data)) {
+                    camera.startPreview();
+                    getActivity().setResult(FOTO_MODE, imgIntent);
+                    Intent intent = new Intent(getActivity(), CompressFilter.class);
+                    intent.putExtra("path", filename);
+                    startActivity(intent);
+                    //getActivity().finish();
+                }
+
             }
 
         }
@@ -79,21 +94,8 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // TODO Auto-generated method stub
-
-        view = inflater.inflate(R.layout.postfragment, container, false);
-
-        //getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        surefaceView = (SurfaceView) view.findViewById(R.id.surface_camera);
-        surefaceView.setOnClickListener(this);
-        surefaceHolder = surefaceView.getHolder();
-        surefaceHolder.addCallback(this);
-        surefaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        bt = (Button) view.findViewById(R.id.btncapture);
-        bt.setOnClickListener(this);
 
         locationListener = new LocationListener() {
 
@@ -177,9 +179,132 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         }
 
 
+        if (Build.VERSION.SDK_INT < 22) {
+            view = inflater.inflate(R.layout.postfragment, container, false);
+            try {
+                if (camera != null)
+                    camera.release();
 
+                surefaceView = (SurfaceView) view.findViewById(R.id.surface_camera);
+                surefaceView.setOnClickListener(this);
+                surefaceHolder = surefaceView.getHolder();
+                surefaceHolder.addCallback(this);
+                surefaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+                bt = (Button) view.findViewById(R.id.btncapture);
+                bt.setOnClickListener(this);
+
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "catch: " + e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            takePhoto();
+            //view = inflater.inflate(R.layout.activity_compress, container, false);
+        }
         return view;
+    }
+
+    public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        file = String.format("/TIR%d.jpeg", System.currentTimeMillis());
+        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), file);
+        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file;
+        Log.e("path", filename);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+        imageUri = Uri.fromFile(photo);
+
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Toast.makeText(getActivity(), "req"+requestCode, Toast.LENGTH_SHORT).show();
+        //Bitmap bp = (Bitmap) data.getExtras().get("data");
+        //storeByteImage(bp);
+
+
+        switch (requestCode) {
+            case 100:
+                Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri selectedImage = imageUri;
+                    getActivity().getContentResolver().notifyChange(selectedImage, null);
+                    ContentResolver cr = getActivity().getContentResolver();
+                    Bitmap bitmap;
+
+                    try {
+                        bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
+                        //filename = "";
+                        storeByteImage(bitmap);
+
+                        //viewHolder.imageView.setImageBitmap(bitmap);
+                        //Toast.makeText(getActivity(), selectedImage.toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
+                                .show();
+                        Log.e("Camera", e.toString());
+                    }
+                }
+            default:
+                //Toast.makeText(getActivity(), "Filename" +filename, Toast.LENGTH_SHORT).show();
+                Log.e("filename", filename);
+                File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
+                if (file1.delete())
+                    Log.e("TAG", "Deleted");
+                Intent intent = new Intent(getActivity(), CompressFilter.class);
+                intent.putExtra("path", filename);
+                startActivity(intent);
+
+        }
+
+    }
+
+    public void storeByteImage(Bitmap bp) {
+
+        /*String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        File myDir = new File(root + "/saved_images");
+        myDir.mkdirs();
+        File filename = new File(myDir, "man.jpeg");*/
+
+        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
+        Log.e("TAG", "filename = " + filename);
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(filename);
+            try {
+                fileOutputStream = new FileOutputStream(filename);
+                bp.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
+            ExifInterface exif = new ExifInterface(filename.toString());
+            createExifData(exif, lat, lon);
+            exif.saveAttributes();
+
+
+            /*Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+            while (cursor.moveToNext()) {
+                String imagefilename = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                Long latitide = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
+                Long longitude = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
+
+                Log.e("TAG", "filepath: " + imagefilename + " latitude = " + latitide + "  longitude = " + longitude);
+            }*/
+
+            //return true;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //return false;
     }
 
     protected void gpsLocationReceived(Location location) {
@@ -195,7 +320,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         File filename = new File(myDir, "man.jpeg");*/
 
 
-        String filename = Environment.getExternalStorageDirectory() + String.format("/%d.jpeg", System.currentTimeMillis());
+        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
         Log.e("TAG", "filename = " + filename);
 
         try {
@@ -209,7 +334,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            Toast.makeText(getActivity(), "lat: " + lat + " ,lng: " + lon, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "lat: " + lat + " ,lng: " + lon, Toast.LENGTH_SHORT).show();
 
             Log.e("TAG", "lat =" + lat + "  lon :" + lon);
             ExifInterface exif = new ExifInterface(filename.toString());
@@ -268,7 +393,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         exif.setAttribute(ExifInterface.TAG_MAKE, make);
         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         imei = telephonyManager.getDeviceId();
-        exif.setAttribute(ExifInterface.TAG_MODEL, model + " - " + imei);
+        exif.setAttribute(ExifInterface.TAG_MODEL, model);
 
         exif.setAttribute(ExifInterface.TAG_DATETIME, (new Date(System.currentTimeMillis())).toString()); // set the date & time
 
@@ -288,16 +413,23 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        try {
+            camera = Camera.open();
+            camera.setDisplayOrientation(90);
+            //camera.setPreviewDisplay(holder);
+        } catch (RuntimeException e) {
+            Toast.makeText(getActivity(), "error: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        //camera.startPreview();
+        //previewRunning = true;
 
-        camera = Camera.open();
         //Camera.Parameters parameters = camera.getParameters();
-        camera.setDisplayOrientation(90);
+
 
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                               int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if (previewRunning) {
             camera.stopPreview();
         }
@@ -313,7 +445,11 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.stopPreview();
+        try {
+            camera.stopPreview();
+        } catch (Exception e) {
+
+        }
         previewRunning = false;
         camera.release();
 
@@ -337,12 +473,19 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         return true;
     }*/
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (camera != null)
+            camera.release();
+    }
 
     @Override
     public void onStop() {
         super.onStop();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             locationManager.removeUpdates(this.locationListener);
             //    ActivityCompat#requestPermissions
@@ -353,6 +496,8 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        if (camera != null)
+            camera.release();
 
     }
 
