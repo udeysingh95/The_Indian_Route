@@ -31,6 +31,7 @@ public class PostAdapter extends ArrayAdapter {
     List list = new ArrayList();
     Typeface samarn, fa;
     static int state;
+    static String user_id;
 
 
     public PostAdapter(Context context, int resource, Typeface cFont, Typeface FontAwesome) {
@@ -69,7 +70,7 @@ public class PostAdapter extends ArrayAdapter {
             postHolder.reaction = (TextView) row.findViewById(R.id.icon_like);
             postHolder.comment = (TextView) row.findViewById(R.id.icon_comment);
             postHolder.no_of_reactions = (TextView) row.findViewById(R.id.likes);
-            postHolder.no_of_comments = (TextView)row.findViewById(R.id.comments);
+            postHolder.no_of_comments = (TextView) row.findViewById(R.id.comments);
             postHolder.userPostImage = (ImageView) row.findViewById(R.id.userpostimage);
             postHolder.userprofilePicture = (RoundedImageView) row.findViewById(R.id.userProfilePicture);
             row.setTag(postHolder);
@@ -79,15 +80,18 @@ public class PostAdapter extends ArrayAdapter {
 
         final posts posts = (posts) this.getItem(position);
         state = posts.getstate();
+        user_id = posts.getUser_id();
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(posts.getUsername());
         postHolder.reaction.setTypeface(fa);
-        postHolder.reaction.setTextColor(Color.BLACK);
         postHolder.reaction.setTextSize(24);
         postHolder.no_of_comments.setText(String.valueOf(posts.getComment()));
         if (state == 1) {
             postHolder.reaction.setText(R.string.icon_heart_filled);
             postHolder.reaction.setTextColor(Color.RED);
+        } else {
+            postHolder.reaction.setText(R.string.icon_heart_empty);
+            postHolder.reaction.setTextColor(Color.BLACK);
         }
         postHolder.reaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,21 +99,17 @@ public class PostAdapter extends ArrayAdapter {
                 if (state == 0) {
                     postHolder.reaction.setText(R.string.icon_heart_filled);
                     postHolder.reaction.setTextColor(Color.RED);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()+1));
+                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
                     state = 1;
-
-                }
-                else{
+                } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
                     postHolder.reaction.setTextColor(Color.BLACK);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()-1));
+                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() - 1));
                     state = 0;
-
                 }
-                post_reaction(state, 22, posts.getPost_id());
+                post_reaction(state,user_id, posts.getPost_id());
             }
         });
-
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(24);
@@ -122,29 +122,27 @@ public class PostAdapter extends ArrayAdapter {
         return row;
     }
 
-
     static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions,no_of_comments;
+        TextView username, reaction, comment, no_of_reactions, no_of_comments;
         ImageView userPostImage;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
 
     }
 
-    public void post_reaction(int setstate, int user_id, String post_id) {
+    public void post_reaction(int setstate, String  user_id, String post_id) {
 
         try {
             RequestParams params = new RequestParams();
             params.put("state", setstate);
             params.put("user_id", user_id);
-            params.put("post_id",post_id);
+            params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/post_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("on success",""+res);
+                            Log.d("on success", "" + res);
 
                         }
-
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             Toast.makeText(getContext(), "" + res, Toast.LENGTH_SHORT).show();
@@ -154,8 +152,6 @@ public class PostAdapter extends ArrayAdapter {
         } catch (Exception e) {
             Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
 

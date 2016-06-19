@@ -29,7 +29,6 @@ public class Profile extends AppCompatActivity {
 
         profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
 
-
         try {
             intent = getIntent();
             String userId = intent.getStringExtra("NAME");
