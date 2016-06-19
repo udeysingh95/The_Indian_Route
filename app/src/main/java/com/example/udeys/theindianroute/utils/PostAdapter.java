@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Gitesh on 14-06-2016.
  */
 public class PostAdapter extends ArrayAdapter {
-
+    int liker = 0;
     List list = new ArrayList();
     Typeface samarn, fa;
 
@@ -52,15 +52,16 @@ public class PostAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
-        PostHolder postHolder;
+        final PostHolder postHolder;
 
         if (row == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.timelinerowlayout, parent, false);
             postHolder = new PostHolder();
             postHolder.username = (TextView) row.findViewById(R.id.username);
-            postHolder.like = (TextView) row.findViewById(R.id.icon_like);
+            postHolder.reaction = (TextView) row.findViewById(R.id.icon_like);
             postHolder.comment = (TextView) row.findViewById(R.id.icon_comment);
+            postHolder.no_of_reactions = (TextView) row.findViewById(R.id.likes);
             postHolder.userPostImage = (ImageView) row.findViewById(R.id.userpostimage);
             postHolder.userprofilePicture = (RoundedImageView) row.findViewById(R.id.userProfilePicture);
             row.setTag(postHolder);
@@ -68,12 +69,29 @@ public class PostAdapter extends ArrayAdapter {
             postHolder = (PostHolder) row.getTag();
         }
 
-        posts posts = (posts) this.getItem(position);
+        final posts posts = (posts) this.getItem(position);
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(posts.getUsername());
-        postHolder.like.setTypeface(fa);
-        postHolder.like.setTextSize(24);
-        postHolder.like.setTextColor(Color.RED);
+        postHolder.reaction.setTypeface(fa);
+        postHolder.reaction.setTextColor(Color.BLACK);
+        postHolder.reaction.setTextSize(24);
+        postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
+        postHolder.reaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (liker == 0) {
+                    postHolder.reaction.setText(R.string.icon_heart_filled);
+                    postHolder.reaction.setTextColor(Color.RED);
+                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
+                    liker = 1;
+                } else {
+                    postHolder.reaction.setText(R.string.icon_heart_empty);
+                    postHolder.reaction.setTextColor(Color.BLACK);
+                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
+                    liker = 0;
+                }
+            }
+        });
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(24);
         Picasso.with(getContext())
@@ -82,11 +100,14 @@ public class PostAdapter extends ArrayAdapter {
         Picasso.with(getContext())
                 .load(posts.getPictue()).resize(250, 300).centerCrop()
                 .into(postHolder.userPostImage);
+
+
         return row;
     }
 
+
     static class PostHolder {
-        TextView username, like, comment;
+        TextView username, reaction, comment, no_of_reactions;
         ImageView userPostImage;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
 

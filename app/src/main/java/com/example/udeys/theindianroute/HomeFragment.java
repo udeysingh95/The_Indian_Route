@@ -119,7 +119,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         try {
             swipeRefreshLayout.setRefreshing(true);
             JSONArray jArr = new JSONArray(result);
-            String username, story, picture, check_in, userprofilePicture;
+            String username;
+            String story;
+            String picture;
+            String check_in;
+            String userprofilePicture;
+            String post_id;
+            int reaction;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 username = obj.getString("username");
@@ -127,7 +133,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 picture = obj.getString("picture");
                 check_in = obj.getString("check_in");
                 userprofilePicture = obj.getString("userprofilePicture");
-                posts posts = new posts(username, story, picture, check_in, userprofilePicture);
+                post_id = obj.getString("post_id");
+                reaction = Integer.valueOf(obj.getString("reaction"));
+                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction);
                 swipeRefreshLayout.setRefreshing(false);
                 PostAdapter.add(posts);
             }

@@ -5,17 +5,38 @@ package com.example.udeys.theindianroute.utils;
  */
 public class posts {
     String username;
+
+    public String getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
+    }
+
+    public int getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(int reaction) {
+        this.reaction = reaction;
+    }
+
     String story;
     String pictue;
     String check_in;
     String userProfilePicture;
+    String post_id;
+    int reaction;
 
-    public posts(String username, String story, String pictue, String check_in, String userProfilePicture) {
+    public posts(String username, String story, String pictue, String check_in, String userProfilePicture, String post_id,int reaction) {
         this.setUsername(username);
         this.setStory(story);
         this.setPictue(pictue);
         this.setCheck_in(check_in);
         this.setUserProfilePicture(userProfilePicture);
+        this.setPost_id(post_id);
+        this.setReaction(reaction);
     }
 
     public String getUsername() {

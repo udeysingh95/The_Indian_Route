@@ -3,8 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="team_name">The Indian Developers</string>
     <string name="facebook_app_id">1063969920342928</string>
-
-    <string name="icon_heart">&#xf004;</string>
+    <string name="icon_heart_empty">&#xf08a;</string>
+    <string name="icon_heart_filled">&#xf004;</string>
     <string name="icon_comment">&#xf0e5;</string>
     <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>
