@@ -1,5 +1,6 @@
 package com.example.udeys.theindianroute.filters;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -500,7 +505,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
         return mBitmap;
     }
 
-    /*@Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_filter, menu);
     }
@@ -534,6 +539,6 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
 }
