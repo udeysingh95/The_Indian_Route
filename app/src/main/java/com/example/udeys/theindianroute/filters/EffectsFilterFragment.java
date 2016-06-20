@@ -48,6 +48,8 @@ import java.util.Date;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+/*filter fragment*/
+
 public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Renderer {
 
     private RecyclerView recList;
