@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
-        android:id="@+id/logo"
-        android:src="@drawable/logo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/icon" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/loader"
-        android:layout_below="@+id/logo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="120dp">
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="120dp"
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/foot1"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="15dp"
             android:alpha="0.2"
-            android:src="@drawable/footstep_sm"
-            android:id="@+id/foot1" />
+            android:src="@drawable/footstep_sm" />
         <ImageView
+            android:id="@+id/foot2"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/footstep_sm"
             android:alpha="0.4"
-            android:id="@+id/foot2" />
+            android:src="@drawable/footstep_sm" />
         <ImageView
+            android:id="@+id/foot3"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/footstep_sm"
             android:alpha="0.8"
-            android:id="@+id/foot3" />
+            android:src="@drawable/footstep_sm" />
         <ImageView
+            android:id="@+id/foot4"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:src="@drawable/footstep_sm"
-            android:alpha="0.4"
             android:layout_marginRight="15dp"
-            android:id="@+id/foot4" />
+            android:alpha="0.4"
+            android:src="@drawable/footstep_sm" />
         <ImageView
+            android:id="@+id/foot5"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginRight="0dp"
-            android:src="@drawable/footstep_sm"
             android:alpha="0.2"
-            android:id="@+id/foot5" />
+            android:src="@drawable/footstep_sm" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/team_name"
-        android:id="@+id/textView"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/team_name" />
 
 
 </RelativeLayout>
