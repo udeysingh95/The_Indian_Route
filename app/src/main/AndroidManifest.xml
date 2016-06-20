@@ -32,19 +32,11 @@
             android:resource="@xml/searchable" />
 
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Login"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Splash"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MyApplication"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

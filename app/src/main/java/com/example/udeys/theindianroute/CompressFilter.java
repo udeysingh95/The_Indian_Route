@@ -46,7 +46,6 @@ public class CompressFilter extends AppCompatActivity {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.image_filters, targetFragment);
         transaction.commit();
-
     }
 
 
