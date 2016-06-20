@@ -13,8 +13,9 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
  * Created by Siddharth Malhotra on 5/4/2016.
  */
 
-public class MyApplication extends AppCompatActivity{
+public class MyApplication extends AppCompatActivity {
     CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
