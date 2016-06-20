@@ -256,7 +256,9 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
                 if (file1.delete())
                     Log.e("TAG", "Deleted");
-                //initFragments(new EffectsFilterFragment());
+                Intent intent = new Intent(getActivity(), EffectsFilterFragment.class);
+                intent.putExtra("path", filename);
+                startActivity(intent);
 
         }
 
@@ -309,12 +311,17 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         //return false;
     }
 
-    private void initFragments(Fragment targetFragment) {
-        Bundle bundle = new Bundle();
-        bundle.putString("filename", filename); // send imagePath
-        /*
-        * Resolve the issue here
-        * */
+    private void initFragments() {
+        Bundle bundl = new Bundle();
+        bundl.putString("filename", filename); // send imagePath
+
+        EffectsFilterFragment dv = new EffectsFilterFragment();
+        dv.setArguments(bundl);
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.image_filters, new EffectsFilterFragment());
+        ft.show(getFragmentManager().findFragmentById(R.id.fragment_1));
+        ft.addToBackStack(null);
+        ft.commit();
 
     }
 
