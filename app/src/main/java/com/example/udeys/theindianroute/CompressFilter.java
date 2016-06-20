@@ -1,6 +1,5 @@
 package com.example.udeys.theindianroute;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,13 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
 
 
 /**
- * Created by Malhotra G on 6/19/2016.
+ * Created by Siddharth Malhotra on 6/19/2016.
  */
 public class CompressFilter extends AppCompatActivity {
 

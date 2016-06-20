@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,6 +50,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
     double lat;
     double lon;
     Button bt;
+    FragmentTransaction ft;
     String file;
     Uri imageUri;
     private LocationManager locationManager;
@@ -66,7 +70,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 if (storeByteImage(data)) {
                     camera.startPreview();
                     getActivity().setResult(FOTO_MODE, imgIntent);
-                    Intent intent = new Intent(getActivity(), CompressFilter.class);
+                    Intent intent = new Intent(getActivity(), EffectsFilterFragment.class);
                     intent.putExtra("path", filename);
                     startActivity(intent);
                     //getActivity().finish();
@@ -252,7 +256,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
                 if (file1.delete())
                     Log.e("TAG", "Deleted");
-                Intent intent = new Intent(getActivity(), CompressFilter.class);
+                Intent intent = new Intent(getActivity(), EffectsFilterFragment.class);
                 intent.putExtra("path", filename);
                 startActivity(intent);
 
@@ -305,6 +309,20 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
             e.printStackTrace();
         }
         //return false;
+    }
+
+    private void initFragments() {
+        Bundle bundl = new Bundle();
+        bundl.putString("filename", filename); // send imagePath
+
+        EffectsFilterFragment dv = new EffectsFilterFragment();
+        dv.setArguments(bundl);
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.image_filters, new EffectsFilterFragment());
+        ft.show(getFragmentManager().findFragmentById(R.id.fragment_1));
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
 
     protected void gpsLocationReceived(Location location) {

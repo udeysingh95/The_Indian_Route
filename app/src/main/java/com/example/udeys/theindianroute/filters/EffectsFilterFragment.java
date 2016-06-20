@@ -1,6 +1,5 @@
 package com.example.udeys.theindianroute.filters;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,7 +19,6 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,9 +26,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,8 +47,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Renderer {
 
-    private RecyclerView recList;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_OK = -1;
+    Intent intent;
     int mCurrentEffect;
+    Bitmap bitmap, tempBitmap;
+    ImageView tick;
+    String imagePath;
+    private RecyclerView recList;
     private GLSurfaceView mEffectView;
     private int[] mTextures = new int[2];
     private EffectContext mEffectContext;
@@ -63,10 +64,10 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     private int mImageHeight;
     private boolean mInitialized = false;
     private volatile boolean saveFrame;
-    private static final int RESULT_LOAD_IMAGE = 1;
-    private static final int RESULT_OK = -1;
-    Bitmap bitmap, tempBitmap;
-    ImageView tick;
+
+    public EffectsFilterFragment() {
+
+    }
 
     public void setCurrentEffect(int effect) {
         mCurrentEffect = effect;
@@ -76,6 +77,14 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.imf_effect_factory, container, false);
         setHasOptionsMenu(true);
+
+        try {
+            Bundle bundle = getArguments();
+            imagePath = bundle.getString("filename"); // imagePath has the path to image in device
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
         mEffectView = (GLSurfaceView) rootView.findViewById(R.id.effectsview);
         mEffectView.setZOrderOnTop(true);
         mEffectView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
@@ -491,7 +500,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
         return mBitmap;
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_filter, menu);
     }
@@ -525,6 +534,6 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }
