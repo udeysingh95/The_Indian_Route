@@ -5,26 +5,30 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
+
+
 /**
- * Created by Malhotra G on 6/19/2016.
+ * Created by Siddharth Malhotra on 6/19/2016.
  */
 public class CompressFilter extends AppCompatActivity {
 
-    ImageView imageView;
+
     Intent intent;
     String imagePath;
+    FragmentTransaction ft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compress);
-
-        imageView = (ImageView) findViewById(R.id.imageView3);
+        initFragments(new EffectsFilterFragment());
 
         try {
             intent = getIntent();
@@ -35,7 +39,13 @@ public class CompressFilter extends AppCompatActivity {
         }
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        imageView.setImageBitmap(bitmap);
+
+    }
+
+    private void initFragments(Fragment targetFragment) {
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.image_filters, targetFragment);
+        transaction.commit();
     }
 
 
