@@ -2,6 +2,7 @@ package com.example.udeys.theindianroute;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -170,17 +171,31 @@ public class Login extends Activity {
     * decode json array here which is coming as response from server
     * */
     private void decodeJson(String result) {
+        String name = null;
+        String user_id = null;
         try {
             JSONArray jArr = new JSONArray(result);
-            String name = null;
+
+
+
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 name = obj.getString("username");
+                user_id = obj.getString("user_id");
             }
-            Toast.makeText(Login.this, "username : " + name, Toast.LENGTH_SHORT).show();
+
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+        try {
+            SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+            SharedPreferences.Editor ed = sp.edit();
+            ed.putString("user_id", user_id);
+            ed.putString("username", name);
+            ed.commit();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext() , e.getMessage() , Toast.LENGTH_SHORT).show();
         }
     }
 

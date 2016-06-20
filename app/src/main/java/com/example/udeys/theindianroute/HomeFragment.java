@@ -5,6 +5,8 @@ package com.example.udeys.theindianroute;
  */
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +30,11 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+    String username = sp.getString("username", null);
+    String user_id = sp.getString("user_id", null);
+
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     ListView datalist;
@@ -95,7 +102,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         try {
             RequestParams params = new RequestParams();
-            params.put("user_id",22);
+            params.put("user_id",user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/fetch_post.php",params, new TextHttpResponseHandler() {
                         @Override

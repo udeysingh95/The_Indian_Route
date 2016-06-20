@@ -1,6 +1,8 @@
 package com.example.udeys.theindianroute;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,6 +17,14 @@ public class Splash extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+        if(sp.contains("user_id")){
+            Intent i = new Intent(this , MenuActivity.class);
+            startActivity(i);
+        }
+
+
+
         setContentView(R.layout.splash);
 
         im1 = (ImageView) findViewById(R.id.foot1);
