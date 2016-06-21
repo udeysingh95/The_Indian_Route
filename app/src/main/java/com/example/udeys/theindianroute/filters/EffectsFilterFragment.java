@@ -36,6 +36,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.CompressFilter;
+import com.example.udeys.theindianroute.PostForm;
 import com.example.udeys.theindianroute.R;
 
 import java.io.ByteArrayOutputStream;
@@ -81,6 +83,8 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.imf_effect_factory, container, false);
+        bitmap = ((CompressFilter)getActivity()).getImage();
+
         setHasOptionsMenu(true);
 
         try {
@@ -487,6 +491,9 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
             return null;
         }
     }
+    public void setBitmap(String st){
+        Toast.makeText(getActivity() , st , Toast.LENGTH_LONG).show();
+    }
 
     public Bitmap takeScreenshot(GL10 mGL) {
         final int mWidth = mEffectView.getWidth();
@@ -529,9 +536,9 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
                     @Override
                     public void run() {
                         pShow.dismiss();
-                        //Intent intent = new Intent(getActivity(), MainActivity.class);
-                        //intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
-                        //startActivity(intent);
+                        Intent intent = new Intent(getActivity(), PostForm.class);
+                        intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
+                        startActivity(intent);
                     }
                 }, 1500);
 

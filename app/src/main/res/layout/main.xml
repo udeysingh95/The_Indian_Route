@@ -6,7 +6,10 @@
     <SurfaceView
         android:id="@+id/surface_camera"
         android:layout_width="match_parent"
-        android:layout_height="360dp"></SurfaceView>
+        android:layout_height="360dp">
+
+
+    </SurfaceView>
 
     <Button
         android:id="@+id/btncapture"

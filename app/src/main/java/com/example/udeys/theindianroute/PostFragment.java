@@ -32,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,9 +70,9 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 if (storeByteImage(data)) {
                     camera.startPreview();
                     getActivity().setResult(FOTO_MODE, imgIntent);
-                    //Intent intent = new Intent(getActivity(), CompressFilter.class);
-                    //intent.putExtra("path", filename);
-                    //startActivity(intent);
+                    Intent intent = new Intent(getActivity(),CompressFilter.class);
+                    intent.putExtra("path", filename);
+                    startActivity(intent);
                     //getActivity().finish();
                 }
 
@@ -254,7 +256,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
                 if (file1.delete())
                     Log.e("TAG", "Deleted");
-                Intent intent = new Intent(getActivity(), CompressFilter.class);
+                Intent intent = new Intent(getActivity(), EffectsFilterFragment.class);
                 intent.putExtra("path", filename);
                 startActivity(intent);
 
