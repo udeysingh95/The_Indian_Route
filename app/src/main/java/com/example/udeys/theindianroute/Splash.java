@@ -21,6 +21,11 @@ public class Splash extends Activity {
         if(sp.contains("user_id")){
             Intent i = new Intent(this , MenuActivity.class);
             startActivity(i);
+            finish();
+        } else {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
         }
 
 

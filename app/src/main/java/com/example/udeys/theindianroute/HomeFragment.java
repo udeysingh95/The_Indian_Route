@@ -31,9 +31,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
-    String username = ((MenuActivity)getActivity()).username;
-    String user_id = ((MenuActivity)getActivity()).user_id;
+    SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+    String username = sp.getString("username", null);
+    String user_id = sp.getString("user_id", null);
 
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
