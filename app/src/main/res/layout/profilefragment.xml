@@ -118,12 +118,11 @@
             android:background="#C1C1C1"
             android:orientation="horizontal">
 
-            <GridLayout
-                android:id="@+id/gallery_images"
+            <fragment
+                android:id="@+id/gallery_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </GridLayout>
+                android:layout_height="match_parent"
+                android:name="com.example.udeys.theindianroute.GalleryFragment"/>
         </LinearLayout>
 
     </LinearLayout>
