@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -150,12 +151,13 @@ public class Login extends Activity {
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //called when response HTTP status is "200"
                             decodeJson(res);
+
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                            Toast.makeText(Login.this, "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
@@ -172,31 +174,36 @@ public class Login extends Activity {
         String user_id = null;
         try {
             JSONArray jArr = new JSONArray(result);
-
-
-
-            for (int count = 0; count < jArr.length(); count++) {
-                JSONObject obj = jArr.getJSONObject(count);
-                name = obj.getString("username");
-                user_id = obj.getString("user_id");
+            JSONObject obj = jArr.getJSONObject(0);
+            name = obj.getString("username");
+            user_id = obj.getString("user_id");
+            if(user_id == null){
+                Toast.makeText(Login.this, "user not found", Toast.LENGTH_SHORT).show();
             }
+            else{
+                try {
+                    SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sp.edit();
+                    ed.clear();
+                    ed.putString("user_id", user_id);
+                    ed.putString("username", name);
+                    ed.commit();
+
+                    Intent i = new Intent(this , MenuActivity.class);
+                    startActivity(i);
+                    finish();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext() , "sp failed" + e.getMessage() , Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        try {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-            SharedPreferences.Editor ed = sp.edit();
-            ed.clear();
-            ed.putString("user_id", user_id);
-            ed.putString("username", name);
-            ed.commit();
-            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
 
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext() , e.getMessage() , Toast.LENGTH_SHORT).show();
-        }
     }
 
 
