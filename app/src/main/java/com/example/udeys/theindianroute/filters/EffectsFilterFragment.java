@@ -85,7 +85,8 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
 
         try {
             Bundle bundle = getArguments();
-            imagePath = bundle.getString("filename"); // imagePath has the path to image in device
+            imagePath = bundle.getString("index"); // imagePath has the path to image in device
+            Toast.makeText(getActivity(), "path: " + imagePath, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }

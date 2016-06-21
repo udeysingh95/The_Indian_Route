@@ -1,12 +1,6 @@
 package com.example.udeys.theindianroute;
 
-/**
- * Created by udeys on 6/17/2016.
- */
-
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
-
 import android.widget.Toast;
+
 import com.example.udeys.theindianroute.utils.PostAdapter;
 import com.example.udeys.theindianroute.utils.posts;
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,17 +23,21 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Created by udeys on 6/17/2016.
+ */
+
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+    /*SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
     String username = sp.getString("username", null);
-    String user_id = sp.getString("user_id", null);
+    String user_id = sp.getString("user_id", null);*/
 
     PostAdapter PostAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
     ListView datalist;
     View view;
-
+    String user_id = String.valueOf(22);
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

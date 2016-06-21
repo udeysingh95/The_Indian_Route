@@ -1,17 +1,11 @@
 package com.example.udeys.theindianroute;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
 
 
 /**
@@ -22,13 +16,12 @@ public class CompressFilter extends AppCompatActivity {
 
     Intent intent;
     String imagePath;
-    FragmentTransaction ft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compress);
-        initFragments(new EffectsFilterFragment());
+        //initFragments();
 
         try {
             intent = getIntent();
@@ -38,15 +31,20 @@ public class CompressFilter extends AppCompatActivity {
             Toast.makeText(CompressFilter.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        //Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        //newInstance(imagePath);
 
     }
 
-    private void initFragments(Fragment targetFragment) {
+    /*private void initFragments(Fragment targetFragment) {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.image_filters, targetFragment);
         transaction.commit();
-    }
+    }*/
+
+
+
+
 
 
 }

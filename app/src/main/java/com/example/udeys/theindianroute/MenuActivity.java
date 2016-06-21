@@ -3,7 +3,6 @@ package com.example.udeys.theindianroute;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -14,9 +13,9 @@ import android.widget.ImageButton;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
-    String username = sp.getString("username", null);
-    String user_id = sp.getString("user_id", null);
+    //SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+    //String username = sp.getString("username", null);
+    //String user_id = sp.getString("user_id", null);
 
     ImageButton hm, srch, pst, notif, prfl;
     FragmentTransaction ft;
