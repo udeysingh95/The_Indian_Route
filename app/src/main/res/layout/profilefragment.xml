@@ -59,8 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:background="#94B3D9"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -118,11 +118,16 @@
             android:background="#C1C1C1"
             android:orientation="horizontal">
 
-            <fragment
-                android:id="@+id/gallery_fragment"
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gallery_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.example.udeys.theindianroute.GalleryFragment"/>
+                android:columnWidth="120dp"
+                android:gravity="center"
+                android:horizontalSpacing="1dp"
+                android:numColumns="3"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="1dp" />
         </LinearLayout>
 
     </LinearLayout>
