@@ -5,6 +5,8 @@ package com.example.udeys.theindianroute;
  */
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +32,18 @@ public class ProfileFragment extends Fragment {
     View view;
     TextView uname , posts;
     ImageView iv;
-    String username = ((MenuActivity)getActivity()).username;
-    String user_id = ((MenuActivity)getActivity()).user_id;
+    SharedPreferences sp;
+    String username;
+    String user_id;
     int no_of_post = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
-
+        sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+        username = sp.getString("username", null);
+        user_id = sp.getString("user_id", null);
         uname = (TextView) view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
 

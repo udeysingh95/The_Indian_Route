@@ -31,9 +31,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
-    String username = sp.getString("username", null);
-    String user_id = sp.getString("user_id", null);
+    SharedPreferences sp;
+    String username;
+    String user_id;
 
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -45,6 +45,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         view = inflater.inflate(R.layout.homefragment, container, false);
+        sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+        username = sp.getString("username", null);
+        user_id = sp.getString("user_id", null);
         return view;
     }
 
