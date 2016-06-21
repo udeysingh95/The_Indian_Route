@@ -536,7 +536,9 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
                     @Override
                     public void run() {
                         pShow.dismiss();
+
                         Intent intent = new Intent(getActivity(), PostForm.class);
+                        intent.putExtra("post_image",fileName);
                         intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
                         startActivity(intent);
                     }

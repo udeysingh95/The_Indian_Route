@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute;
+package com.example.udeys.theindianroute.fragments;
 
 
 import android.app.Fragment;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.udeys.theindianroute.R;
 
 /**
  * Created by udeys on 6/18/2016.
