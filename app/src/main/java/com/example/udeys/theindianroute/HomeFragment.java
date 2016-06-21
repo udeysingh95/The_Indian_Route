@@ -17,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import android.widget.Toast;
+
 import com.example.udeys.theindianroute.utils.PostAdapter;
 import com.example.udeys.theindianroute.utils.posts;
 import com.loopj.android.http.AsyncHttpClient;
@@ -31,9 +32,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
-    String username = sp.getString("username", null);
-    String user_id = sp.getString("user_id", null);
+    //SharedPreferences sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+    //String username = sp.getString("username", null);
+    //String user_id = sp.getString("user_id", null);
 
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -102,9 +103,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         try {
             RequestParams params = new RequestParams();
-            params.put("user_id",user_id);
+            params.put("user_id", 22);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_post.php",params, new TextHttpResponseHandler() {
+            client.get("http://indianroute.roms4all.com/fetch_post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);
@@ -131,8 +132,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             String picture;
             String check_in;
             String userprofilePicture;
-            String post_id,user_id;
-            int reaction,state,comment;
+            String post_id, user_id;
+            int reaction, state, comment;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 username = obj.getString("username");
@@ -145,7 +146,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 state = Integer.valueOf(obj.getString("state"));
                 comment = Integer.valueOf(obj.getString("comment"));
                 user_id = obj.getString("user_id");
-                posts posts = new posts(username, story, picture, check_in, userprofilePicture,post_id,reaction,state,comment,user_id);
+                posts posts = new posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
                 swipeRefreshLayout.setRefreshing(false);
                 PostAdapter.add(posts);
             }

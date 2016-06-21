@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class CompressFilter extends AppCompatActivity {
 
     Intent intent;
     String imagePath;
+    Bitmap bp = null;
     FragmentTransaction ft;
 
     @Override
@@ -38,7 +40,6 @@ public class CompressFilter extends AppCompatActivity {
             Toast.makeText(CompressFilter.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
 
     }
 
@@ -46,6 +47,10 @@ public class CompressFilter extends AppCompatActivity {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.image_filters, targetFragment);
         transaction.commit();
+    }
+    public Bitmap getImage(){
+        bp = BitmapFactory.decodeFile(imagePath);
+        return bp;
     }
 
 

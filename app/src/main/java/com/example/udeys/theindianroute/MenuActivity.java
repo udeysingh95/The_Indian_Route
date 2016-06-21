@@ -14,9 +14,9 @@ import android.widget.ImageButton;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
-    String username = sp.getString("username", null);
-    String user_id = sp.getString("user_id", null);
+    //SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+    //String username = sp.getString("username", null);
+    //String user_id = sp.getString("user_id", null);
 
     ImageButton hm, srch, pst, notif, prfl;
     FragmentTransaction ft;
