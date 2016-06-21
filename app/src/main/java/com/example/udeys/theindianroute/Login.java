@@ -182,7 +182,7 @@ public class Login extends Activity {
             }
             else{
                 try {
-                    SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+                    SharedPreferences sp = this.getSharedPreferences("user_details", MODE_PRIVATE);
                     SharedPreferences.Editor ed = sp.edit();
                     ed.putString("user_id", user_id);
                     ed.putString("username", name);
