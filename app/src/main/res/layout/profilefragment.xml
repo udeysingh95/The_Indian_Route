@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#C1D3ED"
+                android:background="#d2d2d2"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#94B3D9"
+                android:background="#d2d2d2"
                 android:gravity="center"
                 android:orientation="vertical">
 

@@ -51,17 +51,19 @@ public class ProfileFragment extends Fragment {
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
         username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
-        uname = (TextView) view.findViewById(R.id.username);
+        uname = (TextView)view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
 
         imagePath = new ArrayList<>();
 
         iv = (ImageView) view.findViewById(R.id.PF);
+
         initValue();    //fetch profile
+
         initValues();  //fetch posts
 
-        //gridView.setAdapter(new ImageAdapter(getActivity() , imagePath));
+
 
         return view;
     }
@@ -115,23 +117,13 @@ public class ProfileFragment extends Fragment {
     private void decodeJson(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
-            String userprofilePicture;
 
             JSONObject obj = jArr.getJSONObject(0);
-            //userprofilePicture = obj.getString("userprofilePicture");
-            //no_of_post = Integer.valueOf(obj.getString("post_count"));
+
             String path = obj.getString("picture");
             imagePath.add(path);
 
             Log.e("path", path);
-            //Toast.makeText(getActivity(), "path:" + path, Toast.LENGTH_SHORT).show();
-            //uname.setText(username);
-            //posts.setText(no_of_post);
-
-            //may throw some error
-
-            //Picasso.with(getActivity().getApplicationContext()).load(path).resize(250, 300).centerCrop().into(iv);
-
 
 
         } catch (JSONException e) {
@@ -149,8 +141,8 @@ public class ProfileFragment extends Fragment {
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
-            //          uname.setText(username);
-//            posts.setText(no_of_post);
+            uname.setText(username);
+            posts.setText(String.valueOf(no_of_post));
 
             //may throw some error
 
