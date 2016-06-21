@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute;
+package com.example.udeys.theindianroute.fragments;
 
 /**
  * Created by udeys on 6/17/2016.
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.utils.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -62,7 +63,6 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);
-
                         }
 
                         @Override

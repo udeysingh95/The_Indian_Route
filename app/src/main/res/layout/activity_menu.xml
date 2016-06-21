@@ -16,7 +16,7 @@
 
         <fragment
             android:id="@+id/fragment_1"
-            android:name="com.example.udeys.theindianroute.EmptyFragment"
+            android:name="com.example.udeys.theindianroute.fragments.EmptyFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

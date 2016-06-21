@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute;
+package com.example.udeys.theindianroute.fragments;
 
 /**
  * Created by udeys on 6/17/2016.
@@ -17,6 +17,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import android.widget.Toast;
+
+import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.utils.PostAdapter;
 import com.example.udeys.theindianroute.utils.posts;
 import com.loopj.android.http.AsyncHttpClient;

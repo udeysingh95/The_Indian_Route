@@ -3,19 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.udeys.theindianroute.PostForm"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.udeys.theindianroute.PostForm">
 
     <EditText
+        android:id="@+id/post_story"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/post_story"/>
+        android:hint="Story"
+        android:inputType="textPersonName" />
 
     <EditText
+        android:id="@+id/post_checkin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/post_checkin"
+        android:layout_gravity="center_horizontal"
+        android:hint="CheckIn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:id="@+id/push_post"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

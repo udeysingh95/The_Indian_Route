@@ -12,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.udeys.theindianroute.fragments.HomeFragment;
+import com.example.udeys.theindianroute.fragments.ProfileFragment;
+import com.example.udeys.theindianroute.fragments.TripFragment;
+
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 

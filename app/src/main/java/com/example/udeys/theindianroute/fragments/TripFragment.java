@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute;
+package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.graphics.Color;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.path.HttpConnection;
 import com.example.udeys.theindianroute.path.PathJSONParser;
 import com.google.android.gms.maps.CameraUpdateFactory;
