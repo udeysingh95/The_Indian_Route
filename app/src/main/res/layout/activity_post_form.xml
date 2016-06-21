@@ -7,10 +7,15 @@
     android:orientation="vertical">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
-        android:id="@+id/editText"/>
+        android:id="@+id/post_story"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_checkin"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

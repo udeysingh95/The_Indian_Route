@@ -17,7 +17,7 @@ public class Splash extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         if(sp.contains("user_id")){
             Intent i = new Intent(this , MenuActivity.class);
             startActivity(i);

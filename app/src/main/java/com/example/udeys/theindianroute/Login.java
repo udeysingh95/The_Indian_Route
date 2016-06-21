@@ -186,7 +186,7 @@ public class Login extends Activity {
             e.printStackTrace();
         }
         try {
-            SharedPreferences sp = getSharedPreferences("user_details", MODE_PRIVATE);
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
             SharedPreferences.Editor ed = sp.edit();
             ed.clear();
             ed.putString("user_id", user_id);
