@@ -8,23 +8,26 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.utils.posts;
+import com.example.udeys.theindianroute.utils.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -37,6 +40,8 @@ public class ProfileFragment extends Fragment {
     String username;
     String user_id;
     int no_of_post = 0;
+    GridView gridView;
+    ArrayList<String> imagePath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,9 +52,14 @@ public class ProfileFragment extends Fragment {
         user_id = sp.getString("user_id", null);
         uname = (TextView) view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
+        gridView = (GridView) view.findViewById(R.id.gallery_images);
+
+        imagePath = new ArrayList<>();
 
         iv = (ImageView) view.findViewById(R.id.PF);
         initValues();
+
+        //gridView.setAdapter(new ImageAdapter(getActivity() , imagePath));
 
         return view;
     }
@@ -59,9 +69,10 @@ public class ProfileFragment extends Fragment {
             RequestParams params = new RequestParams();
             params.put("user_id",user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_profile.php",params, new TextHttpResponseHandler() {
+            client.get("http://indianroute.roms4all.com/fetch_gallery.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
+                            //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();
                             decodeJson(res);
                         }
 
@@ -82,17 +93,19 @@ public class ProfileFragment extends Fragment {
             String userprofilePicture;
 
             JSONObject obj = jArr.getJSONObject(0);
-            userprofilePicture = obj.getString("userprofilePicture");
-            no_of_post = Integer.valueOf(obj.getString("post_count"));
+            //userprofilePicture = obj.getString("userprofilePicture");
+            //no_of_post = Integer.valueOf(obj.getString("post_count"));
+            String path = obj.getString("picture");
+            imagePath.add(path);
 
-            uname.setText(username);
-            posts.setText(no_of_post);
+            Log.e("path", path);
+            //Toast.makeText(getActivity(), "path:" + path, Toast.LENGTH_SHORT).show();
+            //uname.setText(username);
+            //posts.setText(no_of_post);
 
             //may throw some error
 
-            Picasso.with(getActivity().getApplicationContext())
-                    .load(userprofilePicture).resize(250, 300).centerCrop()
-                    .into(iv);
+            //Picasso.with(getActivity().getApplicationContext()).load(path).resize(250, 300).centerCrop().into(iv);
 
 
 
@@ -100,5 +113,6 @@ public class ProfileFragment extends Fragment {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
     }
 }
