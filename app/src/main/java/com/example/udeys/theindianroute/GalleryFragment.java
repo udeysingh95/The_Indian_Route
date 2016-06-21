@@ -73,9 +73,6 @@ public class GalleryFragment extends Fragment {
         String picture_path;
         try {
             JSONArray jArr = new JSONArray(result);
-
-
-
             for(int count = 0 ; count < jArr.length() ; count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 picture_path = obj.getString("picture");
