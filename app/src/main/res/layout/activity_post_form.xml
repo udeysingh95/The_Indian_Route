@@ -12,6 +12,5 @@
         android:inputType="textPersonName"
         android:text="Name"
         android:ems="10"
-        android:id="@+id/editText"
-        android:layout_weight="1" />
+        android:id="@+id/editText"/>
 </LinearLayout>
