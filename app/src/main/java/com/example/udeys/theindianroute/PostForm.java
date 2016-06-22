@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -49,11 +47,8 @@ public class PostForm extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         story = s.getText().toString();
         checkin = c.getText().toString();
-        Toast.makeText(this,username,Toast.LENGTH_LONG).show();
-        Toast.makeText(this,story,Toast.LENGTH_LONG).show();
-        Toast.makeText(this,checkin,Toast.LENGTH_LONG).show();
+
         i = get();
-        Toast.makeText(this,"i'm here",Toast.LENGTH_LONG).show();
         pushPost();
     }
 
@@ -70,12 +65,12 @@ public class PostForm extends Activity implements View.OnClickListener {
                 params.put("story", story);
                 params.put("picture",i);
             } catch (Exception e) {
-                Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplication(), MenuActivity.class);
                             startActivity(i);
                             finish();
@@ -84,7 +79,7 @@ public class PostForm extends Activity implements View.OnClickListener {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                            Toast.makeText(PostForm.this, "3" + statusCode + res, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PostForm.this, "3" + statusCode + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
