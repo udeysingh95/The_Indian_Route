@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute.utils;
+package com.example.udeys.theindianroute.helperClasses;
 
 /**
  * Created by Gitesh on 23-05-2016.

@@ -19,8 +19,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.utils.PostAdapter;
-import com.example.udeys.theindianroute.utils.posts;
+import com.example.udeys.theindianroute.adapters.PostAdapter;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;

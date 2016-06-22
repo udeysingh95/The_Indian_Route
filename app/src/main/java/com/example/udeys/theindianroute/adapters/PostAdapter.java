@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute.utils;
+package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
