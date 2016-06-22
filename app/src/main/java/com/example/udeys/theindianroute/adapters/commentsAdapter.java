@@ -1,6 +1,8 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
  */
 public class commentsAdapter extends ArrayAdapter {
     List list = new ArrayList();
+    View row;
 
     public commentsAdapter(Context context, int resource) {
         super(context, resource);
@@ -32,5 +35,9 @@ public class commentsAdapter extends ArrayAdapter {
         return list.get(position);
     }
 
-
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        row = convertView;
+        return  row;
+    }
 }
