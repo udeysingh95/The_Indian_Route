@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,13 +119,14 @@ public class ProfileFragment extends Fragment {
         try {
             JSONArray jArr = new JSONArray(result);
 
-            JSONObject obj = jArr.getJSONObject(0);
-            String path = obj.getString("picture");
-            imagePath.add(path);
 
-            Log.e("path", path);
-
-
+            for (int count = 0; count < jArr.length(); count++) {
+                JSONObject obj = jArr.getJSONObject(count);
+                String path = obj.getString("picture");
+                imagePath.add(path);
+                //Log.e("path", path);
+                //gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
+            }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block

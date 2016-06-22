@@ -339,6 +339,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
         filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
         Log.e("TAG", "filename = " + filename);
 
+
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             try {
