@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();
+
                             decodeNewJson(res);
                         }
 
@@ -100,6 +101,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();
+
                             decodeJson(res);
                         }
 
@@ -119,11 +121,11 @@ public class ProfileFragment extends Fragment {
             JSONArray jArr = new JSONArray(result);
 
             JSONObject obj = jArr.getJSONObject(0);
-
             String path = obj.getString("picture");
             imagePath.add(path);
 
             Log.e("path", path);
+
 
 
         } catch (JSONException e) {
