@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.utils.ImageAdapter;
+import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;

@@ -1,4 +1,4 @@
-package com.example.udeys.theindianroute;
+package com.example.udeys.theindianroute.fragments;
 
 import android.Manifest;
 import android.app.Activity;
@@ -32,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.CompressFilter;
+import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
 
 import java.io.File;

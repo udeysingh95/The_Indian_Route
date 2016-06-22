@@ -1,8 +1,11 @@
-package com.example.udeys.theindianroute.utils;
+package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.fragments.CommentFragment;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -107,12 +112,22 @@ public class PostAdapter extends ArrayAdapter {
                     postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() - 1));
                     state = 0;
                 }
-                post_reaction(state,user_id, posts.getPost_id());
+                post_reaction(state, user_id, posts.getPost_id());
             }
         });
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(24);
+        postHolder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                CommentFragment fragment = new CommentFragment();
+                fragmentTransaction.replace(R.id.fragment_1, fragment);
+                fragmentTransaction.commit();
+            }
+        });
         Picasso.with(getContext())
                 .load(posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
                 .into(postHolder.userprofilePicture);
@@ -129,7 +144,7 @@ public class PostAdapter extends ArrayAdapter {
 
     }
 
-    public void post_reaction(int setstate, String  user_id, String post_id) {
+    public void post_reaction(int setstate, String user_id, String post_id) {
 
         try {
             RequestParams params = new RequestParams();
@@ -143,6 +158,7 @@ public class PostAdapter extends ArrayAdapter {
                             Log.d("on success", "" + res);
 
                         }
+
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             Toast.makeText(getContext(), "" + res, Toast.LENGTH_SHORT).show();
