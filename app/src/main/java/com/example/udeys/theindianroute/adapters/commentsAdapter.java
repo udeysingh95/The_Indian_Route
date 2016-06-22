@@ -1,9 +1,14 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.helperClasses.comments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +18,7 @@ import java.util.List;
  */
 public class commentsAdapter extends ArrayAdapter {
     List list = new ArrayList();
-    View row;
+
 
     public commentsAdapter(Context context, int resource) {
         super(context, resource);
@@ -37,7 +42,24 @@ public class commentsAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View row;
         row = convertView;
-        return  row;
+        final commentHolder commentHolder;
+        if (row == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = layoutInflater.inflate(R.layout.commentrowlayout, parent, false);
+            commentHolder = new commentHolder();
+            commentHolder.commentersComments = (TextView) row.findViewById(R.id.commenters_comments);
+            row.setTag(commentHolder);
+        } else {
+            commentHolder = (commentHolder) row.getTag();
+        }
+        final comments comments = (comments) this.getItem(position);
+        commentHolder.commentersComments.setText(comments.getComments());
+        return row;
+    }
+
+    static class commentHolder {
+        TextView commentersComments;
     }
 }
