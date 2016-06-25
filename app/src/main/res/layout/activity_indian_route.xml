@@ -5,12 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="com.example.udeys.theindianroute.MenuActivity">
-
-    <include
-        android:id="@+id/my_toolbar"
-        layout="@layout/my_toolbar"></include>
-
+    tools:context="com.example.udeys.theindianroute.TheIndianRoute.IndianRoute">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +14,7 @@
 
 
         <fragment
-            android:id="@+id/fragment_1"
+            android:id="@+id/indian_route_fragment"
             android:name="com.example.udeys.theindianroute.fragments.EmptyFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -35,7 +30,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/home"
+            android:id="@+id/frag1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -43,7 +38,7 @@
             android:src="@drawable/ic_action_important" />
 
         <ImageButton
-            android:id="@+id/trip"
+            android:id="@+id/frag2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -51,30 +46,14 @@
             android:src="@drawable/ic_action_split" />
 
         <ImageButton
-            android:id="@+id/post"
+            android:id="@+id/frag3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#ccc"
             android:src="@drawable/ic_action_favorite" />
 
-        <ImageButton
-            android:id="@+id/notification"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_search" />
-
-        <ImageButton
-            android:id="@+id/profile"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_go_to_today" />
 
     </LinearLayout>
-
 
 </LinearLayout>

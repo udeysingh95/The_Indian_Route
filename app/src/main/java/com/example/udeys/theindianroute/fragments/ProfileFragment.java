@@ -58,13 +58,19 @@ public class ProfileFragment extends Fragment {
 
         iv = (ImageView) view.findViewById(R.id.PF);
 
-        initValue();    //fetch profile
 
-        initValues();  //fetch posts
 
 
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initValue();    //fetch profile
+
+        initValues();  //fetch posts
     }
 
     private void initValue() {
