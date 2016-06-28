@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
@@ -25,7 +26,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public String username , user_id;
-    ImageButton hm, srch, pst, notif, prfl,ir;
+    ImageButton hm, trp, pst, notif, prfl;      //menuBar
+
+    ImageButton Logo, Search ;
+    EditText srch;
+    Boolean search_state = false;
     FragmentTransaction ft;
 
     @Override
@@ -35,25 +40,35 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        srch = (EditText) findViewById(R.id.search_bar);
+        Search = (ImageButton) findViewById(R.id.btn_search);
+        Logo = (ImageButton)findViewById(R.id.toolbar_logo);
+
+
+
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", "udeysingh95");
         user_id = sp.getString("user_id", "22");
         initFragments();
 
         hm = (ImageButton) findViewById(R.id.home);
-        srch = (ImageButton) findViewById(R.id.trip);
+        trp = (ImageButton) findViewById(R.id.trip);
         pst = (ImageButton) findViewById(R.id.post);
         notif = (ImageButton) findViewById(R.id.notification);
         prfl = (ImageButton) findViewById(R.id.profile);
-        ir = (ImageButton)findViewById(R.id.toolbar_logo);
+
 
 
         hm.setOnClickListener(this);
-        srch.setOnClickListener(this);
+        trp.setOnClickListener(this);
         pst.setOnClickListener(this);
         notif.setOnClickListener(this);
         prfl.setOnClickListener(this);
-        ir.setOnClickListener(this);
+
+        Logo.setOnClickListener(this);
+        Search.setOnClickListener(this);
+
 
     }
 
@@ -96,6 +111,22 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.toolbar_logo:
                 Intent i = new Intent(this, IndianRoute.class);
                 startActivity(i);
+                break;
+            case R.id.btn_search:
+                if(search_state == false){
+                    Search.setImageResource(R.drawable.ic_action_back);
+                    srch.setVisibility(View.VISIBLE);
+                    search_state = true;
+                }
+                else{
+                    Search.setImageResource(R.drawable.ic_action_search_dark);
+                    srch.setVisibility(View.INVISIBLE);
+                    search_state = false;
+                }
+                break;
+
+
+
         }
 
     }

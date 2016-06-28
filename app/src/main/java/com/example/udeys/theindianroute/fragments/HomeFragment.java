@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             RequestParams params = new RequestParams();
             params.put("user_id",user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_post.php",params, new TextHttpResponseHandler() {
+            client.get("http://indianroute.roms4all.com/fetch_following_post.php",params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);
