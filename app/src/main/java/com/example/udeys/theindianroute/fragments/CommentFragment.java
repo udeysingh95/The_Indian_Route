@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
 import com.example.udeys.theindianroute.helperClasses.comments;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -26,30 +29,70 @@ import cz.msebera.android.httpclient.Header;
  */
 public class CommentFragment extends Fragment {
     View view;
+    Button post_comment;
+    EditText write_comment;
     commentsAdapter commentsAdapter;
     ListView commnetslists;
+    String post_id = null;
+    posts p;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.commentfragment, container, false);
 
+        Bundle bundle = this.getArguments();
+        post_id = bundle.getString("post_id", null);
+        view = inflater.inflate(R.layout.commentfragment, container, false);
 
         return view;
     }
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        post_comment = (Button) view.findViewById(R.id.post_comment);
+        write_comment = (EditText) view.findViewById(R.id.write_comment);
+        post_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = write_comment.getText().toString();
+
+                try {
+                    RequestParams params = new RequestParams();
+                    params.put("post_id", post_id);
+                    params.put("user_id", HomeFragment.user_id);
+                    params.put("comment", comment);
+                    AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+                    client.get("http://indianroute.roms4all.com/post_comment.php", params, new TextHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, String res) {
+                                    Toast.makeText(getActivity(), "" + res, Toast.LENGTH_LONG).show();
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                                    Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         requestComments();
         commnetslists = (ListView) view.findViewById(R.id.comments_lists);
-        commentsAdapter = new commentsAdapter(getActivity(),R.layout.commentrowlayout);
+        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
         commnetslists.setAdapter(commentsAdapter);
     }
 
     public void requestComments() {
         try {
             RequestParams params = new RequestParams();
-            params.put("post_id", 3);
+            params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/fetch_comment.php", params, new TextHttpResponseHandler() {
                         @Override

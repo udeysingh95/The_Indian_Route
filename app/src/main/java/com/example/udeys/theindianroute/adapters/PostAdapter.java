@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class PostAdapter extends ArrayAdapter {
     List list = new ArrayList();
     Typeface samarn, fa;
     static int state;
-    static String user_id;
+    public static String user_id;
 
 
     public PostAdapter(Context context, int resource, Typeface cFont, Typeface FontAwesome) {
@@ -124,6 +125,10 @@ public class PostAdapter extends ArrayAdapter {
                 FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 CommentFragment fragment = new CommentFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("post_id", posts.getPost_id());
+                fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.fragment_1, fragment);
                 fragmentTransaction.commit();
             }

@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     SharedPreferences sp;
     String username;
-    String user_id;
+    public static String user_id;
 
     PostAdapter PostAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
