@@ -72,7 +72,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 if (storeByteImage(data)) {
                     camera.startPreview();
                     getActivity().setResult(FOTO_MODE, imgIntent);
-                    Intent intent = new Intent(getActivity(),CompressFilter.class);
+                    Intent intent = new Intent(getActivity(), CompressFilter.class);
                     intent.putExtra("path", filename);
                     startActivity(intent);
                     //getActivity().finish();

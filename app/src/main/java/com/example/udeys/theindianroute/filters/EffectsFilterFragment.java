@@ -83,7 +83,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.imf_effect_factory, container, false);
-        bitmap = ((CompressFilter)getActivity()).getImage();
+        bitmap = ((CompressFilter) getActivity()).getImage();
 
         setHasOptionsMenu(true);
 
@@ -491,8 +491,9 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
             return null;
         }
     }
-    public void setBitmap(String st){
-        Toast.makeText(getActivity() , st , Toast.LENGTH_LONG).show();
+
+    public void setBitmap(String st) {
+        Toast.makeText(getActivity(), st, Toast.LENGTH_LONG).show();
     }
 
     public Bitmap takeScreenshot(GL10 mGL) {
@@ -538,7 +539,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
                         pShow.dismiss();
 
                         Intent intent = new Intent(getActivity(), PostForm.class);
-                        intent.putExtra("post_image",fileName);
+                        intent.putExtra("post_image", fileName);
                         intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
                         startActivity(intent);
                     }

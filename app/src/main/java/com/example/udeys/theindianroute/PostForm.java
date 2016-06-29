@@ -52,7 +52,7 @@ public class PostForm extends Activity implements View.OnClickListener {
         pushPost();
     }
 
-    public void pushPost(){
+    public void pushPost() {
         try {
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             /*
@@ -60,10 +60,10 @@ public class PostForm extends Activity implements View.OnClickListener {
             * */
             RequestParams params = new RequestParams();
             try {
-                params.put("username",username);
-                params.put("check_in",checkin);
+                params.put("username", username);
+                params.put("check_in", checkin);
                 params.put("story", story);
-                params.put("picture",i);
+                params.put("picture", i);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -89,7 +89,8 @@ public class PostForm extends Activity implements View.OnClickListener {
             Toast.makeText(PostForm.this, "4" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-    private File get(){
+
+    private File get() {
 
         File sd = Environment.getExternalStorageDirectory();
         File location = new File(sd.getAbsolutePath() + "/TheIndianRoute");

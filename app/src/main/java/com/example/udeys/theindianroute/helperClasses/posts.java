@@ -40,16 +40,16 @@ public class posts {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getUserProfilePicture() {
         return userProfilePicture;
     }
 
     public void setUserProfilePicture(String userProfilePicture) {
         this.userProfilePicture = userProfilePicture;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getStory() {

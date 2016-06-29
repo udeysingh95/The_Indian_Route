@@ -13,7 +13,7 @@ import com.example.udeys.theindianroute.R;
  * Created by udeys on 6/17/2016.
  */
 
-public class SearchFragment extends Fragment{
+public class SearchFragment extends Fragment {
 
     View view;
 
@@ -25,8 +25,7 @@ public class SearchFragment extends Fragment{
         return view;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         TextView txtName = (TextView) view.findViewById(R.id.txtViewResult);
         txtName.setText("Hi \n" + name);
     }

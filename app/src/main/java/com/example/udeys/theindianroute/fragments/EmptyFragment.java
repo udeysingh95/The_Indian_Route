@@ -13,7 +13,7 @@ import com.example.udeys.theindianroute.R;
  * Created by udeys on 6/18/2016.
  */
 
-public class EmptyFragment extends Fragment{
+public class EmptyFragment extends Fragment {
 
     View view;
 
@@ -24,7 +24,6 @@ public class EmptyFragment extends Fragment{
         view = inflater.inflate(R.layout.emptylayout, container, false);
         return view;
     }
-
 
 
 }

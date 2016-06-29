@@ -73,7 +73,7 @@ public class FilterAdapterFactory extends RecyclerView.Adapter<FilterAdapterFact
                 .endConfig()
                 .rect();
 
-        TextDrawable drawable = builder.build(val.substring(0,5), color1);
+        TextDrawable drawable = builder.build(val.substring(0, 5), color1);
 
         holder.imFilter.setImageDrawable(drawable);
     }

@@ -13,13 +13,14 @@ import android.widget.ImageView;
  */
 
 public class Splash extends Activity {
-    ImageView im1 , im2 , im3 , im4 , im5;
+    ImageView im1, im2, im3, im4, im5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        if(sp.contains("user_id")){
-            Intent i = new Intent(this , MenuActivity.class);
+        if (sp.contains("user_id")) {
+            Intent i = new Intent(this, MenuActivity.class);
             startActivity(i);
             finish();
         } else {
@@ -27,7 +28,6 @@ public class Splash extends Activity {
             startActivity(intent);
             finish();
         }
-
 
 
         setContentView(R.layout.splash);
@@ -39,11 +39,9 @@ public class Splash extends Activity {
         im5 = (ImageView) findViewById(R.id.foot5);
 
 
-
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fade);
-        a.setRepeatCount( 1000 );
-        im1.startAnimation( a );
-
+        a.setRepeatCount(1000);
+        im1.startAnimation(a);
 
 
         //fade1();
@@ -53,30 +51,32 @@ public class Splash extends Activity {
         fade5();
 
 
-
     }
 
-    public void fade1( ){
+    public void fade1() {
         Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
         im1.startAnimation(animation1);
     }
-    public void fade2( ){
+
+    public void fade2() {
         Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade1);
         im2.startAnimation(animation2);
     }
-    public void fade3( ){
+
+    public void fade3() {
         Animation animation3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade2);
         im3.startAnimation(animation3);
     }
-    public void fade4( ){
+
+    public void fade4() {
         Animation animation4 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade3);
         im4.startAnimation(animation4);
     }
-    public void fade5( ){
+
+    public void fade5() {
         Animation animation5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade4);
         im5.startAnimation(animation5);
     }
-
 
 
 }

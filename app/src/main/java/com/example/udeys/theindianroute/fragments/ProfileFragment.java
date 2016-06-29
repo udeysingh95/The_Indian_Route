@@ -34,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
 public class ProfileFragment extends Fragment {
 
     View view;
-    TextView uname , posts;
+    TextView uname, posts;
     ImageView iv;
     SharedPreferences sp;
     String username;
@@ -50,14 +50,13 @@ public class ProfileFragment extends Fragment {
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
         username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
-        uname = (TextView)view.findViewById(R.id.username);
+        uname = (TextView) view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
 
         imagePath = new ArrayList<>();
 
         iv = (ImageView) view.findViewById(R.id.PF);
-
 
 
 
@@ -97,10 +96,10 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void initValues(){
+    private void initValues() {
         try {
             RequestParams params = new RequestParams();
-            params.put("user_id",user_id);
+            params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/fetch_gallery.php", params, new TextHttpResponseHandler() {
                         @Override

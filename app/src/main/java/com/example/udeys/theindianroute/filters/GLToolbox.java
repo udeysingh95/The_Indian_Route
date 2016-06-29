@@ -1,4 +1,5 @@
 package com.example.udeys.theindianroute.filters;
+
 import android.opengl.GLES20;
 
 public class GLToolbox {
@@ -15,14 +16,14 @@ public class GLToolbox {
                 GLES20.glDeleteShader(shader);
                 shader = 0;
                 throw new RuntimeException("Could not compile shader " +
-                shaderType + ":" + info);
+                        shaderType + ":" + info);
             }
         }
         return shader;
     }
 
     public static int createProgram(String vertexSource,
-            String fragmentSource) {
+                                    String fragmentSource) {
         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         if (vertexShader == 0) {
             return 0;
@@ -68,6 +69,6 @@ public class GLToolbox {
                 GLES20.GL_CLAMP_TO_EDGE);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
                 GLES20.GL_CLAMP_TO_EDGE);
-   }
+    }
 
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -177,10 +176,9 @@ public class Login extends Activity {
             JSONObject obj = jArr.getJSONObject(0);
             name = obj.getString("username");
             user_id = obj.getString("user_id");
-            if(user_id == null){
+            if (user_id == null) {
                 Toast.makeText(Login.this, "user not found", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 try {
                     SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
                     SharedPreferences.Editor ed = sp.edit();
@@ -189,11 +187,11 @@ public class Login extends Activity {
                     ed.putString("username", name);
                     ed.commit();
 
-                    Intent i = new Intent(this , MenuActivity.class);
+                    Intent i = new Intent(this, MenuActivity.class);
                     startActivity(i);
                     finish();
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext() , "sp failed" + e.getMessage() , Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "sp failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }

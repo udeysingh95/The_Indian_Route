@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute.fragments;
 /**
  * Created by udeys on 6/17/2016.
  */
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.udeys.theindianroute.R;
 
-public class NotificationFragment extends Fragment{
+public class NotificationFragment extends Fragment {
 
     View view;
 

@@ -1,10 +1,8 @@
 package com.example.udeys.theindianroute;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,18 +12,16 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import java.io.ByteArrayOutputStream;
-
 import cz.msebera.android.httpclient.Header;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
+    public static boolean flag = false;
+    protected static int res = 0;
     EditText name, uname, passowrd, repassword, email;
     Button reg;
-    protected static int res = 0;
     Bitmap bp;
     String bas;
-    public static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

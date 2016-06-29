@@ -6,7 +6,7 @@ package com.example.udeys.theindianroute.helperClasses;
 public class comments {
     String username, comments;
 
-   public comments(String comments) {
+    public comments(String comments) {
         this.setComments(comments);
 
     }
