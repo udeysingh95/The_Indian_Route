@@ -32,14 +32,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.6"
-            android:background="#f0f"
             android:orientation="vertical"
             android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.7"
                 android:background="#d2d2d2"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -58,7 +57,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.7"
                 android:background="#d2d2d2"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -77,6 +76,23 @@
                     android:text="POSTS"
                     android:textColor="#2a2a2a"
                     android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="0dp"
+                android:layout_weight="0.6"
+                android:padding="0dp">
+
+                <Button
+                    android:id="@+id/follow_stauts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:gravity="center"
+                    android:textColor="#fff" />
 
             </LinearLayout>
 
