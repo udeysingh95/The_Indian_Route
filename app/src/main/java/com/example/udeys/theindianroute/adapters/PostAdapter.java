@@ -107,6 +107,8 @@ public class PostAdapter extends ArrayAdapter {
                     postHolder.reaction.setTextColor(Color.RED);
                     postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
                     state = 1;
+                    Toast.makeText(getContext(),""+user_id,Toast.LENGTH_LONG).show();
+                    likeNotification(user_id, posts.getPost_id());
                 } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
                     postHolder.reaction.setTextColor(Color.BLACK);
@@ -114,7 +116,7 @@ public class PostAdapter extends ArrayAdapter {
                     state = 0;
                 }
                 post_reaction(state, user_id, posts.getPost_id());
-                likeNotification(user_id, posts.getPost_id());
+
             }
         });
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
