@@ -29,6 +29,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     EditText srch;
     Boolean search_state = false;
     FragmentTransaction ft;
+    Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,24 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         Logo = (ImageButton)findViewById(R.id.toolbar_logo);
 
         FirebaseMessaging.getInstance().subscribeToTopic("Notification");
+
+        try {
+            intent = getIntent();
+            String open = intent.getStringExtra("notification");
+            if (open != null) {
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new NotificationFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            } else {
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new HomeFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }
+        } catch (Exception e) {
+            Log.e("ERROR", e.toString());
+        }
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
