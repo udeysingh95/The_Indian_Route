@@ -184,7 +184,7 @@ public class PostAdapter extends ArrayAdapter {
             params.put("user_id", user_id);
             params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/push_notification.php", params, new TextHttpResponseHandler() {
+            client.get("http://indianroute.roms4all.com/like_push_notification.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.d("on success", "" + res);
