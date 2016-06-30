@@ -1,10 +1,10 @@
 package com.example.udeys.theindianroute.adapters;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -114,6 +114,7 @@ public class PostAdapter extends ArrayAdapter {
                     state = 0;
                 }
                 post_reaction(state, user_id, posts.getPost_id());
+                likeNotification(user_id, posts.getPost_id());
             }
         });
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
@@ -175,5 +176,29 @@ public class PostAdapter extends ArrayAdapter {
         }
     }
 
+    protected void likeNotification(String user_id, String post_id) {
+        try {
+            RequestParams params = new RequestParams();
+            params.put("user_id", user_id);
+            params.put("post_id", post_id);
+            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+            client.get("http://indianroute.roms4all.com/push_notification.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String res) {
+                            Log.d("on success", "" + res);
 
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            Toast.makeText(getContext(), "" + res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
+

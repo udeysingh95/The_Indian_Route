@@ -72,9 +72,6 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     private boolean mInitialized = false;
     private volatile boolean saveFrame;
 
-    public EffectsFilterFragment() {
-
-    }
 
     public void setCurrentEffect(int effect) {
         mCurrentEffect = effect;
@@ -83,6 +80,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.imf_effect_factory, container, false);
+        
         bitmap = ((CompressFilter) getActivity()).getImage();
 
         setHasOptionsMenu(true);
