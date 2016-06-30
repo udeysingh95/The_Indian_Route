@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,8 +45,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseMessaging.getInstance().subscribeToTopic("Notification");
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        String username = sp.getString("username", "udeysingh95");
-        user_id = sp.getString("user_id", "22");
+        String username = sp.getString("username", null);
+        user_id = sp.getString("user_id", null);
+        Log.e("sharedpred", username + " " + user_id);
         initFragments();
 
         hm = (ImageButton) findViewById(R.id.home);

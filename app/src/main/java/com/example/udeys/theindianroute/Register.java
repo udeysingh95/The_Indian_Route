@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +54,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         repass = repassword.getText().toString();
         device_token = FirebaseInstanceId.getInstance().getToken();
 
-        //Log.e("token" , device_token);
+        Log.e("token", device_token);
         /*
         * validation goes here
         * */
@@ -65,7 +66,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         * validated data send to the server.
         * flag boolean varidable to check the response from the server.
         * */
-        hit_data(nm, unm, pass, eml, device_token);
+        // hit_data(nm, unm, pass, eml, device_token);
 
     }
 
