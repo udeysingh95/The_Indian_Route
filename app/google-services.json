@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "47637510100",
+    "firebase_url": "https://theindianroute-1357.firebaseio.com",
+    "project_id": "theindianroute-1357",
+    "storage_bucket": "theindianroute-1357.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47637510100:android:1c222a623a3bbc77",
+        "android_client_info": {
+          "package_name": "com.example.udeys.theindianroute"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47637510100-sro2nk82s22hbbgkc0lnttc97dn10ktc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJmbWbBujRu6QaxKebrnAARVQARmrCej8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

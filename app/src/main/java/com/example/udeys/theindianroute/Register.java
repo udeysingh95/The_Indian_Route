@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -38,7 +39,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         reg.setOnClickListener(this);
 
-
     }
 
 
@@ -51,7 +51,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         pass = passowrd.getText().toString();
         eml = email.getText().toString();
         repass = repassword.getText().toString();
-        device_token = "hello";
+        device_token = FirebaseInstanceId.getInstance().getToken();
+
+        //Log.e("token" , device_token);
         /*
         * validation goes here
         * */

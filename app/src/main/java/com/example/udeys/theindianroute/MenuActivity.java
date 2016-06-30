@@ -1,16 +1,11 @@
 package com.example.udeys.theindianroute;
 
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,6 +16,7 @@ import com.example.udeys.theindianroute.fragments.NotificationFragment;
 import com.example.udeys.theindianroute.fragments.PostFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.fragments.TripFragment;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,7 +41,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         Search = (ImageButton) findViewById(R.id.btn_search);
         Logo = (ImageButton)findViewById(R.id.toolbar_logo);
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic("Notification");
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", "udeysingh95");

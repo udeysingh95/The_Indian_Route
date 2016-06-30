@@ -29,12 +29,12 @@
         android:layout_weight="0.3"
         android:src="@drawable/ic_action_search_dark" />
 
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.4"
-        android:visibility="invisible"
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"
+            android:visibility="invisible"
         />
 
 
