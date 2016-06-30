@@ -46,7 +46,7 @@ public class Login extends Activity {
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 Toast.makeText(getApplicationContext(), profile.getName().toString(), Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(getApplicationContext(), Profile.class);
+                Intent in = new Intent(getApplicationContext(), MenuActivity.class);
                 String name = profile.getName().toString();
                 String userId = profile.getId().toString();
                 in.putExtra("NAME", userId);
