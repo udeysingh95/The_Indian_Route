@@ -2,6 +2,7 @@ package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class CommentFragment extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                commentNotification(HomeFragment.user_id,post_id);
 
             }
         });
@@ -126,6 +128,30 @@ public class CommentFragment extends Fragment {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void commentNotification(String user_id, String post_id) {
+        try {
+            RequestParams params = new RequestParams();
+            params.put("user_id", user_id);
+            params.put("post_id", post_id);
+            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+            client.get("http://indianroute.roms4all.com/comment_push_notification.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String res) {
+                            Log.d("on success", "" + res);
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
