@@ -66,7 +66,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
-        Log.e("sharedpred", username + " " + user_id);
+        //Log.e("sharedpred", username + " " + user_id);
         initFragments();
 
         hm = (ImageButton) findViewById(R.id.home);
