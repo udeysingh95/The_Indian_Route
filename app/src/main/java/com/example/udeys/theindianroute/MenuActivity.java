@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute;
 
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             intent = getIntent();
             String open = intent.getStringExtra("notification");
             if (open != null) {
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.cancelAll();
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new NotificationFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
