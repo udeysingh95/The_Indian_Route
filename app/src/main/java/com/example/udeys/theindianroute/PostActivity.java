@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.PostFragment;
 
 public class PostActivity extends AppCompatActivity {
@@ -142,8 +143,10 @@ public class PostActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position==0){
-               return new PostFragment();
-
+                new PostFragment();
+            }
+            else if(position==1){
+                new HomeFragment();
             }
             return PlaceholderFragment.newInstance(position + 1);
         }
