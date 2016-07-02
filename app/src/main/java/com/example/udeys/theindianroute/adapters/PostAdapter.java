@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
+import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -107,8 +108,8 @@ public class PostAdapter extends ArrayAdapter {
                     postHolder.reaction.setTextColor(Color.RED);
                     postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
                     state = 1;
-                    Toast.makeText(getContext(),""+user_id,Toast.LENGTH_LONG).show();
-                    likeNotification(user_id, posts.getPost_id());
+                    Log.d("user_id",HomeFragment.user_id);
+                    likeNotification(HomeFragment.user_id, posts.getPost_id());
                 } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
                     postHolder.reaction.setTextColor(Color.BLACK);

@@ -19,6 +19,7 @@
     <permission
         android:name="com.example.udeys.theindianroute.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.example.udeys.theindianroute.permission.C2D_MESSAGE" />
 
     <application
@@ -40,9 +41,7 @@
         <activity
             android:name=".Login"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Splash"
             android:label="@string/app_name"
@@ -64,14 +63,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PostForm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Register"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -80,23 +78,29 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MenuActivity"></activity>
-        <activity android:name=".TheIndianRoute.IndianRoute"></activity>
-
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".TheIndianRoute.IndianRoute" />
 
         <service android:name=".helperClasses.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".helperClasses.FirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-
+        <activity
+            android:name=".PostActivity"
+            android:label="@string/title_activity_post"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.udeys.theindianroute.MenuActivity" />
+        </activity>
     </application>
 
 </manifest>
