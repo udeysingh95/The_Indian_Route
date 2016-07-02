@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -50,6 +48,8 @@ import java.util.Date;
 public class PostFragment extends Fragment implements SurfaceHolder.Callback, View.OnClickListener {
     static final int FOTO_MODE = 0;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 2;
+    private final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 3;
     View view;
     double lat;
     double lon;
@@ -122,6 +122,42 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 return;
             }
 
+            case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                    Toast.makeText(getActivity(), "GRANTED", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            case MY_PERMISSIONS_REQUEST_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                    Toast.makeText(getActivity(), "GRANTED", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
             // other 'case' lines to check for other
             // permissions this app might request
         }
@@ -129,6 +165,49 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_CAMERA is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_COARSE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_CAMERA is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
@@ -153,7 +232,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
         // TODO Auto-generated method stub
 
-        locationListener = new LocationListener() {
+        /*locationListener = new LocationListener() {
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -232,7 +311,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
             Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
-        }
+        }*/
 
 
         if (Build.VERSION.SDK_INT < 22) {
