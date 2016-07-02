@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.example.udeys.theindianroute.MenuActivity;
 import com.example.udeys.theindianroute.R;
@@ -40,8 +41,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Intent i = new Intent(this, MenuActivity.class);
         i.putExtra("notification", "openNF");
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Uri alarmSound = RingtoneManager
-                .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -57,6 +57,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         boolean isScreenOn;
         if (Build.VERSION.SDK_INT <= 19) {
+            Log.e("build", "<=19");
             isScreenOn = pm.isScreenOn();
         } else {
             isScreenOn = pm.isInteractive();
@@ -75,7 +76,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         manager.notify(generateRandom(), builder.build());
 
     }
