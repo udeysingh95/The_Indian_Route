@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -102,7 +104,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
         // TODO Auto-generated method stub
 
-        /*locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -181,7 +183,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
-        }*/
+        }
 
 
         if (Build.VERSION.SDK_INT < 22) {
