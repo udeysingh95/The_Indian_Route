@@ -81,7 +81,7 @@ public class CommentFragment extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                commentNotification(HomeFragment.user_id,post_id);
+                commentNotification(HomeFragment.user_id, post_id);
 
             }
         });

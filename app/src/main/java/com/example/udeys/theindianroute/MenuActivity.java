@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.NotificationFragment;
-import com.example.udeys.theindianroute.fragments.PostFragment;
+import com.example.udeys.theindianroute.fragments.CameraFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.fragments.TripFragment;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -25,7 +25,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     public String username , user_id;
     ImageButton hm, trp, pst, notif, prfl;      //menuBar
-
     ImageButton Logo, Search ;
     EditText srch;
     Boolean search_state = false;
@@ -112,7 +111,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.post:
                 ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new PostFragment());
+                ft.replace(R.id.fragment_1, new CameraFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;

@@ -45,7 +45,7 @@ import java.util.Date;
  * Created by udeys on 6/17/2016.
  */
 
-public class PostFragment extends Fragment implements SurfaceHolder.Callback, View.OnClickListener {
+public class CameraFragment extends Fragment implements SurfaceHolder.Callback, View.OnClickListener {
     static final int FOTO_MODE = 0;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 2;
@@ -248,7 +248,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
             public void onLocationChanged(Location location) {
 
-                PostFragment.this.gpsLocationReceived(location);
+                CameraFragment.this.gpsLocationReceived(location);
 
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -288,12 +288,12 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
                 // for ActivityCompat#requestPermissions for more details.
 
             }
-            locationManager.requestLocationUpdates(providerName, 20000, 100, PostFragment.this.locationListener);
+            locationManager.requestLocationUpdates(providerName, 20000, 100, CameraFragment.this.locationListener);
         } else {
             // Provider not enabled, prompt user to enable it
             Toast.makeText(getActivity(), "please_turn_on_gps", Toast.LENGTH_LONG).show();
             Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            PostFragment.this.startActivity(myIntent);
+            CameraFragment.this.startActivity(myIntent);
         }
 
         if (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) {
@@ -315,7 +315,7 @@ public class PostFragment extends Fragment implements SurfaceHolder.Callback, Vi
 
 
         if (Build.VERSION.SDK_INT < 22) {
-            view = inflater.inflate(R.layout.postfragment, container, false);
+            view = inflater.inflate(R.layout.camera_fragment, container, false);
             try {
                 if (camera != null)
                     camera.release();
