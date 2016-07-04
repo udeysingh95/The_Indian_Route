@@ -110,10 +110,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.post:
-                ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new CameraFragment());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                Intent i = new Intent(this,PostActivity.class);
+                startActivity(i);
                 break;
             case R.id.notification:
                 ft = getFragmentManager().beginTransaction();
@@ -128,8 +126,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.toolbar_logo:
-                Intent i = new Intent(this, IndianRoute.class);
-                startActivity(i);
+                Intent intent = new Intent(this, IndianRoute.class);
+                startActivity(intent);
                 break;
             case R.id.btn_search:
                 if(search_state == false){

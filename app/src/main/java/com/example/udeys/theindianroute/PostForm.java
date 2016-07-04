@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +71,7 @@ public class PostForm extends Activity implements View.OnClickListener {
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
+                            Log.d("error", res);
                             //Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplication(), MenuActivity.class);
                             startActivity(i);

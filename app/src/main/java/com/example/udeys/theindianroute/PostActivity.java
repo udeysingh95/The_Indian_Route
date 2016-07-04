@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Switch;
 
 import com.example.udeys.theindianroute.fragments.CameraFragment;
+import com.example.udeys.theindianroute.fragments.GalleryFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
@@ -34,7 +35,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         switch(id){
             case R.id.gallery:
                 ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.post_fragment, new HomeFragment());
+                ft.replace(R.id.post_fragment, new GalleryFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
