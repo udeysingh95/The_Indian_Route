@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
@@ -18,6 +21,7 @@ import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,16 +36,19 @@ public class CommentFragment extends Fragment {
     View view;
     Button post_comment;
     EditText write_comment;
+    TextView user;
     commentsAdapter commentsAdapter;
     ListView commnetslists;
-    String post_id = null;
-    posts p;
+    String post_id, username;
+    ImageView post_image, pp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Bundle bundle = this.getArguments();
         post_id = bundle.getString("post_id", null);
+        username = bundle.getString("username", null);
+
         view = inflater.inflate(R.layout.commentfragment, container, false);
 
         return view;
@@ -54,6 +61,13 @@ public class CommentFragment extends Fragment {
 
         post_comment = (Button) view.findViewById(R.id.post_comment);
         write_comment = (EditText) view.findViewById(R.id.write_comment);
+        user = (TextView) view.findViewById(R.id.usernameComment);
+        post_image = (ImageView) view.findViewById(R.id.userpostimageComment);
+        pp = (ImageView) view.findViewById(R.id.userProfilePictureComment);
+        user.setText(username);
+        Picasso.with(getActivity()).load("http://indianroute.roms4all.com/uploads/user_profile_picture/" + username).into(pp);
+        Picasso.with(getActivity()).load("http://indianroute.roms4all.com/uploads/user_posts_images/" + post_id).into(post_image);
+
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,9 +99,13 @@ public class CommentFragment extends Fragment {
 
             }
         });
+
         requestComments();
+
         commnetslists = (ListView) view.findViewById(R.id.comments_lists);
+
         commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+
         commnetslists.setAdapter(commentsAdapter);
     }
 

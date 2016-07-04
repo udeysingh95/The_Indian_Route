@@ -3,6 +3,8 @@ package com.example.udeys.theindianroute.adapters;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -129,8 +131,8 @@ public class PostAdapter extends ArrayAdapter {
                 FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 CommentFragment fragment = new CommentFragment();
-
                 Bundle bundle = new Bundle();
+                bundle.putString("username",posts.getUsername());
                 bundle.putString("post_id", posts.getPost_id());
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.fragment_1, fragment);

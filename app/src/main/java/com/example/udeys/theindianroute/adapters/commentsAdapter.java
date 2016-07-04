@@ -1,12 +1,15 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +68,15 @@ public class commentsAdapter extends ArrayAdapter {
             commentHolder.commentersComments = (TextView) row.findViewById(R.id.commenters_comments);
             commentHolder.post_comment = (Button) row.findViewById(R.id.post_comment);
             commentHolder.writecomment = (EditText) row.findViewById(R.id.write_comment);
+
             row.setTag(commentHolder);
         } else {
             commentHolder = (commentHolder) row.getTag();
         }
         final comments comments = (comments) this.getItem(position);
         commentHolder.commentersComments.setText(comments.getComments());
+
+
         return row;
     }
 
