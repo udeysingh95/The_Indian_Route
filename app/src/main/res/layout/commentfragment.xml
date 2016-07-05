@@ -3,85 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="3">
+    android:weightSum="2">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="3">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.30"
-                android:background="@drawable/border">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="6dp">
-
-
-                    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/userProfilePictureComment"
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ppplaceholder"
-                        app:riv_border_color="#333333"
-                        app:riv_border_width="2dip"
-                        app:riv_corner_radius="5dip"
-                        app:riv_mutate_background="true"
-                        app:riv_oval="true"
-                        app:riv_tile_mode="repeat" />
-
-
-                    <TextView
-                        android:id="@+id/usernameComment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toEndOf="@+id/userProfilePictureComment"
-                        android:text="Small Text"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5"
-                android:background="@drawable/border">
-
-
-                <ImageView
-                    android:id="@+id/userpostimageComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bc" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <ListView
         android:id="@+id/comments_lists"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8" />
+        android:layout_weight="1.8" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -93,7 +93,7 @@ public class PostAdapter extends ArrayAdapter {
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(posts.getUsername());
         postHolder.reaction.setTypeface(fa);
-        postHolder.reaction.setTextSize(24);
+        postHolder.reaction.setTextSize(30);
         postHolder.no_of_comments.setText(String.valueOf(posts.getComment()));
         if (state == 1) {
             postHolder.reaction.setText(R.string.icon_heart_filled);
@@ -110,7 +110,7 @@ public class PostAdapter extends ArrayAdapter {
                     postHolder.reaction.setTextColor(Color.RED);
                     postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
                     state = 1;
-                    Log.d("user_id",HomeFragment.user_id);
+                    Log.d("user_id", HomeFragment.user_id);
                     likeNotification(HomeFragment.user_id, posts.getPost_id());
                 } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
@@ -124,7 +124,7 @@ public class PostAdapter extends ArrayAdapter {
         });
         postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
         postHolder.comment.setTypeface(fa);
-        postHolder.comment.setTextSize(24);
+        postHolder.comment.setTextSize(30);
         postHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +139,7 @@ public class PostAdapter extends ArrayAdapter {
                 fragmentTransaction.commit();
             }
         });
+
         Picasso.with(getContext())
                 .load(posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
                 .into(postHolder.userprofilePicture);

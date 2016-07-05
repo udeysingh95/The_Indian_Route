@@ -21,6 +21,7 @@ import com.example.udeys.theindianroute.fragments.NotificationFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.fragments.SearchFragment;
 import com.example.udeys.theindianroute.fragments.TripFragment;
+import com.example.udeys.theindianroute.fragments.ViewPostFragment;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -146,8 +147,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.post:
-                Intent i = new Intent(this,PostActivity.class);
-                startActivity(i);
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new ViewPostFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+                /*Intent i = new Intent(this,PostActivity.class);
+                startActivity(i);*/
                 break;
             case R.id.notification:
                 ft = getFragmentManager().beginTransaction();

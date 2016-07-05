@@ -61,12 +61,7 @@ public class CommentFragment extends Fragment {
 
         post_comment = (Button) view.findViewById(R.id.post_comment);
         write_comment = (EditText) view.findViewById(R.id.write_comment);
-        user = (TextView) view.findViewById(R.id.usernameComment);
-        post_image = (ImageView) view.findViewById(R.id.userpostimageComment);
-        pp = (ImageView) view.findViewById(R.id.userProfilePictureComment);
-        user.setText(username);
-        Picasso.with(getActivity()).load("http://indianroute.roms4all.com/uploads/user_profile_picture/" + username).into(pp);
-        Picasso.with(getActivity()).load("http://indianroute.roms4all.com/uploads/user_posts_images/" + post_id).into(post_image);
+
 
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
