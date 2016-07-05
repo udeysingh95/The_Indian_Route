@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment {
         }
         else{
             initValue(user_id);    //fetch profile
-            initValues();  //fetch posts
+            initValues();  //fetch post
             follow_status.setText("Follow");
         }
     }
