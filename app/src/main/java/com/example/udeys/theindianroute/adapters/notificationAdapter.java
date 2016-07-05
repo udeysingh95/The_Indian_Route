@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.helperClasses.notification;
 import com.squareup.picasso.Picasso;
@@ -19,10 +18,10 @@ import java.util.List;
 /**
  * Created by Gitesh on 30-06-2016.
  */
-public class NotificationAdapter extends ArrayAdapter {
+public class notificationAdapter extends ArrayAdapter {
     List list = new ArrayList();
 
-    public NotificationAdapter(Context context, int resource) {
+    public notificationAdapter(Context context, int resource) {
         super(context, resource);
     }
 
