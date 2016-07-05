@@ -100,7 +100,9 @@ public class ViewPostFragment extends Fragment {
                 reaction = obj.getString("reaction_no");
                 Log.d("pic",""+profile_pic);
             }
-
+            Picasso.with(getActivity()).load(profile_pic).into(pp);
+            Picasso.with(getActivity()).load(post_pic).resize(320, 240).into(post);
+            user_name.setText(username);
 
         } catch (JSONException e) {
             e.printStackTrace();
