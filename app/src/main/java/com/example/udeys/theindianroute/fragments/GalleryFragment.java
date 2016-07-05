@@ -14,7 +14,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.adapters.ImageAdapter;
+import com.example.udeys.theindianroute.adapters.GalleryAdapter;
 
 import java.util.ArrayList;
 
@@ -37,11 +37,9 @@ public class GalleryFragment extends Fragment {
         while (cursor.moveToNext()) {
             String imagefilename = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             imagePath.add(imagefilename);
-            //Long latitide = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
-            //Long longitude = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
             Log.e("TAG", "filepath: " + imagefilename);
         }
-        gridview.setAdapter(new ImageAdapter(getActivity(), imagePath));
+        gridview.setAdapter(new GalleryAdapter(getActivity(), imagePath));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
