@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,14 +45,25 @@ public class ProfileFragment extends Fragment {
     GridView gridView;
     ArrayList<String> imagePath;
     Button follow_status;
+    boolean res = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
-        username = sp.getString("username", null);
-        user_id = sp.getString("user_id", null);
+
+        try {
+            username = getArguments().getString("user_name");
+            user_id = String.valueOf(getArguments().getInt("user_id"));
+            res = true;
+        } catch (Exception e) {
+            Log.e("catch", e.toString());
+        }
+        if (res == false) {
+            username = sp.getString("username", null);
+            user_id = sp.getString("user_id", null);
+        }
         userid = user_id;
         uname = (TextView)view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
@@ -65,7 +77,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(userid.contentEquals(user_id)){
+        if (res == false) {
             initValue(user_id);    //fetch profile
             initValues();  //fetch posts
             follow_status.setText("Edit Your Profile");
