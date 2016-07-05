@@ -102,10 +102,10 @@
                     android:layout_weight="3.8" />
 
                 <TextView
-                    android:id="@+id/comments"
+                    android:id="@+id/Comments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 comments"
+                    android:text="2 Comments"
                     android:layout_gravity="center_vertical"/>
 
 

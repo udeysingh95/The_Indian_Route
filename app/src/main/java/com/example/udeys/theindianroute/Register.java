@@ -82,7 +82,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 params.put("name", name);
                 params.put("user_email", email);
                 params.put("user_password", password);
-                params.put("notification", "1");
+                params.put("Notification", "1");
                 params.put("device_token", device_token);
 
             } catch (Exception e) {

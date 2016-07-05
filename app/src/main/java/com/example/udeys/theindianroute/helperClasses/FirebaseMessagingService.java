@@ -39,7 +39,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void showNotification(String message) {
         Intent i = new Intent(this, MenuActivity.class);
-        i.putExtra("notification", "openNF");
+        i.putExtra("Notification", "openNF");
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

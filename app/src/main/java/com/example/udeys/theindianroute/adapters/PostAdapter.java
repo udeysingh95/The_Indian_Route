@@ -3,8 +3,6 @@ package com.example.udeys.theindianroute.adapters;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,7 +19,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.posts;
+import com.example.udeys.theindianroute.helperClasses.Posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -87,14 +85,14 @@ public class PostAdapter extends ArrayAdapter {
             postHolder = (PostHolder) row.getTag();
         }
 
-        final posts posts = (posts) this.getItem(position);
-        state = posts.getstate();
-        user_id = posts.getUser_id();
+        final Posts Posts = (Posts) this.getItem(position);
+        state = Posts.getstate();
+        user_id = Posts.getUser_id();
         postHolder.username.setTypeface(samarn);
-        postHolder.username.setText(posts.getUsername());
+        postHolder.username.setText(Posts.getUsername());
         postHolder.reaction.setTypeface(fa);
         postHolder.reaction.setTextSize(30);
-        postHolder.no_of_comments.setText(String.valueOf(posts.getComment()));
+        postHolder.no_of_comments.setText(String.valueOf(Posts.getComment()));
         if (state == 1) {
             postHolder.reaction.setText(R.string.icon_heart_filled);
             postHolder.reaction.setTextColor(Color.RED);
@@ -108,21 +106,21 @@ public class PostAdapter extends ArrayAdapter {
                 if (state == 0) {
                     postHolder.reaction.setText(R.string.icon_heart_filled);
                     postHolder.reaction.setTextColor(Color.RED);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() + 1));
+                    postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction() + 1));
                     state = 1;
                     Log.d("user_id", HomeFragment.user_id);
-                    likeNotification(HomeFragment.user_id, posts.getPost_id());
+                    likeNotification(HomeFragment.user_id, Posts.getPost_id());
                 } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
                     postHolder.reaction.setTextColor(Color.BLACK);
-                    postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction() - 1));
+                    postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction() - 1));
                     state = 0;
                 }
-                post_reaction(state, user_id, posts.getPost_id());
+                post_reaction(state, user_id, Posts.getPost_id());
 
             }
         });
-        postHolder.no_of_reactions.setText(String.valueOf(posts.getReaction()));
+        postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction()));
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(30);
         postHolder.comment.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +130,8 @@ public class PostAdapter extends ArrayAdapter {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 CommentFragment fragment = new CommentFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("username",posts.getUsername());
-                bundle.putString("post_id", posts.getPost_id());
+                bundle.putString("username", Posts.getUsername());
+                bundle.putString("post_id", Posts.getPost_id());
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.fragment_1, fragment);
                 fragmentTransaction.commit();
@@ -141,10 +139,10 @@ public class PostAdapter extends ArrayAdapter {
         });
 
         Picasso.with(getContext())
-                .load(posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
+                .load(Posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
                 .into(postHolder.userprofilePicture);
         Picasso.with(getContext())
-                .load(posts.getPictue()).resize(250, 300).centerCrop()
+                .load(Posts.getPictue()).resize(250, 300).centerCrop()
                 .into(postHolder.userPostImage);
         return row;
     }

@@ -1,7 +1,6 @@
 package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.adapters.commentsAdapter;
-import com.example.udeys.theindianroute.helperClasses.comments;
-import com.example.udeys.theindianroute.helperClasses.posts;
+import com.example.udeys.theindianroute.adapters.CommentsAdapter;
+import com.example.udeys.theindianroute.helperClasses.Comments;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +34,7 @@ public class CommentFragment extends Fragment {
     Button post_comment;
     EditText write_comment;
     TextView user;
-    commentsAdapter commentsAdapter;
+    CommentsAdapter CommentsAdapter;
     ListView commnetslists;
     String post_id, username;
     ImageView post_image, pp;
@@ -99,9 +96,9 @@ public class CommentFragment extends Fragment {
 
         commnetslists = (ListView) view.findViewById(R.id.comments_lists);
 
-        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+        CommentsAdapter = new CommentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
 
-        commnetslists.setAdapter(commentsAdapter);
+        commnetslists.setAdapter(CommentsAdapter);
     }
 
     public void requestComments() {
@@ -134,8 +131,8 @@ public class CommentFragment extends Fragment {
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 comment = obj.getString("comment");
-                comments comments = new comments(comment);
-                commentsAdapter.add(comments);
+                Comments Comments = new Comments(comment);
+                CommentsAdapter.add(Comments);
             }
 
 

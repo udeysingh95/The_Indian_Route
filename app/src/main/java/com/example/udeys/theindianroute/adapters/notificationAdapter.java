@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.helperClasses.notification;
+import com.example.udeys.theindianroute.helperClasses.Notification;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import java.util.List;
 /**
  * Created by Gitesh on 30-06-2016.
  */
-public class notificationAdapter extends ArrayAdapter {
+public class NotificationAdapter extends ArrayAdapter {
     List list = new ArrayList();
 
-    public notificationAdapter(Context context, int resource) {
+    public NotificationAdapter(Context context, int resource) {
         super(context, resource);
     }
 
@@ -59,10 +59,10 @@ public class notificationAdapter extends ArrayAdapter {
             notificationHolder = (notificationHolder) row.getTag();
         }
 
-        final notification notification = (notification) this.getItem(position);
-        notificationHolder.t1.setText(notification.getUsername());
-        Picasso.with(getContext()).load(notification.getPp()).into(notificationHolder.i1);
-        Picasso.with(getContext()).load(notification.getPost_pic()).into(notificationHolder.i2);
+        final Notification Notification = (Notification) this.getItem(position);
+        notificationHolder.t1.setText(Notification.getUsername());
+        Picasso.with(getContext()).load(Notification.getPp()).into(notificationHolder.i1);
+        Picasso.with(getContext()).load(Notification.getPost_pic()).into(notificationHolder.i2);
         return row;
 
     }

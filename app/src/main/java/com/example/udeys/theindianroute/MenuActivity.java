@@ -84,7 +84,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             intent = getIntent();
-            String open = intent.getStringExtra("notification");
+            String open = intent.getStringExtra("Notification");
             if (open != null) {
                 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 manager.cancelAll();

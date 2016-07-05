@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (res == false) {
             initValue(user_id);    //fetch profile
-            initValues();  //fetch posts
+            initValues();  //fetch Posts
             follow_status.setText("Edit Your Profile");
         }
         else{

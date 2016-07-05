@@ -59,7 +59,7 @@
             android:src="@drawable/ic_action_favorite" />
 
         <ImageButton
-            android:id="@+id/notification"
+            android:id="@+id/Notification"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
