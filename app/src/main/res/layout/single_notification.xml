@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.4"
             android:background="#ccc"
-            android:id="@+id/userProfilePicture" />
+            android:id="@+id/notifyuserProfilePicture" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -86,6 +86,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.95"
                     android:textSize="15.5dp"
+                    android:id="@+id/notification_details"
                     android:hint="commented on your post"/>
 
             </LinearLayout>
@@ -95,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.4"
             android:background="#ccc"
-            android:id="@+id/postPicture"/>
+            android:id="@+id/notifypostPicture"/>
     </LinearLayout>
 
 
