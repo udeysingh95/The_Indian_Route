@@ -12,14 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.adapters.NotificationAdapter;
-import com.example.udeys.theindianroute.helperClasses.Notification;
+import com.example.udeys.theindianroute.adapters.notificationAdapter;
+import com.example.udeys.theindianroute.helperClasses.notification;
 
 public class NotificationFragment extends Fragment {
 
     View view;
     ListView notificationList;
-    NotificationAdapter notAdapter;
+    notificationAdapter notAdapter;
 
     @Override
 
@@ -34,13 +34,13 @@ public class NotificationFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         notificationList = (ListView) view.findViewById(R.id.notification_list);
-        notAdapter = new NotificationAdapter(getActivity(), R.layout.single_notification);
+        notAdapter = new notificationAdapter(getActivity(), R.layout.single_notification);
         notificationList.setAdapter(notAdapter);
         String username,pp,post;
         username = "udeysingh95";
         pp = "http://indianroute.roms4all.com/uploads/users_profile_pictures/pp.jpg";
         post = "http://indianroute.roms4all.com/uploads/users_posts_images/1.jpg";
-        Notification Notification = new Notification(username,pp,post);
+        notification Notification = new notification(username, pp, post);
         notAdapter.add(Notification);
     }
 

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.Posts;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -35,10 +35,10 @@ import cz.msebera.android.httpclient.Header;
  * Created by Gitesh on 14-06-2016.
  */
 public class PostAdapter extends ArrayAdapter {
+    public static String user_id;
+    static int state;
     List list = new ArrayList();
     Typeface samarn, fa;
-    static int state;
-    public static String user_id;
 
 
     public PostAdapter(Context context, int resource, Typeface cFont, Typeface FontAwesome) {
@@ -85,7 +85,7 @@ public class PostAdapter extends ArrayAdapter {
             postHolder = (PostHolder) row.getTag();
         }
 
-        final Posts Posts = (Posts) this.getItem(position);
+        final posts Posts = (posts) this.getItem(position);
         state = Posts.getstate();
         user_id = Posts.getUser_id();
         postHolder.username.setTypeface(samarn);
@@ -147,13 +147,6 @@ public class PostAdapter extends ArrayAdapter {
         return row;
     }
 
-    static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments;
-        ImageView userPostImage;
-        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
-
-    }
-
     public void post_reaction(int setstate, String user_id, String post_id) {
 
         try {
@@ -202,6 +195,13 @@ public class PostAdapter extends ArrayAdapter {
         } catch (Exception e) {
             Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    static class PostHolder {
+        TextView username, reaction, comment, no_of_reactions, no_of_comments;
+        ImageView userPostImage;
+        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
+
     }
 }
 

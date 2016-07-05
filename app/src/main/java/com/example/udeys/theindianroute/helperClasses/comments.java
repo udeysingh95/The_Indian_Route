@@ -3,10 +3,10 @@ package com.example.udeys.theindianroute.helperClasses;
 /**
  * Created by Gitesh on 22-06-2016.
  */
-public class Comments {
+public class comments {
     String username, comments;
 
-    public Comments(String comments) {
+    public comments(String comments) {
         this.setComments(comments);
 
     }

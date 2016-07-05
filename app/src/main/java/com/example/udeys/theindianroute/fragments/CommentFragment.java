@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.adapters.CommentsAdapter;
-import com.example.udeys.theindianroute.helperClasses.Comments;
+import com.example.udeys.theindianroute.adapters.commentsAdapter;
+import com.example.udeys.theindianroute.helperClasses.comments;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -34,7 +34,7 @@ public class CommentFragment extends Fragment {
     Button post_comment;
     EditText write_comment;
     TextView user;
-    CommentsAdapter CommentsAdapter;
+    commentsAdapter CommentsAdapter;
     ListView commnetslists;
     String post_id, username;
     ImageView post_image, pp;
@@ -96,7 +96,7 @@ public class CommentFragment extends Fragment {
 
         commnetslists = (ListView) view.findViewById(R.id.comments_lists);
 
-        CommentsAdapter = new CommentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+        CommentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
 
         commnetslists.setAdapter(CommentsAdapter);
     }
@@ -131,7 +131,7 @@ public class CommentFragment extends Fragment {
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 comment = obj.getString("comment");
-                Comments Comments = new Comments(comment);
+                comments Comments = new comments(comment);
                 CommentsAdapter.add(Comments);
             }
 

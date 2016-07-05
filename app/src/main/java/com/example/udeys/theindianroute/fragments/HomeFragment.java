@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.PostAdapter;
-import com.example.udeys.theindianroute.helperClasses.Posts;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -32,15 +32,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static String user_id;
     SharedPreferences sp;
     String username;
-    public static String user_id;
-
     PostAdapter postAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
     ListView datalist;
     View view;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -149,7 +147,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 state = Integer.valueOf(obj.getString("state"));
                 comment = Integer.valueOf(obj.getString("comment"));
                 user_id = obj.getString("user_id");
-                Posts Posts = new Posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
+                posts Posts = new posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
                 swipeRefreshLayout.setRefreshing(false);
                 postAdapter.add(Posts);
             }

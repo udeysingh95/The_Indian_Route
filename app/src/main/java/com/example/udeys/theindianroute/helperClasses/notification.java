@@ -3,7 +3,7 @@ package com.example.udeys.theindianroute.helperClasses;
 /**
  * Created by Gitesh on 05-07-2016.
  */
-public class Notification {
+public class notification {
     String username;
     String pp;
     String post_pic;
@@ -11,7 +11,7 @@ public class Notification {
     String time;
 
 
-    public Notification(String username, String pp, String post_pic) {
+    public notification(String username, String pp, String post_pic) {
         this.setUsername(username);
         this.setPp(pp);
         this.setPost_pic(post_pic);

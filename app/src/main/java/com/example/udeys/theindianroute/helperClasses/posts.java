@@ -3,7 +3,7 @@ package com.example.udeys.theindianroute.helperClasses;
 /**
  * Created by Gitesh on 23-05-2016.
  */
-public class Posts {
+public class posts {
     String username;
     String story;
     String pictue;
@@ -15,7 +15,7 @@ public class Posts {
     int reaction;
     int state;
 
-    public Posts(String username,
+    public posts(String username,
                  String story,
                  String pictue,
                  String check_in,
