@@ -7,18 +7,32 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.NotificationFragment;
-import com.example.udeys.theindianroute.fragments.CameraFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
+import com.example.udeys.theindianroute.fragments.SearchFragment;
 import com.example.udeys.theindianroute.fragments.TripFragment;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,6 +56,28 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         srch = (EditText) findViewById(R.id.search_bar);
         Search = (ImageButton) findViewById(R.id.btn_search);
         Logo = (ImageButton)findViewById(R.id.toolbar_logo);
+
+        srch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                changeUsername(cs);
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         FirebaseMessaging.getInstance().subscribeToTopic("Notification");
 
@@ -145,6 +181,61 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
+
+    }
+
+    public void changeUsername(CharSequence cs) {
+        try {
+            RequestParams params = new RequestParams();
+            params.put("search", cs.toString());
+            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+            client.get("http://indianroute.roms4all.com/search_temp.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Toast.makeText(getApplicationContext(), "" + responseString, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            decodeJson(responseString);
+                        }
+
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void decodeJson(String result) {
+        ArrayList<String> users_name;
+        users_name = new ArrayList<>();
+        ArrayList<Integer> users_id;
+        users_id = new ArrayList<>();
+        try {
+            JSONArray jArr = new JSONArray(result);
+            for (int count = 0; count < jArr.length(); count++) {
+                JSONObject obj = jArr.getJSONObject(count);
+                String path = obj.getString("username");
+                int id = obj.getInt("user_id");
+                users_name.add(path);
+                users_id.add(id);
+                //Toast.makeText(this,users.get(count),Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //Toast.makeText(this,users.size(),Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("user_name", users_name);
+        bundle.putIntegerArrayList("user_id", users_id);
+        SearchFragment searchFragment = new SearchFragment();
+        searchFragment.setArguments(bundle);
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_1, searchFragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
 
     }
 

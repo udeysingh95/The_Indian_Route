@@ -1,13 +1,10 @@
 package com.example.udeys.theindianroute.fragments;
 
-/**
- * Created by udeys on 6/17/2016.
- */
-
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +29,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Created by udeys on 6/17/2016.
+ */
 public class ProfileFragment extends Fragment {
 
     View view;
@@ -44,15 +44,28 @@ public class ProfileFragment extends Fragment {
     GridView gridView;
     ArrayList<String> imagePath;
     Button follow_status;
+    int uid;
+    boolean res = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
-        sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
-        username = sp.getString("username", null);
-        user_id = sp.getString("user_id", null);
-        userid = "23";
+
+        try {
+            username = getArguments().getString("user_name");
+            user_id = String.valueOf(getArguments().getInt("user_id"));
+            Log.e("Profile try", "success");
+            res = true;
+        } catch (Exception e) {
+            Log.e("catch", e.toString());
+        }
+        if (res == false) {
+            sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+            username = sp.getString("username", null);
+            user_id = sp.getString("user_id", null);
+        }
+        userid = "2";
         uname = (TextView)view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
@@ -65,7 +78,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(userid.contentEquals(user_id)){
+        //if(userid.contentEquals(user_id)){
+        if (res == false) {
             initValue(user_id);    //fetch profile
             initValues();  //fetch posts
             follow_status.setText("Edit Your Profile");
