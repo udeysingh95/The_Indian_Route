@@ -40,7 +40,6 @@ public class ViewPostFragment extends Fragment {
         posts_id = "1";
 
 
-
         return view;
     }
 

@@ -1,41 +1,30 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.comments;
-import com.example.udeys.theindianroute.helperClasses.posts;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
-import com.squareup.picasso.Picasso;
+import com.example.udeys.theindianroute.helperClasses.Comments;
+import com.example.udeys.theindianroute.helperClasses.Posts;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-
 /**
  * Created by Gitesh on 22-06-2016.
  */
-public class commentsAdapter extends ArrayAdapter {
+public class CommentsAdapter extends ArrayAdapter {
     List list = new ArrayList();
-    posts p;
+    Posts p;
     String post_id;
 
-    public commentsAdapter(Context context, int resource, String p) {
+    public CommentsAdapter(Context context, int resource, String p) {
         super(context, resource);
         post_id = p;
     }
@@ -73,8 +62,8 @@ public class commentsAdapter extends ArrayAdapter {
         } else {
             commentHolder = (commentHolder) row.getTag();
         }
-        final comments comments = (comments) this.getItem(position);
-        commentHolder.commentersComments.setText(comments.getComments());
+        final Comments Comments = (Comments) this.getItem(position);
+        commentHolder.commentersComments.setText(Comments.getComments());
 
 
         return row;
