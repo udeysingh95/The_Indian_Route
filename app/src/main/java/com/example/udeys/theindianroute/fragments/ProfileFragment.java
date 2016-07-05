@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment {
             Log.e("catch", e.toString());
         }
         if (res == false) {
+
             username = sp.getString("username", null);
             user_id = sp.getString("user_id", null);
         }
