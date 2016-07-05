@@ -1,7 +1,16 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.helperClasses.notification;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +39,37 @@ public class notificationAdapter extends ArrayAdapter {
     @Override
     public Object getItem(int position) {
         return list.get(position);
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row;
+        row = convertView;
+        final notificationHolder notificationHolder;
+        if (row == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = layoutInflater.inflate(R.layout.single_notification, parent, false);
+            notificationHolder = new notificationHolder();
+            notificationHolder.t1 = (TextView) row.findViewById(R.id.username);
+            notificationHolder.t2 = (TextView) row.findViewById(R.id.notification_details);
+            notificationHolder.t3 = (TextView) row.findViewById(R.id.time);
+            notificationHolder.i1 = (ImageView) row.findViewById(R.id.notifyuserProfilePicture);
+            notificationHolder.i2 = (ImageView) row.findViewById(R.id.notifypostPicture);
+            row.setTag(notificationHolder);
+        } else {
+            notificationHolder = (notificationHolder) row.getTag();
+        }
+
+        final notification notification = (notification) this.getItem(position);
+        notificationHolder.t1.setText(notification.getUsername());
+        Picasso.with(getContext()).load(notification.getPp()).into(notificationHolder.i1);
+        Picasso.with(getContext()).load(notification.getPost_pic()).into(notificationHolder.i2);
+        return row;
+
+    }
+
+    static class notificationHolder {
+        TextView t1, t2, t3;
+        ImageView i1, i2;
     }
 
 }
