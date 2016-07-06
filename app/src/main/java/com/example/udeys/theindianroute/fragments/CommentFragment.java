@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
-import com.example.udeys.theindianroute.helperClasses.comments;
+import com.example.udeys.theindianroute.helperClasses.Comments;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -34,7 +34,7 @@ public class CommentFragment extends Fragment {
     Button post_comment;
     EditText write_comment;
     TextView user;
-    commentsAdapter CommentsAdapter;
+    commentsAdapter commentsAdapter;
     ListView commnetslists;
     String post_id, username;
     ImageView post_image, pp;
@@ -96,9 +96,9 @@ public class CommentFragment extends Fragment {
 
         commnetslists = (ListView) view.findViewById(R.id.comments_lists);
 
-        CommentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
 
-        commnetslists.setAdapter(CommentsAdapter);
+        commnetslists.setAdapter(commentsAdapter);
     }
 
     public void requestComments() {
@@ -106,7 +106,7 @@ public class CommentFragment extends Fragment {
             RequestParams params = new RequestParams();
             params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_comment.php", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/fetch_comment.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeCommentsJSON(res);
@@ -131,8 +131,8 @@ public class CommentFragment extends Fragment {
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 comment = obj.getString("comment");
-                comments Comments = new comments(comment);
-                CommentsAdapter.add(Comments);
+                Comments Comments = new Comments(comment);
+                commentsAdapter.add(Comments);
             }
 
 

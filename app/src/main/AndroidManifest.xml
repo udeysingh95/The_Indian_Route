@@ -27,7 +27,8 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -94,8 +95,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".PostActivity">
-        </activity>
+        <activity android:name=".PostActivity"></activity>
     </application>
 
 </manifest>

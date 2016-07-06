@@ -36,8 +36,9 @@ public class ViewPostFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle bundle = this.getArguments();
+        posts_id = bundle.getString("post_id");
         view = inflater.inflate(R.layout.viewpostfragment, container, false);
-        posts_id = "1";
 
 
         return view;

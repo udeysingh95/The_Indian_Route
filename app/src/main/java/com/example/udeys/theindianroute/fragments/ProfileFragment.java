@@ -51,6 +51,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
+
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
 
         try {

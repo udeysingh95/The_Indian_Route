@@ -61,6 +61,7 @@ public class notificationAdapter extends ArrayAdapter {
 
         final notification Notification = (notification) this.getItem(position);
         notificationHolder.t1.setText(Notification.getUsername());
+        notificationHolder.t2.setText(Notification.getNotify());
         Picasso.with(getContext()).load(Notification.getPp()).into(notificationHolder.i1);
         Picasso.with(getContext()).load(Notification.getPost_pic()).into(notificationHolder.i2);
         return row;

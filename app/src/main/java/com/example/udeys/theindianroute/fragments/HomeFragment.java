@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.PostAdapter;
-import com.example.udeys.theindianroute.helperClasses.posts;
+import com.example.udeys.theindianroute.helperClasses.Posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 state = Integer.valueOf(obj.getString("state"));
                 comment = Integer.valueOf(obj.getString("comment"));
                 user_id = obj.getString("user_id");
-                posts Posts = new posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
+                Posts Posts = new Posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
                 swipeRefreshLayout.setRefreshing(false);
                 postAdapter.add(Posts);
             }

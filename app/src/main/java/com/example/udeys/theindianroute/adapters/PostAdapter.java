@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.posts;
+import com.example.udeys.theindianroute.helperClasses.Posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -74,6 +74,8 @@ public class PostAdapter extends ArrayAdapter {
             row = layoutInflater.inflate(R.layout.timelinerowlayout, parent, false);
             postHolder = new PostHolder();
             postHolder.username = (TextView) row.findViewById(R.id.username);
+            postHolder.story_username = (TextView)row.findViewById(R.id.story_username);
+            postHolder.story = (TextView)row.findViewById(R.id.post_story);
             postHolder.reaction = (TextView) row.findViewById(R.id.icon_like);
             postHolder.comment = (TextView) row.findViewById(R.id.icon_comment);
             postHolder.no_of_reactions = (TextView) row.findViewById(R.id.likes);
@@ -85,11 +87,13 @@ public class PostAdapter extends ArrayAdapter {
             postHolder = (PostHolder) row.getTag();
         }
 
-        final posts Posts = (posts) this.getItem(position);
+        final Posts Posts = (com.example.udeys.theindianroute.helperClasses.Posts) this.getItem(position);
         state = Posts.getstate();
         user_id = Posts.getUser_id();
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(Posts.getUsername());
+        postHolder.story_username.setText(Posts.getUsername());
+        postHolder.story.setText(Posts.getStory());
         postHolder.reaction.setTypeface(fa);
         postHolder.reaction.setTextSize(30);
         postHolder.no_of_comments.setText(String.valueOf(Posts.getComment()));
@@ -123,6 +127,7 @@ public class PostAdapter extends ArrayAdapter {
         postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction()));
         postHolder.comment.setTypeface(fa);
         postHolder.comment.setTextSize(30);
+        postHolder.comment.setFocusableInTouchMode(false);
         postHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,7 +203,7 @@ public class PostAdapter extends ArrayAdapter {
     }
 
     static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments;
+        TextView username, reaction, comment, no_of_reactions, no_of_comments,story,story_username;
         ImageView userPostImage;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
 

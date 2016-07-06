@@ -9,12 +9,15 @@ public class notification {
     String post_pic;
     String notify;
     String time;
+    String post_id;
 
 
-    public notification(String username, String pp, String post_pic) {
+    public notification(String username, String pp, String post_pic, String notify,String post_id) {
         this.setUsername(username);
         this.setPp(pp);
         this.setPost_pic(post_pic);
+        this.setNotify(notify);
+        this.setPost_id(post_id);
 
     }
 
@@ -56,6 +59,14 @@ public class notification {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
     }
 
 }
