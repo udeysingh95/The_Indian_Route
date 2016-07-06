@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by Malhotra g on 05-07-2016.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class IndianRouteMap extends Fragment implements OnMapReadyCallback {
 
     View view;
 
@@ -44,7 +44,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
 
-        view = inflater.inflate(R.layout.tripfragment, container, false);
+        view = inflater.inflate(R.layout.indianroute_map, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();// needed to get the map to display immediately

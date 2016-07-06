@@ -38,7 +38,7 @@ public class IndianRouteGallery extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag1, container, false);
+        view = inflater.inflate(R.layout.indianroute_gallery, container, false);
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

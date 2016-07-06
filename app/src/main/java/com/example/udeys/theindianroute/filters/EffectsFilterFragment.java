@@ -538,6 +538,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
 
                         Intent intent = new Intent(getActivity(), PostForm.class);
                         intent.putExtra("post_image", fileName);
+                        intent.putExtra("old_image",imagePath);
                         intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
                         startActivity(intent);
                     }
