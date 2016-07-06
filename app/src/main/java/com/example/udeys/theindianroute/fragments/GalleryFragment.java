@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
+import com.example.udeys.theindianroute.CompressFilter;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.GalleryAdapter;
 
@@ -44,7 +45,9 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Log.e("Path", imagePath.get(position));
-                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), CompressFilter.class);
+                intent.putExtra("path", imagePath.get(position));
+                startActivity(intent);
             }
         });
 

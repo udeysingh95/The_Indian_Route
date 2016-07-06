@@ -24,6 +24,11 @@ public class IndianRoute extends AppCompatActivity implements View.OnClickListen
         frag2.setOnClickListener(this);
         frag3.setOnClickListener(this);
 
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.indian_route_fragment, new IndianRouteGallery());
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
+
     }
 
 
@@ -33,7 +38,7 @@ public class IndianRoute extends AppCompatActivity implements View.OnClickListen
         switch (id) {
             case R.id.frag1:
                 ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.indian_route_fragment, new fragment1());
+                ft.replace(R.id.indian_route_fragment, new IndianRouteGallery());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;

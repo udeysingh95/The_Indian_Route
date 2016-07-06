@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
-import com.example.udeys.theindianroute.helperClasses.Comments;
+import com.example.udeys.theindianroute.helperClasses.comments;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -131,7 +131,7 @@ public class CommentFragment extends Fragment {
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 comment = obj.getString("comment");
-                Comments Comments = new Comments(comment);
+                comments Comments = new comments(comment);
                 commentsAdapter.add(Comments);
             }
 

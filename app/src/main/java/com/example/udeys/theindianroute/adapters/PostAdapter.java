@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.Posts;
+import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -87,7 +87,7 @@ public class PostAdapter extends ArrayAdapter {
             postHolder = (PostHolder) row.getTag();
         }
 
-        final Posts Posts = (com.example.udeys.theindianroute.helperClasses.Posts) this.getItem(position);
+        final posts Posts = (com.example.udeys.theindianroute.helperClasses.posts) this.getItem(position);
         state = Posts.getstate();
         user_id = Posts.getUser_id();
         postHolder.username.setTypeface(samarn);

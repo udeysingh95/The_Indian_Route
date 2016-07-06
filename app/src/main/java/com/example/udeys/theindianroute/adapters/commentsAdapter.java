@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.helperClasses.Comments;
-import com.example.udeys.theindianroute.helperClasses.Posts;
+import com.example.udeys.theindianroute.helperClasses.comments;
+import com.example.udeys.theindianroute.helperClasses.posts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class commentsAdapter extends ArrayAdapter {
     List list = new ArrayList();
-    Posts p;
+    posts p;
     String post_id;
 
     public commentsAdapter(Context context, int resource, String p) {
@@ -62,7 +62,7 @@ public class commentsAdapter extends ArrayAdapter {
         } else {
             commentHolder = (commentHolder) row.getTag();
         }
-        final Comments Comments = (Comments) this.getItem(position);
+        final comments Comments = (comments) this.getItem(position);
         commentHolder.commentersComments.setText(Comments.getComments());
 
 
