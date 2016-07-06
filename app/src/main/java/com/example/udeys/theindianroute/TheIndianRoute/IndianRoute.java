@@ -50,7 +50,7 @@ public class IndianRoute extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.frag3:
                 ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.indian_route_fragment, new fragment3());
+                ft.replace(R.id.indian_route_fragment, new Events());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;

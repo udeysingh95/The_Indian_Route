@@ -150,6 +150,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 posts Posts = new posts(username, story, picture, check_in, userprofilePicture, post_id, reaction, state, comment, user_id);
                 swipeRefreshLayout.setRefreshing(false);
                 postAdapter.add(Posts);
+                postAdapter.notifyDataSetChanged();
             }
 
         } catch (JSONException e) {

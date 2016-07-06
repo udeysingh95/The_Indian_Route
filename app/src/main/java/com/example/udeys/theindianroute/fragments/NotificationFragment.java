@@ -54,14 +54,23 @@ public class NotificationFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 notification obj = (notification) notificationList.getItemAtPosition(position);
                 String post_id = obj.getPost_id();
+                String action = obj.getAction();
                 Bundle bundle = new Bundle();
-                bundle.putString("post_id",post_id);
-                ViewPostFragment ViewPostFragment = new ViewPostFragment();
-                ViewPostFragment.setArguments(bundle);
-                ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, ViewPostFragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                bundle.putString("post_id", post_id);
+                bundle.putString("action", action);
+                if (action.contentEquals("1") || action.contentEquals("2")) {
+                    ViewPostFragment ViewPostFragment = new ViewPostFragment();
+                    ViewPostFragment.setArguments(bundle);
+                    ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.fragment_1, ViewPostFragment);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
+                } else {
+                    ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.fragment_1, new ProfileFragment());
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
+                }
 
             }
         });
@@ -93,7 +102,7 @@ public class NotificationFragment extends Fragment {
     public void extractNotifictaion(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
-            String userprofilepic, username, message, picture, post_id;
+            String userprofilepic, username, message, picture, post_id, action;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 userprofilepic = obj.getString("userProfilePicture");
@@ -101,7 +110,8 @@ public class NotificationFragment extends Fragment {
                 message = obj.getString("message");
                 picture = obj.getString("picture");
                 post_id = obj.getString("post_id");
-                notification notification = new notification(username, userprofilepic, picture, message, post_id);
+                action = obj.getString("action");
+                notification notification = new notification(username, userprofilepic, picture, message, post_id, action);
                 notAdapter.add(notification);
             }
         } catch (JSONException e) {

@@ -10,14 +10,16 @@ public class notification {
     String notify;
     String time;
     String post_id;
+    String action;
 
 
-    public notification(String username, String pp, String post_pic, String notify,String post_id) {
+    public notification(String username, String pp, String post_pic, String notify, String post_id, String action) {
         this.setUsername(username);
         this.setPp(pp);
         this.setPost_pic(post_pic);
         this.setNotify(notify);
         this.setPost_id(post_id);
+        this.setAction(action);
 
     }
 
@@ -69,5 +71,12 @@ public class notification {
         this.post_id = post_id;
     }
 
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 }
 

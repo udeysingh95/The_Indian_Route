@@ -12,13 +12,15 @@ import com.example.udeys.theindianroute.R;
 /**
  * Created by Gitesh on 24-06-2016.
  */
-public class fragment3 extends Fragment {
+public class Events extends Fragment {
     View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag3, container, false);
+        view = inflater.inflate(R.layout.events, container, false);
         return  view;
     }
+
+
 }

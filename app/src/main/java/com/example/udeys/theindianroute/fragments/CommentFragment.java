@@ -99,6 +99,8 @@ public class CommentFragment extends Fragment {
         commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
 
         commnetslists.setAdapter(commentsAdapter);
+        commnetslists.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
     }
 
     public void requestComments() {
@@ -133,6 +135,7 @@ public class CommentFragment extends Fragment {
                 comment = obj.getString("comment");
                 comments Comments = new comments(comment);
                 commentsAdapter.add(Comments);
+                commentsAdapter.notifyDataSetChanged();
             }
 
 
