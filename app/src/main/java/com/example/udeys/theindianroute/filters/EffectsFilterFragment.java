@@ -61,6 +61,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     Bitmap bitmap, tempBitmap;
     ImageView tick;
     String imagePath;
+    Bundle bundle;
     private RecyclerView recList;
     private GLSurfaceView mEffectView;
     private int[] mTextures = new int[2];
@@ -71,7 +72,6 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
     private int mImageHeight;
     private boolean mInitialized = false;
     private volatile boolean saveFrame;
-
 
     public void setCurrentEffect(int effect) {
         mCurrentEffect = effect;
@@ -86,7 +86,7 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
         setHasOptionsMenu(true);
 
         try {
-            Bundle bundle = getArguments();
+            bundle = getArguments();
             imagePath = bundle.getString("index"); // imagePath has the path to image in device
             Toast.makeText(getActivity(), "path: " + imagePath, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -538,7 +538,6 @@ public class EffectsFilterFragment extends Fragment implements GLSurfaceView.Ren
 
                         Intent intent = new Intent(getActivity(), PostForm.class);
                         intent.putExtra("post_image", fileName);
-                        intent.putExtra("old_image",imagePath);
                         intent.putExtra(StaticClass.GET_IMAGE_MESSAGE, fileName);
                         startActivity(intent);
                     }

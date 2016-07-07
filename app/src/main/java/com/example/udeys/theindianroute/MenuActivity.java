@@ -214,14 +214,14 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private void decodeJson(String result) {
         ArrayList<String> users_name;
         users_name = new ArrayList<>();
-        ArrayList<Integer> users_id;
+        ArrayList<String> users_id;
         users_id = new ArrayList<>();
         try {
             JSONArray jArr = new JSONArray(result);
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("username");
-                int id = obj.getInt("user_id");
+                String id = obj.getString("user_id");
                 users_name.add(path);
                 users_id.add(id);
                 //Toast.makeText(this,users.get(count),Toast.LENGTH_SHORT).show();
@@ -233,7 +233,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         //Toast.makeText(this,users.size(),Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("user_name", users_name);
-        bundle.putIntegerArrayList("user_id", users_id);
+        bundle.putStringArrayList("user_id", users_id);
         SearchFragment searchFragment = new SearchFragment();
         searchFragment.setArguments(bundle);
         ft = getFragmentManager().beginTransaction();

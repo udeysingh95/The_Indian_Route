@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -40,6 +38,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -104,7 +104,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
         // TODO Auto-generated method stub
 
-        locationListener = new LocationListener() {
+/*        locationListener = new LocationListener() {
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -183,7 +183,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
-        }
+        }*/
 
 
         if (Build.VERSION.SDK_INT < 22) {
@@ -213,6 +213,11 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
         file = String.format("/TIR%d.jpeg", System.currentTimeMillis());
         File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), file);
         filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file;
@@ -331,10 +336,17 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
     public boolean storeByteImage(byte[] data) {
 
-        /*String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        /*
+        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         File myDir = new File(root + "/saved_images");
         myDir.mkdirs();
-        File filename = new File(myDir, "man.jpeg");*/
+        File filename = new File(myDir, "man.jpeg");
+        */
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
 
 
         filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());

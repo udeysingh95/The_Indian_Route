@@ -23,7 +23,7 @@ public class SearchFragment extends Fragment {
 
     View view;
     ArrayList<String> user_name;
-    ArrayList<Integer> user_id;
+    ArrayList<String> user_id;
     ListView listView;
 
     @Override
@@ -36,7 +36,7 @@ public class SearchFragment extends Fragment {
             user_name = new ArrayList<>();
             user_id = new ArrayList<>();
             user_name = getArguments().getStringArrayList("user_name");
-            user_id = getArguments().getIntegerArrayList("user_id");
+            user_id = getArguments().getStringArrayList("user_id");
             Log.e("search try", "success");
         } catch (Exception e) {
             Log.e("catch", e.toString());
@@ -54,10 +54,10 @@ public class SearchFragment extends Fragment {
 
                 // ListView Clicked item value
                 String itemValue = (String) listView.getItemAtPosition(position);
-                int uid = user_id.get(position);
+                String uid = user_id.get(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("user_id", uid);
+                bundle.putString("user_id", uid);
                 bundle.putString("user_name", itemValue);
                 ProfileFragment profileFragment = new ProfileFragment();
                 profileFragment.setArguments(bundle);

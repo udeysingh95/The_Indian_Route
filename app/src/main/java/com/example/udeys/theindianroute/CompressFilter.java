@@ -39,7 +39,6 @@ public class CompressFilter extends AppCompatActivity {
             Toast.makeText(CompressFilter.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
     private void initFragments(Fragment targetFragment) {

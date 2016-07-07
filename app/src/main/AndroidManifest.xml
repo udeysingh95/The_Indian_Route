@@ -69,7 +69,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PostForm"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Register"
             android:theme="@style/AppTheme.NoActionBar" />

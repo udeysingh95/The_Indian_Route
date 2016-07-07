@@ -1,14 +1,20 @@
 package com.example.udeys.theindianroute;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
-import android.media.ExifInterface;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,54 +32,19 @@ import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
-public class PostForm extends Activity implements View.OnClickListener {
+public class PostForm extends AppCompatActivity implements View.OnClickListener {
 
-    String story, checkin;
+    String story, checkin = "";
     EditText s, c;
     String username;
-    byte[] byteArray;
-    Bitmap bmp;
-    String filename, oldFile;
+    String filename;
     File i;
-    Double Latitude, Longitude;
+    double lat;
+    double lon;
+    private Location thislocation;
     private boolean valid = false;
-
-    public static void copyExif(String oldPath, String newPath) throws IOException {
-        ExifInterface oldExif = new ExifInterface(oldPath);
-
-        String[] attributes = new String[]
-                {
-                        ExifInterface.TAG_APERTURE,
-                        ExifInterface.TAG_DATETIME,
-                        ExifInterface.TAG_EXPOSURE_TIME,
-                        ExifInterface.TAG_FLASH,
-                        ExifInterface.TAG_FOCAL_LENGTH,
-                        ExifInterface.TAG_GPS_ALTITUDE,
-                        ExifInterface.TAG_GPS_ALTITUDE_REF,
-                        ExifInterface.TAG_GPS_DATESTAMP,
-                        ExifInterface.TAG_GPS_LATITUDE,
-                        ExifInterface.TAG_GPS_LATITUDE_REF,
-                        ExifInterface.TAG_GPS_LONGITUDE,
-                        ExifInterface.TAG_GPS_LONGITUDE_REF,
-                        ExifInterface.TAG_GPS_PROCESSING_METHOD,
-                        ExifInterface.TAG_GPS_TIMESTAMP,
-                        ExifInterface.TAG_IMAGE_LENGTH,
-                        ExifInterface.TAG_IMAGE_WIDTH,
-                        ExifInterface.TAG_ISO,
-                        ExifInterface.TAG_MAKE,
-                        ExifInterface.TAG_MODEL,
-                        ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.TAG_WHITE_BALANCE
-                };
-
-        ExifInterface newExif = new ExifInterface(newPath);
-        for (int i = 0; i < attributes.length; i++) {
-            String value = oldExif.getAttribute(attributes[i]);
-            if (value != null)
-                newExif.setAttribute(attributes[i], value);
-        }
-        newExif.saveAttributes();
-    }
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +55,97 @@ public class PostForm extends Activity implements View.OnClickListener {
         s = (EditText) findViewById(R.id.post_story);
         c = (EditText) findViewById(R.id.post_checkin);
         Button push_post = (Button) findViewById(R.id.push_post);
-        filename = getIntent().getStringExtra("post_image");
-        oldFile = getIntent().getStringExtra("old_image");
-        /*try {
-            copyExif(oldFile,filename);
-        } catch (IOException e) {
-            Log.e("exif catch",e.toString());
-        }*/
+        filename = Environment.getExternalStorageDirectory().toString() + "/TheIndianRoute/" + getIntent().getStringExtra("post_image");
         push_post.setOnClickListener(this);
+        Log.e("new", filename);
+
         try {
-            c.setText(ReadExif(filename));
+            getLocationFromGPS();
         } catch (Exception e) {
-            Log.e("catch", e.toString());
+            Log.e("post catch", e.toString());
+        }
+    }
+
+    private void getLocationFromGPS() {
+        locationListener = new LocationListener() {
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            public void onProviderDisabled(String provider) {
+
+            }
+
+            public void onLocationChanged(Location location) {
+
+                gpsLocationReceived(location);
+
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    lat = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
+                    lon = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
+                }
+
+            }
+        };
+
+
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Criteria locationCritera = new Criteria();
+        locationCritera.setAccuracy(Criteria.ACCURACY_COARSE);
+        locationCritera.setAltitudeRequired(false);
+        locationCritera.setBearingRequired(false);
+        locationCritera.setCostAllowed(true);
+        locationCritera.setPowerRequirement(Criteria.NO_REQUIREMENT);
+        String providerName = locationManager.getBestProvider(locationCritera, true);
+
+        if (providerName != null && locationManager.isProviderEnabled(providerName)) {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+
+            }
+            locationManager.requestLocationUpdates(providerName, 20000, 100, locationListener);
+        } else {
+            // Provider not enabled, prompt user to enable it
+            Toast.makeText(getApplicationContext(), "please_turn_on_gps", Toast.LENGTH_LONG).show();
+            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(myIntent);
+        }
+
+        if (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) {
+
+            lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+            lon = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+        } else if (locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null) {
+            Log.e("TAG", "Inside NETWORK");
+
+            lat = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
+            lon = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
+
+        } else {
+
+            Log.e("TAG", "else +++++++ ");
+            lat = -1;
+            lon = -1;
         }
     }
 
@@ -103,6 +153,10 @@ public class PostForm extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         story = s.getText().toString();
         checkin = c.getText().toString();
+        if (checkin.length() == 0)
+            checkin = getLocation();
+        c.setText(checkin);
+        //res = true;
 
         i = get();
         pushPost();
@@ -155,74 +209,30 @@ public class PostForm extends Activity implements View.OnClickListener {
         return new File(location, filename);
     }
 
+    protected void gpsLocationReceived(Location location) {
+
+        thislocation = location;
+    }
     /*
-    * Read Location from Image
+    * Read Location
     * */
 
-    public String ReadExif(String file) {
-        try {
-            ExifInterface exif = new ExifInterface(file);
-            String attrLATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-            String attrLATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
-            String attrLONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
-            String attrLONGITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
-
-            if ((attrLATITUDE != null) && (attrLATITUDE_REF != null) && (attrLONGITUDE != null) && (attrLONGITUDE_REF != null)) {
-                valid = true;
-
-                if (attrLATITUDE_REF.equals("N")) {
-                    Latitude = convertToDegree(attrLATITUDE);
-                } else {
-                    Latitude = 0 - convertToDegree(attrLATITUDE);
-                }
-
-                if (attrLONGITUDE_REF.equals("E")) {
-                    Longitude = convertToDegree(attrLONGITUDE);
-                } else {
-                    Longitude = 0 - convertToDegree(attrLONGITUDE);
-                }
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
+    public String getLocation() {
         Geocoder gcd = new Geocoder(PostForm.this, Locale.getDefault());
         List<Address> addresses = null;
         String location = null;
         try {
-            addresses = gcd.getFromLocation(Latitude, Longitude, 1);
-            if (addresses.size() > 0)
-                location = addresses.get(0).getLocality();
+            addresses = gcd.getFromLocation(lat, lon, 1);
+            if (addresses.size() > 0) {
+                location = addresses.get(0).getLocality() + " ";
+                location += addresses.get(0).getSubLocality() + " ";
+                location += addresses.get(0).getAdminArea();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return location;
-    }
-
-    private Double convertToDegree(String stringDMS) {
-        Double result;
-        String[] DMS = stringDMS.split(",", 3);
-
-        String[] stringD = DMS[0].split("/", 2);
-        Double D0 = new Double(stringD[0]);
-        Double D1 = new Double(stringD[1]);
-        Double FloatD = D0 / D1;
-
-        String[] stringM = DMS[1].split("/", 2);
-        Double M0 = new Double(stringM[0]);
-        Double M1 = new Double(stringM[1]);
-        Double FloatM = M0 / M1;
-
-        String[] stringS = DMS[2].split("/", 2);
-        Double S0 = new Double(stringS[0]);
-        Double S1 = new Double(stringS[1]);
-        Double FloatS = S0 / S1;
-
-        result = new Double(FloatD + (FloatM / 60) + (FloatS / 3600));
-
-        return result;
     }
 
 }
