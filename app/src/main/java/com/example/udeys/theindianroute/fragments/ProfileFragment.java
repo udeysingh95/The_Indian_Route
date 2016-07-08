@@ -93,8 +93,11 @@ public class ProfileFragment extends Fragment {
 
     private void initValue(String user_id) {
         try {
+            String u_id = sp.getString("user_id", null);
             RequestParams params = new RequestParams();
+
             params.put("user_id", user_id);
+            params.put("u_id", u_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/fetch_profile.php", params, new TextHttpResponseHandler() {
                         @Override
@@ -163,10 +166,17 @@ public class ProfileFragment extends Fragment {
         try {
             JSONArray jArr = new JSONArray(result);
             String userprofilePicture;
-
+            int follow_s;
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
+            follow_s = Integer.valueOf(obj.getString("following"));
+            if(follow_s == 1){
+                follow_status.setText("Following");
+            }
+            else{
+                follow_status.setText("Follow");
+            }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
 
