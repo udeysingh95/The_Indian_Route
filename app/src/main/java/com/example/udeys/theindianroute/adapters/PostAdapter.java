@@ -26,6 +26,10 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +46,7 @@ public class PostAdapter extends ArrayAdapter {
     static int state;
     List list = new ArrayList();
     Typeface samarn, fa;
-
+    PostHolder postHolder;
 
     public PostAdapter(Context context, int resource, Typeface cFont, Typeface FontAwesome) {
         super(context, resource);
@@ -70,7 +74,7 @@ public class PostAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
-        final PostHolder postHolder;
+
 
         if (row == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -114,14 +118,10 @@ public class PostAdapter extends ArrayAdapter {
                 if (state == 0) {
                     postHolder.reaction.setText(R.string.icon_heart_filled);
                     postHolder.reaction.setTextColor(Color.RED);
-                    postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction() + 1));
                     state = 1;
-                    Log.d("user_id", HomeFragment.user_id);
-                    likeNotification(HomeFragment.user_id, Posts.getPost_id());
                 } else {
                     postHolder.reaction.setText(R.string.icon_heart_empty);
                     postHolder.reaction.setTextColor(Color.BLACK);
-                    postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction() - 1));
                     state = 0;
                 }
                 post_reaction(state, user_id, Posts.getPost_id());
@@ -167,10 +167,8 @@ public class PostAdapter extends ArrayAdapter {
             client.get("http://indianroute.roms4all.com/post_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("on success", "" + res);
-
+                            decodeJson(res);
                         }
-
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             Toast.makeText(getContext(), "" + res, Toast.LENGTH_SHORT).show();
@@ -182,27 +180,16 @@ public class PostAdapter extends ArrayAdapter {
         }
     }
 
-    protected void likeNotification(String user_id, String post_id) {
+    private void decodeJson(String result) {
         try {
-            RequestParams params = new RequestParams();
-            params.put("user_id", user_id);
-            params.put("post_id", post_id);
-            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/like_push_notification.php", params, new TextHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("on success", "" + res);
+            JSONArray jArr = new JSONArray(result);
+            JSONObject obj = jArr.getJSONObject(0);
+            String num = obj.getString("reaction");
+            postHolder.no_of_reactions.setText(num);
 
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getContext(), "" + res, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
