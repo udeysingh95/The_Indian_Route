@@ -11,6 +11,7 @@ public class posts {
     String userProfilePicture;
     String post_id;
     String user_id;
+    String post_time;
     int comment;
     int reaction;
     int state;
@@ -22,7 +23,7 @@ public class posts {
                  String userProfilePicture,
                  String post_id,
                  int reaction,
-                 int state, int comment, String user_id) {
+                 int state, int comment, String user_id,String post_time) {
         this.setUsername(username);
         this.setStory(story);
         this.setPictue(pictue);
@@ -33,6 +34,7 @@ public class posts {
         this.setstate(state);
         this.setComment(comment);
         this.setUser_id(user_id);
+        this.setPost_time(post_time);
 
     }
 
@@ -122,5 +124,13 @@ public class posts {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getPost_time() {
+        return post_time;
+    }
+
+    public void setPost_time(String post_time) {
+        this.post_time = post_time;
     }
 }

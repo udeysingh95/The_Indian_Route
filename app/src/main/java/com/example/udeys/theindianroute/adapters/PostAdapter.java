@@ -26,8 +26,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -74,14 +77,15 @@ public class PostAdapter extends ArrayAdapter {
             row = layoutInflater.inflate(R.layout.timelinerowlayout, parent, false);
             postHolder = new PostHolder();
             postHolder.username = (TextView) row.findViewById(R.id.username);
-            postHolder.story_username = (TextView)row.findViewById(R.id.story_username);
-            postHolder.story = (TextView)row.findViewById(R.id.post_story);
+            postHolder.story_username = (TextView) row.findViewById(R.id.story_username);
+            postHolder.story = (TextView) row.findViewById(R.id.post_story);
             postHolder.reaction = (TextView) row.findViewById(R.id.icon_like);
             postHolder.comment = (TextView) row.findViewById(R.id.icon_comment);
             postHolder.no_of_reactions = (TextView) row.findViewById(R.id.likes);
             postHolder.no_of_comments = (TextView) row.findViewById(R.id.comments);
             postHolder.userPostImage = (ImageView) row.findViewById(R.id.userpostimage);
             postHolder.userprofilePicture = (RoundedImageView) row.findViewById(R.id.userProfilePicture);
+            postHolder.post_time = (TextView) row.findViewById(R.id.post_time);
             row.setTag(postHolder);
         } else {
             postHolder = (PostHolder) row.getTag();
@@ -142,7 +146,7 @@ public class PostAdapter extends ArrayAdapter {
                 fragmentTransaction.commit();
             }
         });
-
+        postHolder.post_time.setText(post_time(Posts.getPost_time()));
         Picasso.with(getContext())
                 .load(Posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
                 .into(postHolder.userprofilePicture);
@@ -203,11 +207,60 @@ public class PostAdapter extends ArrayAdapter {
     }
 
     static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments,story,story_username;
+        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
         ImageView userPostImage;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
 
     }
+
+    public String post_time(String post_time) {
+        String time;
+        String start;
+        start = post_time;
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
+        Log.e("timestamp", timeStamp);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+
+        Date d1 = null;
+        Date d2 = null;
+        long diffHours = 0;
+
+        try {
+            d1 = format.parse(start);
+            d2 = format.parse(timeStamp);
+        } catch (Exception e) {
+            Log.e("date catch", e.toString());
+        }
+        // Get msec from each, and subtract.
+        long diff = 0;
+        try {
+            diff = d2.getTime() - d1.getTime();
+        } catch (Exception e) {
+            Log.e("catch", e.toString());
+        }
+
+        if (diff < 60) {
+            time = Long.toString(diff / 1000 % 60);  //<60 print this value.
+            time += " seconds ago";
+            Log.d("sec", "" + time);
+        } else if (diff < 3600) {
+            time = Long.toString(diff / (60 * 1000) % 60); // <3600 print this value
+            time += " minutes ago";
+            Log.d("min", "" + time);
+        } else if (diff < 86400) {
+            time = Long.toString(diff / (60 * 60 * 1000));
+            time += " hours ago";
+            Log.d("hr", "" + time);
+        } else {
+            time = Long.toString((diff / (60 * 60 * 1000)) / 24);
+            time += " days ago";
+            Log.d("day", "" + time);
+        }
+
+        return time;
+    }
+
+
 }
 
 

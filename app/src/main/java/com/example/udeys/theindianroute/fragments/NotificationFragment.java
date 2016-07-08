@@ -55,9 +55,11 @@ public class NotificationFragment extends Fragment {
                 notification obj = (notification) notificationList.getItemAtPosition(position);
                 String post_id = obj.getPost_id();
                 String action = obj.getAction();
+                String follower_id = obj.getFollower_id();
                 Bundle bundle = new Bundle();
-                bundle.putString("post_id", post_id);
                 bundle.putString("action", action);
+                bundle.putString("user_id",follower_id);
+                bundle.putString("post_id", post_id);
                 if (action.contentEquals("1") || action.contentEquals("2")) {
                     ViewPostFragment ViewPostFragment = new ViewPostFragment();
                     ViewPostFragment.setArguments(bundle);
@@ -66,6 +68,8 @@ public class NotificationFragment extends Fragment {
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     ft.commit();
                 } else {
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    profileFragment.setArguments(bundle);
                     ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.fragment_1, new ProfileFragment());
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -102,7 +106,7 @@ public class NotificationFragment extends Fragment {
     public void extractNotifictaion(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
-            String userprofilepic, username, message, picture, post_id, action;
+            String userprofilepic, username, message, picture, post_id, action, follower_id;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 userprofilepic = obj.getString("userProfilePicture");
@@ -111,7 +115,8 @@ public class NotificationFragment extends Fragment {
                 picture = obj.getString("picture");
                 post_id = obj.getString("post_id");
                 action = obj.getString("action");
-                notification notification = new notification(username, userprofilepic, picture, message, post_id, action);
+                follower_id = obj.getString("user_id");
+                notification notification = new notification(username, userprofilepic, picture, message, post_id, action, follower_id);
                 notAdapter.add(notification);
             }
         } catch (JSONException e) {

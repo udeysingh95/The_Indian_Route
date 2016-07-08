@@ -30,7 +30,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -57,49 +60,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         Search = (ImageButton) findViewById(R.id.btn_search);
         Logo = (ImageButton)findViewById(R.id.toolbar_logo);
 
-        srch.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                changeUsername(cs);
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-        FirebaseMessaging.getInstance().subscribeToTopic("Notification");
-
-        try {
-            intent = getIntent();
-            String open = intent.getStringExtra("Notification");
-            if (open != null) {
-                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                manager.cancelAll();
-                ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new NotificationFragment());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            } else {
-                ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new HomeFragment());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-        } catch (Exception e) {
-            Log.e("ERROR", e.toString());
-        }
+       
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
@@ -123,6 +84,29 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         Logo.setOnClickListener(this);
         Search.setOnClickListener(this);
+
+
+        srch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                changeUsername(cs);
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
 
     }
@@ -249,5 +233,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
+
+
+
 
 }

@@ -27,8 +27,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:windowSoftInputMode="stateHidden">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -42,13 +41,15 @@
         <activity
             android:name=".Login"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan">
 
         </activity>
         <activity
             android:name=".Splash"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,21 +59,26 @@
         <activity
             android:name=".CompressFilter"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat" />
+            android:theme="@style/Theme.AppCompat"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".PostForm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".Register"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -81,8 +87,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".TheIndianRoute.IndianRoute" />
+        <activity
+            android:name=".MenuActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".TheIndianRoute.IndianRoute"
+            android:windowSoftInputMode="adjustPan" />
 
         <service android:name=".helperClasses.FirebaseMessagingService">
             <intent-filter>
@@ -95,7 +105,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".PostActivity"></activity>
+        <activity
+            android:name=".PostActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
     </application>
 
 </manifest>

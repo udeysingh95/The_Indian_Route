@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.helperClasses.Event;
 import com.example.udeys.theindianroute.helperClasses.notification;
 import com.squareup.picasso.Picasso;
 
@@ -45,31 +46,29 @@ public class EventsAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
-        final notificationHolder notificationHolder;
+        final EventsHolder eventsHolder;
         if (row == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.single_notification, parent, false);
-            notificationHolder = new notificationHolder();
-            notificationHolder.t1 = (TextView) row.findViewById(R.id.username);
-            notificationHolder.t2 = (TextView) row.findViewById(R.id.notification_details);
-            notificationHolder.t3 = (TextView) row.findViewById(R.id.time);
-            notificationHolder.i1 = (ImageView) row.findViewById(R.id.notifyuserProfilePicture);
-            notificationHolder.i2 = (ImageView) row.findViewById(R.id.notifypostPicture);
-            row.setTag(notificationHolder);
+            eventsHolder = new EventsHolder();
+            eventsHolder.t1 = (TextView) row.findViewById(R.id.username);
+            eventsHolder.t2 = (TextView) row.findViewById(R.id.notification_details);
+            eventsHolder.t3 = (TextView) row.findViewById(R.id.time);
+            eventsHolder.i1 = (ImageView) row.findViewById(R.id.notifyuserProfilePicture);
+            eventsHolder.i2 = (ImageView) row.findViewById(R.id.notifypostPicture);
+            row.setTag(eventsHolder);
         } else {
-            notificationHolder = (notificationHolder) row.getTag();
+            eventsHolder = (EventsHolder) row.getTag();
         }
 
-        final notification Notification = (notification) this.getItem(position);
-        notificationHolder.t1.setText(Notification.getUsername());
-        notificationHolder.t2.setText(Notification.getNotify());
-        Picasso.with(getContext()).load(Notification.getPp()).into(notificationHolder.i1);
-        Picasso.with(getContext()).load(Notification.getPost_pic()).into(notificationHolder.i2);
+        final Event event =  (Event)this.getItem(position);
+        eventsHolder.t1.setText(event.getHeading());
+        Picasso.with(getContext()).load(event.getPic()).into(eventsHolder.i2);
         return row;
 
     }
 
-    static class notificationHolder {
+    static class EventsHolder {
         TextView t1, t2, t3;
         ImageView i1, i2;
     }
