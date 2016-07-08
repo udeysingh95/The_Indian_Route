@@ -171,11 +171,14 @@ public class ProfileFragment extends Fragment {
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
             follow_s = Integer.valueOf(obj.getString("following"));
-            if(follow_s == 1){
-                follow_status.setText("Following");
+            if(user_id.matches( sp.getString("user_id", null))){
+                follow_status.setText("edit your profile");
+            }
+            else if(follow_s == 1){
+                follow_status.setText("following");
             }
             else{
-                follow_status.setText("Follow");
+                follow_status.setText("follow");
             }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
