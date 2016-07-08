@@ -40,7 +40,7 @@ public class ProfileFragment extends Fragment {
     ImageView iv;
     SharedPreferences sp;
     String username;
-    String user_id,userid;
+    String user_id;
     int no_of_post = 0;
     GridView gridView;
     ArrayList<String> imagePath;
@@ -66,11 +66,11 @@ public class ProfileFragment extends Fragment {
             username = sp.getString("username", null);
             user_id = sp.getString("user_id", null);
         }
-        userid = user_id;
+
         uname = (TextView)view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
-        follow_status = (Button)view.findViewById(R.id.follow_stauts);
+        follow_status = (Button)view.findViewById(R.id.follow_status);
         imagePath = new ArrayList<>();
         iv = (ImageView) view.findViewById(R.id.PF);
         return view;
@@ -79,16 +79,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (res == false) {
+
             initValue(user_id);    //fetch profile
             initValues();  //fetch Posts
-            follow_status.setText("Edit Your Profile");
-        }
-        else{
-            initValue(user_id);    //fetch profile
-            initValues();  //fetch post
-            follow_status.setText("Follow");
-        }
+
     }
 
     private void initValue(String user_id) {
@@ -171,6 +165,7 @@ public class ProfileFragment extends Fragment {
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
             follow_s = Integer.valueOf(obj.getString("following"));
+
             if(user_id.matches( sp.getString("user_id", null))){
                 follow_status.setText("edit your profile");
             }

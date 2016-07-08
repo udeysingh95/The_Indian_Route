@@ -87,7 +87,7 @@
                 android:padding="0dp">
 
                 <Button
-                    android:id="@+id/follow_stauts"
+                    android:id="@+id/follow_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="0dp"
