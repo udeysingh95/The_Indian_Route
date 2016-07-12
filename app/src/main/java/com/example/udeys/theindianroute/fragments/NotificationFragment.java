@@ -106,7 +106,7 @@ public class NotificationFragment extends Fragment {
     public void extractNotifictaion(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
-            String userprofilepic, username, message, picture, post_id, action, follower_id;
+            String userprofilepic, username, message, picture, post_id, action, follower_id, timestamp;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 userprofilepic = obj.getString("userProfilePicture");
@@ -116,7 +116,8 @@ public class NotificationFragment extends Fragment {
                 post_id = obj.getString("post_id");
                 action = obj.getString("action");
                 follower_id = obj.getString("user_id");
-                notification notification = new notification(username, userprofilepic, picture, message, post_id, action, follower_id);
+                timestamp = obj.getString("timestamp");
+                notification notification = new notification(username, userprofilepic, picture, message, post_id, action, follower_id, timestamp);
                 notAdapter.add(notification);
             }
         } catch (JSONException e) {

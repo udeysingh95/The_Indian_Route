@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,11 +54,30 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         eml = email.getText().toString();
         repass = repassword.getText().toString();
         device_token = FirebaseInstanceId.getInstance().getToken();
+        boolean status = true;
+        if (nm.length() == 0) {
+            name.setError("You Forgot To Put Your Name");
+            status = false;
+        }
+        if (uname.length() == 0) {
+            uname.setError("You Forgot To Put Your Username");
+            status = false;
+        }
+        if (!isValidEmail(eml)) {
+            email.setError("Invalid Email");
+            status = false;
+        }
+        if (pass.length() == 0) {
+            passowrd.setError("You Forgot To Put Your Password");
+            status = false;
+        }
+        if (status == true) {
+            /*
+            * After validating data
+            * */
+        }
 
         Log.e("token", device_token);
-        /*
-        * validation goes here
-        * */
 
 
 
@@ -105,6 +125,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
 }
 
 
