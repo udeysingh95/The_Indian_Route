@@ -96,7 +96,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="6"
-                android:id="@+id/imageView3" />
+                android:id="@+id/profile_picture" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -293,7 +293,7 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/male"
+            android:id="@+id/gender"
             android:textSize="12dp"
             android:textColor="#2C3E50"
             android:layout_weight="8.3"
@@ -478,6 +478,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
+        android:id="@+id/logout"
         android:orientation="horizontal"
         android:background="#fff"
         android:weightSum="10">
