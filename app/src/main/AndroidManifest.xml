@@ -58,7 +58,7 @@
             android:name=".CompressFilter"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -71,8 +71,8 @@
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".PostForm"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:theme="@style/Theme.AppCompat"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Register"
             android:theme="@style/AppTheme.NoActionBar"
@@ -105,7 +105,8 @@
 
         <activity
             android:name=".PostActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:theme="@style/Theme.AppCompat"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Setting"
             android:label="@string/title_activity_setting"></activity>

@@ -264,7 +264,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
                 if (file1.delete())
                     Log.e("TAG", "Deleted");
-                Intent intent = new Intent(getActivity(), EffectsFilterFragment.class);
+                Intent intent = new Intent(getActivity(), CompressFilter.class);
                 intent.putExtra("path", filename);
                 startActivity(intent);
 

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +98,7 @@ public class PostAdapter extends ArrayAdapter {
             postHolder.userPostImage = (ImageView) row.findViewById(R.id.userpostimage);
             postHolder.userprofilePicture = (RoundedImageView) row.findViewById(R.id.userProfilePicture);
             postHolder.post_time = (TextView) row.findViewById(R.id.post_time);
+            postHolder.progressBar = (ProgressBar) row.findViewById(R.id.loader);
             row.setTag(postHolder);
         } else {
             postHolder = (PostHolder) row.getTag();
@@ -105,6 +107,7 @@ public class PostAdapter extends ArrayAdapter {
         final posts Posts = (com.example.udeys.theindianroute.helperClasses.posts) this.getItem(position);
         state = Posts.getstate();
         user_id = Posts.getUser_id();
+        postHolder.progressBar.setVisibility(View.VISIBLE);
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(Posts.getUsername());
         postHolder.story_username.setText(Posts.getUsername());
@@ -175,6 +178,7 @@ public class PostAdapter extends ArrayAdapter {
 
                     }
                 });
+        postHolder.progressBar.setVisibility(View.GONE);
         return row;
     }
 
@@ -219,6 +223,7 @@ public class PostAdapter extends ArrayAdapter {
         TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
         ImageView userPostImage;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
+        ProgressBar progressBar;
 
     }
 
@@ -287,6 +292,7 @@ public class PostAdapter extends ArrayAdapter {
 
         try {
             width = bitmap.getWidth();
+            Log.d("width", "" + width);
         } catch (NullPointerException e) {
             throw new NoSuchElementException("Can't find bitmap on given view/drawable");
         }
