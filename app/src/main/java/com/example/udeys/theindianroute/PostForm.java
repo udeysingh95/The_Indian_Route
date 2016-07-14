@@ -55,9 +55,8 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         s = (EditText) findViewById(R.id.post_story);
         c = (EditText) findViewById(R.id.post_checkin);
         Button push_post = (Button) findViewById(R.id.push_post);
-        filename = Environment.getExternalStorageDirectory().toString() + "/TheIndianRoute/" + getIntent().getStringExtra("post_image");
+        filename = getIntent().getStringExtra("post_image");
         push_post.setOnClickListener(this);
-        Log.e("new", filename);
 
         try {
             getLocationFromGPS();
@@ -159,6 +158,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         //res = true;
 
         i = get();
+        Log.d("file", "" + i);
         pushPost();
     }
 
@@ -173,16 +173,15 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 params.put("username", username);
                 params.put("check_in", checkin);
                 params.put("story", story);
-                params.put("picture", i);
+                params.put("image", i);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("filename", "" + i);
                             Log.d("error", res);
-                            //Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
                             /*Intent i = new Intent(getApplication(), MenuActivity.class);
                             startActivity(i);
                             finish();*/
@@ -206,7 +205,6 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         File sd = Environment.getExternalStorageDirectory();
         File location = new File(sd.getAbsolutePath() + "/TheIndianRoute");
-        location.mkdir();
         return new File(location, filename);
     }
 
