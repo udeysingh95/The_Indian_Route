@@ -315,6 +315,10 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         } catch (JSONException e) {
 
         }
+        /**
+         * here is the error
+         */
+
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hashtag));
 
 
