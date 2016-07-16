@@ -1,11 +1,15 @@
 package com.example.udeys.theindianroute.filters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -20,11 +24,11 @@ public class FilterAdapterFactory extends RecyclerView.Adapter<FilterAdapterFact
     private String itemData[] = {
             "No Effect",
             "Autofix",
-            "BlackAndWhite",
+            "BW",
             "Brightness",
             "Contrast",
-            "CrossProcess",
-            "Documentary",
+            "CP",
+            "Doc",
             "Duotone",
             "Fillight",
             "FishEye",
@@ -39,7 +43,7 @@ public class FilterAdapterFactory extends RecyclerView.Adapter<FilterAdapterFact
             "Saturate",
             "Sepia",
             "Sharpen",
-            "Temperature",
+            "Temp",
             "TintEffect",
             "Vignette"};
     private Context mContext;
@@ -60,22 +64,8 @@ public class FilterAdapterFactory extends RecyclerView.Adapter<FilterAdapterFact
 
     @Override
     public void onBindViewHolder(FilterHolder holder, int position) {
-        String val = itemData[position];
-
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        // generate random color
-        int color1 = generator.getRandomColor();
-
-        TextDrawable.IBuilder builder = TextDrawable.builder()
-                .beginConfig()
-                .withBorder(2)
-                .fontSize(23)
-                .endConfig()
-                .rect();
-
-        TextDrawable drawable = builder.build(val.substring(0, 5), color1);
-
-        holder.imFilter.setImageDrawable(drawable);
+        holder.filterName.setText(itemData[position]);
+        holder.imFilter.setImageResource(R.drawable.filter_effetcs);
     }
 
     @Override
@@ -85,10 +75,12 @@ public class FilterAdapterFactory extends RecyclerView.Adapter<FilterAdapterFact
 
     public class FilterHolder extends RecyclerView.ViewHolder {
         public ImageView imFilter;
+        public TextView filterName;
 
         public FilterHolder(View itemView) {
             super(itemView);
             imFilter = (ImageView) itemView.findViewById(R.id.effectsviewimage_item);
+            filterName = (TextView) itemView.findViewById(R.id.filter_name);
         }
     }
 }

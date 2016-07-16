@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment {
 
         try {
             username = getArguments().getString("user_name");
-            user_id = String.valueOf(getArguments().getInt("user_id"));
+            user_id = getArguments().getString("user_id");
             res = true;
         } catch (Exception e) {
             Log.e("catch", e.toString());
@@ -160,16 +160,15 @@ public class ProfileFragment extends Fragment {
         try {
             JSONArray jArr = new JSONArray(result);
             String userprofilePicture;
-            int follow_s;
+            String follow_s;
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
-            follow_s = Integer.valueOf(obj.getString("following"));
+            follow_s = obj.getString("following");
 
             if(user_id.matches( sp.getString("user_id", null))){
                 follow_status.setText("edit your profile");
-            }
-            else if(follow_s == 1){
+            } else if (follow_s.contentEquals("1")) {
                 follow_status.setText("following");
             }
             else{

@@ -24,10 +24,16 @@ public class TextureRenderer {
                     "  gl_FragColor = texture2D(tex_sampler, v_texcoord);\n" +
                     "}\n";
     private static final float[] TEX_VERTICES = {
-            0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+            0f, 1f,
+            1f, 1f,
+            0f, 0f,
+            1f, 0f
     };
     private static final float[] POS_VERTICES = {
-            -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
+            0f, 1f,
+            1f, 1f,
+            0f, 0f,
+            1f, 0f
     };
     private static final int FLOAT_SIZE_BYTES = 4;
     private int mProgram;

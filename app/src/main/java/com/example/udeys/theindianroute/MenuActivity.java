@@ -130,10 +130,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.post:
-                /*ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_1, new ViewPostFragment());
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();*/
                 Intent i = new Intent(this, PostActivity.class);
                 startActivity(i);
                 break;
