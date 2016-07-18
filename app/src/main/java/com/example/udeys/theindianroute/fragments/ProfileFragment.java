@@ -36,7 +36,7 @@ import cz.msebera.android.httpclient.Header;
 public class ProfileFragment extends Fragment {
 
     View view;
-    TextView uname , posts;
+    TextView uname, posts;
     ImageView iv;
     SharedPreferences sp;
     String username;
@@ -46,6 +46,7 @@ public class ProfileFragment extends Fragment {
     ArrayList<String> imagePath;
     Button follow_status;
     boolean res = false;
+    String follow_s;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,10 +68,10 @@ public class ProfileFragment extends Fragment {
             user_id = sp.getString("user_id", null);
         }
 
-        uname = (TextView)view.findViewById(R.id.username);
+        uname = (TextView) view.findViewById(R.id.username);
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
-        follow_status = (Button)view.findViewById(R.id.follow_status);
+        follow_status = (Button) view.findViewById(R.id.follow_status);
         imagePath = new ArrayList<>();
         iv = (ImageView) view.findViewById(R.id.PF);
         return view;
@@ -80,8 +81,8 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-            initValue(user_id);    //fetch profile
-            initValues();  //fetch Posts
+        initValue(user_id);    //fetch profile
+        initValues();  //fetch Posts
 
     }
 
@@ -112,10 +113,10 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void initValues(){
+    private void initValues() {
         try {
             RequestParams params = new RequestParams();
-            params.put("user_id",user_id);
+            params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/fetch_gallery.php", params, new TextHttpResponseHandler() {
                         @Override
@@ -160,19 +161,30 @@ public class ProfileFragment extends Fragment {
         try {
             JSONArray jArr = new JSONArray(result);
             String userprofilePicture;
-            String follow_s;
+
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
             no_of_post = Integer.valueOf(obj.getString("post_count"));
             follow_s = obj.getString("following");
 
-            if(user_id.matches( sp.getString("user_id", null))){
+            if (user_id.matches(sp.getString("user_id", null))) {
                 follow_status.setText("edit your profile");
             } else if (follow_s.contentEquals("1")) {
                 follow_status.setText("following");
-            }
-            else{
+            } else {
                 follow_status.setText("follow");
+                follow_status.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (follow_s.contentEquals("0")) {
+                            follow_status.setText("following");
+                            follow_s = "1";
+                        } else {
+                            follow_status.setText("follow");
+                            follow_s = "0";
+                        }
+                    }
+                });
             }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));

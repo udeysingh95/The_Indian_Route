@@ -206,7 +206,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 params.put("username", username);
                 params.put("check_in", checkin);
                 params.put("story", story);
-                params.put("image", i);
+                // params.put("image", i);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -275,11 +275,11 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * */
             RequestParams params = new RequestParams();
             try {
-                params.put("image", i);
+                params.put("hash", hashtag);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/fetch_hash.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.d("error", res);
@@ -301,27 +301,29 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void decodeHashTag(String result) {
-        String hash = "";
-        ArrayList<String> hashtag = new ArrayList<>();
         try {
-            JSONArray jArr = new JSONArray(result);
-            for (int count = 0; count < jArr.length(); count++) {
-                JSONObject obj = jArr.getJSONObject(count);
-                hash = obj.getString("hash_tag");
-                hashtag.add(hash);
+            String hash = "";
+            ArrayList<String> hashtag = new ArrayList<>();
+            try {
+                JSONArray jArr = new JSONArray(result);
+                for (int count = 0; count < jArr.length(); count++) {
+                    JSONObject obj = jArr.getJSONObject(count);
+                    hash = obj.getString("hash_tag");
+                    hashtag.add(hash);
+
+                }
+
+            } catch (JSONException e) {
 
             }
+            /**
+             * here is the error
+             */
 
-        } catch (JSONException e) {
-
+            listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, hashtag));
+        } catch (Exception e) {
+            Log.d("Exception", e + "");
         }
-        /**
-         * here is the error
-         */
-
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hashtag));
-
-
     }
 
 }

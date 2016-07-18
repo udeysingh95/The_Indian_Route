@@ -23,6 +23,9 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -58,23 +61,35 @@ public class CommentFragment extends Fragment {
 
         post_comment = (Button) view.findViewById(R.id.post_comment);
         write_comment = (EditText) view.findViewById(R.id.write_comment);
+        requestComments();
 
+        commnetslists = (ListView) view.findViewById(R.id.comments_lists);
+
+        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+
+        commnetslists.setAdapter(commentsAdapter);
+        commnetslists.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String comment = write_comment.getText().toString();
+                String co = write_comment.getText().toString();
+                write_comment.setText("");
+                comments comments = new comments(co);
+                commentsAdapter.add(comments);
+                commentsAdapter.notifyDataSetChanged();
+
 
                 try {
                     RequestParams params = new RequestParams();
                     params.put("post_id", post_id);
                     params.put("user_id", HomeFragment.user_id);
-                    params.put("comment", comment);
+                    params.put("comment", co);
                     AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
                     client.get("http://indianroute.roms4all.com/post_comment.php", params, new TextHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, String res) {
-                                    Toast.makeText(getActivity(), "" + res, Toast.LENGTH_LONG).show();
+                                    Log.d("success", "" + res);
 
                                 }
 
@@ -92,16 +107,9 @@ public class CommentFragment extends Fragment {
             }
         });
 
-        requestComments();
-
-        commnetslists = (ListView) view.findViewById(R.id.comments_lists);
-
-        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
-
-        commnetslists.setAdapter(commentsAdapter);
-        commnetslists.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
     }
+
 
     public void requestComments() {
         try {
@@ -135,7 +143,7 @@ public class CommentFragment extends Fragment {
                 comment = obj.getString("comment");
                 comments Comments = new comments(comment);
                 commentsAdapter.add(Comments);
-                commentsAdapter.notifyDataSetChanged();
+
             }
 
 

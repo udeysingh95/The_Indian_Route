@@ -130,7 +130,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.post:
-                Intent i = new Intent(this, PostActivity.class);
+                Intent i = new Intent(this, PostForm.class);
                 startActivity(i);
                 break;
             case R.id.notification:
