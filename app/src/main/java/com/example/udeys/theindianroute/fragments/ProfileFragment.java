@@ -173,31 +173,60 @@ public class ProfileFragment extends Fragment {
                 follow_status.setText("following");
             } else {
                 follow_status.setText("follow");
-                follow_status.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (follow_s.contentEquals("0")) {
-                            follow_status.setText("following");
-                            follow_s = "1";
-                        } else {
-                            follow_status.setText("follow");
-                            follow_s = "0";
-                        }
-                    }
-                });
             }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
 
-            //may throw some error
+            follow_status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        follow_button();
+                }
+            });
 
             Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(250, 300).centerCrop().into(iv);
 
-
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
     }
+
+
+    private void follow_button() {
+        try {
+            String u_id = sp.getString("user_id", null);
+            RequestParams params = new RequestParams();
+            String status = follow_status.getText().toString();
+            params.put("user_id", u_id);
+            params.put("profile_id", user_id);
+            params.put("status", status);
+            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+            client.get("http://indianroute.roms4all.com/follow_unfollow.php", params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String res) {
+                            decode_status(res);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                            Toast.makeText(getActivity(), "button crash" + res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void decode_status(String result) {
+        try {
+            JSONArray jArr = new JSONArray(result);
+            JSONObject obj = jArr.getJSONObject(0);
+            follow_status.setText(obj.getString("status"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
