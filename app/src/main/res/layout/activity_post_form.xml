@@ -4,7 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="1"
     tools:context="com.example.udeys.theindianroute.PostForm">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <EditText
         android:id="@+id/post_story"
@@ -22,9 +29,9 @@
         android:hint="CheckIn" />
 
     <Button
+        android:id="@+id/push_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post"
-        android:id="@+id/push_post"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:text="Post" />
 </LinearLayout>

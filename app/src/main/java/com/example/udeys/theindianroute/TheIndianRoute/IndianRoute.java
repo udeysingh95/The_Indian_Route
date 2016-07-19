@@ -1,8 +1,11 @@
 package com.example.udeys.theindianroute.TheIndianRoute;
 
 import android.app.FragmentTransaction;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -16,6 +19,12 @@ public class IndianRoute extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_indian_route);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        Drawable upArrow = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_action_back);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         frag1 = (ImageButton) findViewById(R.id.frag1);
         frag2 = (ImageButton) findViewById(R.id.frag2);
         frag3 = (ImageButton) findViewById(R.id.frag3);

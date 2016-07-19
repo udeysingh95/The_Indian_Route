@@ -75,7 +75,7 @@
         <activity
             android:name=".PostForm"
             android:theme="@style/Theme.AppCompat"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".Register"
             android:theme="@style/AppTheme.NoActionBar"
@@ -93,6 +93,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".TheIndianRoute.IndianRoute"
+            android:label=""
+            android:parentActivityName=".MenuActivity"
             android:windowSoftInputMode="adjustPan" />
 
         <service android:name=".helperClasses.FirebaseMessagingService">

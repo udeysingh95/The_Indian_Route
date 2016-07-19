@@ -1,7 +1,6 @@
 package com.example.udeys.theindianroute;
 
 import android.app.FragmentTransaction;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,7 +19,6 @@ import com.example.udeys.theindianroute.fragments.NotificationFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.fragments.SearchFragment;
 import com.example.udeys.theindianroute.fragments.TripFragment;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -30,10 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -229,8 +223,4 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
-
-
-
-
 }

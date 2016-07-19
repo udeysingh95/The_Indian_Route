@@ -26,6 +26,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     Bitmap bp;
     String bas;
 
+    public final static boolean isValidEmail(CharSequence target) {
+        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         reg.setOnClickListener(this);
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -86,7 +89,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         * validated data send to the server.
         * flag boolean varidable to check the response from the server.
         * */
-        // hit_data(nm, unm, pass, eml, device_token);
+        hit_data(nm, unm, pass, eml, device_token);
 
     }
 
@@ -108,10 +111,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             } catch (Exception e) {
                 Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/try.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "success" + res, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -124,10 +127,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         } catch (Exception e) {
             Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public final static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
 }

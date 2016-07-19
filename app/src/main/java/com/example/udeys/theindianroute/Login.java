@@ -149,6 +149,7 @@ public class Login extends Activity {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //called when response HTTP status is "200"
+                            Toast.makeText(Login.this, "success", Toast.LENGTH_SHORT).show();
                             decodeJson(res);
 
                         }
@@ -185,7 +186,7 @@ public class Login extends Activity {
                     ed.clear();
                     ed.putString("user_id", user_id);
                     ed.putString("username", name);
-                    ed.commit();
+                    ed.apply();
 
                     Intent i = new Intent(this, MenuActivity.class);
                     startActivity(i);

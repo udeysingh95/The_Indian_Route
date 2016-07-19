@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,10 +20,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -32,7 +35,6 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.CompressFilter;
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.filters.EffectsFilterFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -104,7 +106,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
         // TODO Auto-generated method stub
 
-/*        locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -183,7 +185,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
-        }*/
+        }
 
 
         if (Build.VERSION.SDK_INT < 22) {
@@ -342,13 +344,6 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         myDir.mkdirs();
         File filename = new File(myDir, "man.jpeg");
         */
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c.getTime());
-
-
         filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
         Log.e("TAG", "filename = " + filename);
 
@@ -445,6 +440,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     public void surfaceCreated(SurfaceHolder holder) {
         try {
             camera = Camera.open();
+            setCameraDisplayOrientation();
             camera.setDisplayOrientation(90);
             //camera.setPreviewDisplay(holder);
         } catch (RuntimeException e) {
@@ -529,6 +525,33 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         if (camera != null)
             camera.release();
 
+    }
+
+    public void setCameraDisplayOrientation() {
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        Camera.getCameraInfo(Camera.CameraInfo.CAMERA_FACING_BACK, info);
+        int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break; //Natural orientation
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break; //Landscape left
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;//Upside down
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;//Landscape right
+        }
+        int rotate = (info.orientation - degrees + 360) % 360;
+
+//STEP #2: Set the 'rotation' parameter
+        Camera.Parameters params = camera.getParameters();
+        params.setRotation(rotate);
+        camera.setParameters(params);
     }
 
 

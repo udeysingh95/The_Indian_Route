@@ -51,11 +51,11 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     File i;
     double lat;
     double lon;
+    ListView listView;
     private Location thislocation;
     private boolean valid = false;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,9 +215,9 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.d("error", res);
                             Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
-                            /*Intent i = new Intent(getApplication(), MenuActivity.class);
+                            Intent i = new Intent(getApplication(), MenuActivity.class);
                             startActivity(i);
-                            finish();*/
+                            finish();
                         }
 
                         @Override
