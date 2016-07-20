@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
+import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -111,6 +112,20 @@ public class PostAdapter extends ArrayAdapter {
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(Posts.getUsername());
         postHolder.story_username.setText(Posts.getUsername());
+        postHolder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ProfileFragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("user_name", Posts.getUsername());
+                bundle.putString("user_id", Posts.getUser_id());
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.fragment_1, fragment);
+                fragmentTransaction.commit();
+            }
+        });
         postHolder.story.setText(Posts.getStory());
         postHolder.reaction.setTypeface(fa);
         postHolder.reaction.setTextSize(30);
