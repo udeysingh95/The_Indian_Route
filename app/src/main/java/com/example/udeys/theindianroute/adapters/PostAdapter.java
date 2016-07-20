@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.CommentFragment;
+import com.example.udeys.theindianroute.fragments.HomeFragment;
+import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -110,6 +112,20 @@ public class PostAdapter extends ArrayAdapter {
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(Posts.getUsername());
         postHolder.story_username.setText(Posts.getUsername());
+        postHolder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ProfileFragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("user_name", Posts.getUsername());
+                bundle.putString("user_id", Posts.getUser_id());
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.fragment_1, fragment);
+                fragmentTransaction.commit();
+            }
+        });
         postHolder.story.setText(Posts.getStory());
         postHolder.reaction.setTypeface(fa);
         postHolder.reaction.setTextSize(30);
@@ -164,12 +180,7 @@ public class PostAdapter extends ArrayAdapter {
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        try {
-                            Log.e("loaded", "success");
-                            scaleImage(postHolder.userPostImage, bitmap);
-                        } catch (Exception e) {
-                            Log.e("pa catch", e.toString());
-                        }
+                        scaleImage(postHolder.userPostImage, bitmap);
                     }
 
                     @Override
@@ -223,6 +234,14 @@ public class PostAdapter extends ArrayAdapter {
         }
     }
 
+    static class PostHolder {
+        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
+        ImageView userPostImage;
+        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
+        ProgressBar progressBar;
+
+    }
+
     public String post_time(String post_time) {
         String time;
         String start;
@@ -270,11 +289,12 @@ public class PostAdapter extends ArrayAdapter {
         return time;
     }
 
+
     private void scaleImage(ImageView view, Bitmap bitmap) throws NoSuchElementException {
         try {
             Drawable drawing = view.getDrawable();
             bitmap = ((BitmapDrawable) drawing).getBitmap();
-            Log.e("log", "" + bitmap);
+            Log.d("log", "" + bitmap);
         } catch (NullPointerException e) {
             throw new NoSuchElementException("No drawable on given view");
         } catch (ClassCastException e) {
@@ -294,9 +314,9 @@ public class PostAdapter extends ArrayAdapter {
 
         int height = bitmap.getHeight();
         int bounding = dpToPx(250);
-        Log.e("Test", "original width = " + Integer.toString(width));
-        Log.e("Test", "original height = " + Integer.toString(height));
-        Log.e("Test", "bounding = " + Integer.toString(bounding));
+        Log.i("Test", "original width = " + Integer.toString(width));
+        Log.i("Test", "original height = " + Integer.toString(height));
+        Log.i("Test", "bounding = " + Integer.toString(bounding));
 
         // Determine how much to scale: the dimension requiring less scaling is
         // closer to the its side. This way the image always stays inside your
@@ -304,9 +324,9 @@ public class PostAdapter extends ArrayAdapter {
         float xScale = ((float) bounding) / width;
         float yScale = ((float) bounding) / height;
         float scale = (xScale <= yScale) ? xScale : yScale;
-        Log.e("Test", "xScale = " + Float.toString(xScale));
-        Log.e("Test", "yScale = " + Float.toString(yScale));
-        Log.e("Test", "scale = " + Float.toString(scale));
+        Log.i("Test", "xScale = " + Float.toString(xScale));
+        Log.i("Test", "yScale = " + Float.toString(yScale));
+        Log.i("Test", "scale = " + Float.toString(scale));
 
         // Create a matrix for the scaling and add the scaling data
         Matrix matrix = new Matrix();
@@ -335,14 +355,6 @@ public class PostAdapter extends ArrayAdapter {
     private int dpToPx(int dp) {
         float density = getContext().getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
-    }
-
-    static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
-        ImageView userPostImage;
-        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
-        ProgressBar progressBar;
-
     }
 
 
