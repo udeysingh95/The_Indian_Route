@@ -196,7 +196,6 @@ public class ProfileFragment extends Fragment {
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
     }
 
-
     private void follow_button() {
         try {
 
