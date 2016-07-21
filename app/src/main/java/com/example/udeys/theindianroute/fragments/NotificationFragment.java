@@ -55,11 +55,13 @@ public class NotificationFragment extends Fragment {
                 notification obj = (notification) notificationList.getItemAtPosition(position);
                 String post_id = obj.getPost_id();
                 String action = obj.getAction();
+                String user_name = obj.getUsername();
                 String follower_id = obj.getFollower_id();
                 Bundle bundle = new Bundle();
                 bundle.putString("action", action);
                 bundle.putString("user_id",follower_id);
                 bundle.putString("post_id", post_id);
+                bundle.putString("user_name", user_name);
                 if (action.contentEquals("1") || action.contentEquals("2")) {
                     ViewPostFragment ViewPostFragment = new ViewPostFragment();
                     ViewPostFragment.setArguments(bundle);
@@ -71,7 +73,7 @@ public class NotificationFragment extends Fragment {
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setArguments(bundle);
                     ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.fragment_1, new ProfileFragment());
+                    ft.replace(R.id.fragment_1, profileFragment);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     ft.commit();
                 }
