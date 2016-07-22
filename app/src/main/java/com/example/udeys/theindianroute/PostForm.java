@@ -20,6 +20,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -44,14 +45,16 @@ import cz.msebera.android.httpclient.Header;
 public class PostForm extends AppCompatActivity implements View.OnClickListener {
 
     String story, checkin = "";
-    EditText sto, c;
+    EditText c;
+    AutoCompleteTextView sto;
     String username;
-    String hashtag;
+    String hash_tag;
     String filename;
     File i;
     double lat;
     double lon;
     ListView listView;
+    ArrayList<String> hashtag;
     private Location thislocation;
     private boolean valid = false;
     private LocationManager locationManager;
@@ -63,7 +66,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         username = sp.getString("username", "udeysingh95");
         setContentView(R.layout.activity_post_form);
-        sto = (EditText) findViewById(R.id.post_story);
+        sto = (AutoCompleteTextView) findViewById(R.id.post_story);
         c = (EditText) findViewById(R.id.post_checkin);
         listView = (ListView) findViewById(R.id.mini_list);
         sto.addTextChangedListener(new TextWatcher() {
@@ -75,10 +78,19 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                hashtag = sto.getText().toString();
-                if (hashtag.startsWith("#", 0)) {
-                    hashtag();
+                String hash = sto.getText().toString();
+                hash_tag = hash.substring(hash.lastIndexOf("#") + 1);
+                hashtag();
+                /*if (!valid) {
+                    valid = true;
+                    hash_tag = "";
+                    //Log.e("hash_tag",hash_tag);
+                    //Log.e("valid",String.valueOf(valid));
                 }
+                if(valid){
+                    hashtag();
+                    valid = false;
+                }*/
 
             }
 
@@ -275,14 +287,15 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * */
             RequestParams params = new RequestParams();
             try {
-                params.put("hash", hashtag);
+                Log.e("hash_tag", hash_tag);
+                params.put("hash", hash_tag);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             client.post("http://indianroute.roms4all.com/fetch_hash.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("error", res);
+                            //Log.e("succes", res);
                             decodeHashTag(res);
                         }
 
@@ -303,7 +316,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     public void decodeHashTag(String result) {
         try {
             String hash = "";
-            ArrayList<String> hashtag = new ArrayList<>();
+            hashtag = new ArrayList<>();
             try {
                 JSONArray jArr = new JSONArray(result);
                 for (int count = 0; count < jArr.length(); count++) {
@@ -319,8 +332,9 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             /**
              * here is the error
              */
-
-            listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, hashtag));
+            ArrayAdapter adapter = new ArrayAdapter<>(PostForm.this, android.R.layout.simple_list_item_1, hashtag);
+            sto.setAdapter(adapter);
+            //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, hashtag));
         } catch (Exception e) {
             Log.d("Exception", e + "");
         }
