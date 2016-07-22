@@ -20,12 +20,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.helperClasses.SpaceTokenizer;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -46,7 +47,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
     String story, checkin = "";
     EditText c;
-    AutoCompleteTextView sto;
+    MultiAutoCompleteTextView sto;
     String username;
     String hash_tag;
     String filename;
@@ -66,7 +67,8 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         username = sp.getString("username", "udeysingh95");
         setContentView(R.layout.activity_post_form);
-        sto = (AutoCompleteTextView) findViewById(R.id.post_story);
+        sto = (MultiAutoCompleteTextView) findViewById(R.id.post_story);
+        sto.setTokenizer(new SpaceTokenizer());
         c = (EditText) findViewById(R.id.post_checkin);
         listView = (ListView) findViewById(R.id.mini_list);
         sto.addTextChangedListener(new TextWatcher() {
@@ -295,7 +297,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             client.post("http://indianroute.roms4all.com/fetch_hash.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            //Log.e("succes", res);
+                            Log.e("succes", res);
                             decodeHashTag(res);
                         }
 
@@ -327,7 +329,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 }
 
             } catch (JSONException e) {
-
+                Log.e("catch", e.toString());
             }
             /**
              * here is the error
