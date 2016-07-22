@@ -44,8 +44,6 @@ public class IndianRouteGallery extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String id = String.valueOf(post_id.get(position));
-                Bundle bundle = new Bundle();
-                bundle.putString("post_id", id);
                 /*ViewPostActivity viewPostActivity = new ViewPostActivity();
                 viewPostActivity.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction()
@@ -53,7 +51,7 @@ public class IndianRouteGallery extends Fragment {
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();*/
                 Intent intent = new Intent(getActivity(), ViewPostActivity.class);
-                intent.putExtra("bundle", bundle);
+                intent.putExtra("post_id", id);
                 startActivity(intent);
             }
         });

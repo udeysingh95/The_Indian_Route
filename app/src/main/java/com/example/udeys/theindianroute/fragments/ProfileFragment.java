@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.Setting;
+import com.example.udeys.theindianroute.ViewPostActivity;
 import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -49,6 +51,7 @@ public class ProfileFragment extends Fragment {
     Button follow_status;
     boolean res = false;
     String follow_s;
+    ArrayList<String> post_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -141,13 +144,16 @@ public class ProfileFragment extends Fragment {
 
     private void decodeJson(String result) {
         try {
+            post_id = new ArrayList<>();
             JSONArray jArr = new JSONArray(result);
 
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
+                String id = obj.getString("id");
                 imagePath.add(path);
+                post_id.add(id);
                 //Log.e("path", path);
                 //gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
             }
@@ -157,6 +163,14 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                intent.putExtra("post_id", post_id.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
     private void decodeNewJson(String result) {
