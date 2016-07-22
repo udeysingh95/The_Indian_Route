@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
+import com.example.udeys.theindianroute.fragments.CameraFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.NotificationFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
@@ -34,9 +35,9 @@ import cz.msebera.android.httpclient.Header;
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    public String username , user_id;
+    public String username, user_id;
     ImageButton hm, trp, pst, notif, prfl;      //menuBar
-    ImageButton Logo, Search ;
+    ImageButton Logo, Search;
     EditText srch;
     Boolean search_state = false;
     FragmentTransaction ft;
@@ -52,9 +53,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         srch = (EditText) findViewById(R.id.search_bar);
         Search = (ImageButton) findViewById(R.id.btn_search);
-        Logo = (ImageButton)findViewById(R.id.toolbar_logo);
+        Logo = (ImageButton) findViewById(R.id.toolbar_logo);
 
-       
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
@@ -67,7 +67,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         pst = (ImageButton) findViewById(R.id.post);
         notif = (ImageButton) findViewById(R.id.notification);
         prfl = (ImageButton) findViewById(R.id.profile);
-
 
 
         hm.setOnClickListener(this);
@@ -124,8 +123,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft.commit();
                 break;
             case R.id.post:
-                Intent i = new Intent(this, PostForm.class);
-                startActivity(i);
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_1, new CameraFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
                 break;
             case R.id.notification:
                 ft = getFragmentManager().beginTransaction();
@@ -144,18 +145,16 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn_search:
-                if(search_state == false){
+                if (search_state == false) {
                     Search.setImageResource(R.drawable.ic_action_back);
                     srch.setVisibility(View.VISIBLE);
                     search_state = true;
-                }
-                else{
+                } else {
                     Search.setImageResource(R.drawable.ic_action_search_dark);
                     srch.setVisibility(View.INVISIBLE);
                     search_state = false;
                 }
                 break;
-
 
 
         }

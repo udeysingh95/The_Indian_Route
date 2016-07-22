@@ -240,11 +240,14 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
     private void decode_status(String result) {
         try {
             JSONArray jArr = new JSONArray(result);
             JSONObject obj = jArr.getJSONObject(0);
-            follow_status.setText(obj.getString("status"));
+            String response = obj.getString("status");
+            follow_status.setText(response);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

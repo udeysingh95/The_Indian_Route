@@ -1,5 +1,7 @@
 package com.example.udeys.theindianroute;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -40,15 +42,18 @@ public class ViewPostActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
         setSupportActionBar(myToolbar);
         pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.vpuserProfilePicture);
+        Typeface fa = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         back_btn = (ImageButton) findViewById(R.id.btn_back);
         post = (ImageView) findViewById(R.id.vpuserpostimage);
         user_name = (TextView) findViewById(R.id.vpusername);
         like = (TextView) findViewById(R.id.icon_like);
         comment = (TextView) findViewById(R.id.icon_comment);
-        like.setText(R.string.icon_heart_empty);
         post_like = (TextView) findViewById(R.id.likes);
+        like.setTypeface(fa);
+        like.setTextSize(30);
         post_comment = (TextView) findViewById(R.id.Comments);
-        //comment.setTypeface(fa);
+        comment.setTypeface(fa);
+        comment.setTextSize(30);
         post_story = (TextView) findViewById(R.id.story);
         posts_id = getIntent().getStringExtra("post_id");
         extractData();
@@ -58,7 +63,20 @@ public class ViewPostActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CommentActivity.class);
+                intent.putExtra("post_id", posts_id);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     public void extractData() {
         try {
