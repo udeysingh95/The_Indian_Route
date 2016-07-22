@@ -6,6 +6,7 @@ package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.Setting;
 import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -47,7 +49,6 @@ public class ProfileFragment extends Fragment {
     Button follow_status;
     boolean res = false;
     String follow_s;
-    String u_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,12 +60,11 @@ public class ProfileFragment extends Fragment {
         try {
             username = getArguments().getString("user_name");
             user_id = getArguments().getString("user_id");
-            u_id = sp.getString("user_id", null);
             res = true;
         } catch (Exception e) {
             Log.e("catch", e.toString());
         }
-        if (!res) {
+        if (res == false) {
 
             username = sp.getString("username", null);
             user_id = sp.getString("user_id", null);
@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment {
 
     private void initValue(String user_id) {
         try {
-            u_id = sp.getString("user_id", null);
+            String u_id = sp.getString("user_id", null);
             RequestParams params = new RequestParams();
 
             params.put("user_id", user_id);
@@ -176,7 +176,6 @@ public class ProfileFragment extends Fragment {
                 follow_status.setText("following");
             } else {
                 follow_status.setText("follow");
-
             }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
@@ -196,9 +195,14 @@ public class ProfileFragment extends Fragment {
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
     }
 
-    private void follow_button() {
-        try {
 
+    private void follow_button() {
+        if(follow_status.getText().toString().equals("edit your profile")){
+            Intent i = new Intent(getActivity() , Setting.class);
+            startActivity(i);
+        }
+        try {
+            String u_id = sp.getString("user_id", null);
             RequestParams params = new RequestParams();
             String status = follow_status.getText().toString();
             params.put("user_id", u_id);

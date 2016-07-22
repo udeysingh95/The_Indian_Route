@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "json return" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
@@ -142,6 +142,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             int reaction, state, comment;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
+                if(obj.isNull("username")){
+                    continue;
+                }
                 username = obj.getString("username");
                 story = obj.getString("story");
                 picture = obj.getString("picture");
