@@ -7,4 +7,21 @@
     android:background="?attr/colorPrimaryDark"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"></android.support.v7.widget.Toolbar>
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:src="@drawable/ic_action_back" />
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

@@ -6,12 +6,14 @@ package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.ViewPostActivity;
 import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -48,12 +51,12 @@ public class ProfileFragment extends Fragment {
     boolean res = false;
     String follow_s;
     String u_id;
+    ArrayList<String> post_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
-
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
 
         try {
@@ -141,22 +144,35 @@ public class ProfileFragment extends Fragment {
 
     private void decodeJson(String result) {
         try {
+            post_id = new ArrayList<>();
             JSONArray jArr = new JSONArray(result);
 
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
+                String id = obj.getString("id");
                 imagePath.add(path);
-                //Log.e("path", path);
+                post_id.add(id);
+
+                // Log.e("path", id);
                 //gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
             }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("error", e.toString());
         }
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("position", String.valueOf(i));
+                Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                intent.putExtra("post_id", post_id.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
     private void decodeNewJson(String result) {

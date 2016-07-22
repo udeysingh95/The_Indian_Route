@@ -6,6 +6,7 @@ package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.ViewPostActivity;
 import com.example.udeys.theindianroute.adapters.notificationAdapter;
 import com.example.udeys.theindianroute.helperClasses.notification;
 import com.loopj.android.http.AsyncHttpClient;
@@ -63,12 +65,15 @@ public class NotificationFragment extends Fragment {
                 bundle.putString("post_id", post_id);
                 bundle.putString("user_name", user_name);
                 if (action.contentEquals("1") || action.contentEquals("2")) {
-                    ViewPostFragment ViewPostFragment = new ViewPostFragment();
-                    ViewPostFragment.setArguments(bundle);
+                    Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                    intent.putExtra("bundle", bundle);
+                    startActivity(intent);
+                    /*ViewPostActivity ViewPostActivity = new ViewPostActivity();
+                    ViewPostActivity.setArguments(bundle);
                     ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.fragment_1, ViewPostFragment);
+                    ft.replace(R.id.fragment_1, ViewPostActivity);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    ft.commit();
+                    ft.commit();*/
                 } else {
                     ProfileFragment profileFragment = new ProfileFragment();
                     profileFragment.setArguments(bundle);

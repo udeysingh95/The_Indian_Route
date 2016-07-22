@@ -1,7 +1,7 @@
 package com.example.udeys.theindianroute.TheIndianRoute;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -12,8 +12,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.udeys.theindianroute.R;
+import com.example.udeys.theindianroute.ViewPostActivity;
 import com.example.udeys.theindianroute.adapters.ImageAdapter;
-import com.example.udeys.theindianroute.fragments.ViewPostFragment;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -46,12 +46,15 @@ public class IndianRouteGallery extends Fragment {
                 String id = String.valueOf(post_id.get(position));
                 Bundle bundle = new Bundle();
                 bundle.putString("post_id", id);
-                ViewPostFragment viewPostFragment = new ViewPostFragment();
-                viewPostFragment.setArguments(bundle);
+                /*ViewPostActivity viewPostActivity = new ViewPostActivity();
+                viewPostActivity.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction()
-                        .replace(R.id.indian_route_fragment, viewPostFragment)
+                        .replace(R.id.indian_route_fragment, viewPostActivity)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                ft.commit();*/
+                Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                intent.putExtra("bundle", bundle);
+                startActivity(intent);
             }
         });
         return  view;

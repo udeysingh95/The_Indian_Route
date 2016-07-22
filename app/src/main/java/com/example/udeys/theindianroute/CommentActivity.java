@@ -1,20 +1,20 @@
-package com.example.udeys.theindianroute.fragments;
+package com.example.udeys.theindianroute;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
+import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.helperClasses.comments;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -23,17 +23,13 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Comment;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Gitesh on 22-06-2016.
  */
-public class CommentFragment extends Fragment {
-    View view;
+public class CommentActivity extends AppCompatActivity {
     Button post_comment;
     EditText write_comment;
     TextView user;
@@ -41,31 +37,30 @@ public class CommentFragment extends Fragment {
     ListView commnetslists;
     String post_id, username;
     ImageView post_image, pp;
+    ImageButton btn_back;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Bundle bundle = this.getArguments();
-        post_id = bundle.getString("post_id", null);
-        username = bundle.getString("username", null);
-
-        view = inflater.inflate(R.layout.commentfragment, container, false);
-
-        return view;
-    }
-
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        post_comment = (Button) view.findViewById(R.id.post_comment);
-        write_comment = (EditText) view.findViewById(R.id.write_comment);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comment);
+        post_id = getIntent().getStringExtra("post_id");
+        username = getIntent().getStringExtra("username");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
+        setSupportActionBar(myToolbar);
+        post_comment = (Button) findViewById(R.id.post_comment);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        write_comment = (EditText) findViewById(R.id.write_comment);
         requestComments();
 
-        commnetslists = (ListView) view.findViewById(R.id.comments_lists);
+        commnetslists = (ListView) findViewById(R.id.comments_lists);
 
-        commentsAdapter = new commentsAdapter(getActivity(), R.layout.commentrowlayout, post_id);
+        commentsAdapter = new commentsAdapter(getApplicationContext(), R.layout.commentrowlayout, post_id);
 
         commnetslists.setAdapter(commentsAdapter);
         commnetslists.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
@@ -95,20 +90,19 @@ public class CommentFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                                    Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                                 }
                             }
                     );
                 } catch (Exception e) {
-                    Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 commentNotification(HomeFragment.user_id, post_id);
 
             }
         });
-
-
     }
+
 
 
     public void requestComments() {
@@ -125,12 +119,12 @@ public class CommentFragment extends Fragment {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -167,12 +161,12 @@ public class CommentFragment extends Fragment {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

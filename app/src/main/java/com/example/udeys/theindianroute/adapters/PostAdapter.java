@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute.adapters;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -22,9 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.CommentActivity;
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.fragments.CommentFragment;
-import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.helperClasses.posts;
 import com.loopj.android.http.AsyncHttpClient;
@@ -160,15 +160,10 @@ public class PostAdapter extends ArrayAdapter {
         postHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = ((AppCompatActivity) getContext()).getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                CommentFragment fragment = new CommentFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("username", Posts.getUsername());
-                bundle.putString("post_id", Posts.getPost_id());
-                fragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.fragment_1, fragment);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(getContext(), CommentActivity.class);
+                intent.putExtra("username", Posts.getUsername());
+                intent.putExtra("post_id", Posts.getPost_id());
+                getContext().startActivity(intent);
             }
         });
         postHolder.post_time.setText(post_time(Posts.getPost_time()));
@@ -234,14 +229,6 @@ public class PostAdapter extends ArrayAdapter {
         }
     }
 
-    static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
-        ImageView userPostImage;
-        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
-        ProgressBar progressBar;
-
-    }
-
     public String post_time(String post_time) {
         String time;
         String start;
@@ -288,7 +275,6 @@ public class PostAdapter extends ArrayAdapter {
 
         return time;
     }
-
 
     private void scaleImage(ImageView view, Bitmap bitmap) throws NoSuchElementException {
         try {
@@ -355,6 +341,14 @@ public class PostAdapter extends ArrayAdapter {
     private int dpToPx(int dp) {
         float density = getContext().getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    static class PostHolder {
+        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
+        ImageView userPostImage;
+        com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
+        ProgressBar progressBar;
+
     }
 
 

@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:weightSum="2">
 
-
+    <include
+        android:id="@+id/back_bar"
+        layout="@layout/back_bar" />
     <ListView
         android:id="@+id/comments_lists"
         android:layout_width="match_parent"

@@ -1,17 +1,16 @@
-package com.example.udeys.theindianroute.fragments;
+package com.example.udeys.theindianroute;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.udeys.theindianroute.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -26,39 +25,40 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by Gitesh on 04-07-2016.
  */
-public class ViewPostFragment extends Fragment {
-    View view;
+public class ViewPostActivity extends AppCompatActivity {
     String posts_id, username, profile_pic, post_pic, story, check_in, reaction;
     com.makeramen.roundedimageview.RoundedImageView pp;
     ImageView post;
-    TextView user_name, post_story, like, comment;
+    ImageButton back_btn;
+    TextView user_name, post_story, like, comment, post_like, post_comment;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Bundle bundle = this.getArguments();
-        posts_id = bundle.getString("post_id");
-        view = inflater.inflate(R.layout.viewpostfragment, container, false);
-
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        pp = (com.makeramen.roundedimageview.RoundedImageView) getView().findViewById(R.id.vpuserProfilePicture);
-        post = (ImageView) getView().findViewById(R.id.vpuserpostimage);
-        user_name = (TextView) getView().findViewById(R.id.vpusername);
-
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_viewpost);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
+        setSupportActionBar(myToolbar);
+        pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.vpuserProfilePicture);
+        back_btn = (ImageButton) findViewById(R.id.btn_back);
+        post = (ImageView) findViewById(R.id.vpuserpostimage);
+        user_name = (TextView) findViewById(R.id.vpusername);
+        like = (TextView) findViewById(R.id.icon_like);
+        comment = (TextView) findViewById(R.id.icon_comment);
+        like.setText(R.string.icon_heart_empty);
+        post_like = (TextView) findViewById(R.id.likes);
+        post_comment = (TextView) findViewById(R.id.Comments);
+        //comment.setTypeface(fa);
+        post_story = (TextView) findViewById(R.id.story);
+        posts_id = getIntent().getStringExtra("post_id");
         extractData();
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
-
 
     public void extractData() {
         try {
@@ -74,12 +74,12 @@ public class ViewPostFragment extends Fragment {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getActivity(), "" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -99,8 +99,10 @@ public class ViewPostFragment extends Fragment {
                 Log.d("pic", "" + profile_pic);
                 Log.d("username", "" + username);
             }
-            Picasso.with(getActivity()).load(profile_pic).into(pp);
-            Picasso.with(getActivity()).load(post_pic).resize(320, 240).into(post);
+            Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
+            Picasso.with(getApplicationContext()).load(post_pic).resize(320, 240).into(post);
+            //post_comment.setText();
+            post_like.setText(reaction);
             user_name.setText(username);
 
         } catch (JSONException e) {
