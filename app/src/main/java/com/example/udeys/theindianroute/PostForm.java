@@ -48,10 +48,11 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     String story, checkin = "";
     EditText c;
     MultiAutoCompleteTextView sto;
-    String username;
+    String username ,user_id;
     String hash_tag;
     String filename;
     File i;
+    Button push_post;
     double lat;
     double lon;
     ListView listView;
@@ -65,7 +66,8 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        username = sp.getString("username", "udeysingh95");
+        username = sp.getString("username", null);
+        user_id = sp.getString("user_id", null);
         setContentView(R.layout.activity_post_form);
         sto = (MultiAutoCompleteTextView) findViewById(R.id.post_story);
         sto.setTokenizer(new SpaceTokenizer());
@@ -83,17 +85,6 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 String hash = sto.getText().toString();
                 hash_tag = hash.substring(hash.lastIndexOf("#") + 1);
                 hashtag();
-                /*if (!valid) {
-                    valid = true;
-                    hash_tag = "";
-                    //Log.e("hash_tag",hash_tag);
-                    //Log.e("valid",String.valueOf(valid));
-                }
-                if(valid){
-                    hashtag();
-                    valid = false;
-                }*/
-
             }
 
             @Override
@@ -101,7 +92,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
             }
         });
-        Button push_post = (Button) findViewById(R.id.push_post);
+        push_post = (Button) findViewById(R.id.push_post);
         filename = getIntent().getStringExtra("post_image");
         push_post.setOnClickListener(this);
 
@@ -115,20 +106,10 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     private void getLocationFromGPS() {
         locationListener = new LocationListener() {
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            public void onProviderDisabled(String provider) {
-
-            }
-
+            public void onStatusChanged(String provider, int status, Bundle extras) {            }
+            public void onProviderEnabled(String provider) {            }
+            public void onProviderDisabled(String provider) {            }
             public void onLocationChanged(Location location) {
-
                 gpsLocationReceived(location);
 
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -198,14 +179,15 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         story = sto.getText().toString();
+
         checkin = c.getText().toString();
+
         if (checkin.length() == 0)
             checkin = getLocation();
-        c.setText(checkin);
-        //res = true;
 
+        c.setText(checkin);
         i = get();
-        Log.d("file", "" + i);
+        //Log.d("file", "" + i);
         pushPost();
     }
 
@@ -216,28 +198,23 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * Bind parameters here
             * */
             RequestParams params = new RequestParams();
-            try {
-                params.put("username", username);
-                params.put("check_in", checkin);
-                params.put("story", story);
-                // params.put("image", i);
-            } catch (Exception e) {
-                //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            params.put("user_id" , user_id);
+            params.put("check_in", checkin);
+            params.put("story", story);
+            // params.put("image", i);
+
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("error", res);
-                            Toast.makeText(PostForm.this, "2" + res, Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplication(), MenuActivity.class);
-                            startActivity(i);
-                            finish();
+                            //Intent i = new Intent(getApplication(), MenuActivity.class);
+                            //startActivity(i);
+                            //finish();
+                            Log.d("posted", res);
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                            //Toast.makeText(PostForm.this, "3" + statusCode + res, Toast.LENGTH_SHORT).show();
+                            Log.d("error", res);
                         }
                     }
             );
@@ -256,7 +233,6 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     }
 
     protected void gpsLocationReceived(Location location) {
-
         thislocation = location;
     }
     /*
@@ -331,12 +307,9 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             } catch (JSONException e) {
                 Log.e("catch", e.toString());
             }
-            /**
-             * here is the error
-             */
             ArrayAdapter adapter = new ArrayAdapter<>(PostForm.this, android.R.layout.simple_list_item_1, hashtag);
             sto.setAdapter(adapter);
-            //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, hashtag));
+
         } catch (Exception e) {
             Log.d("Exception", e + "");
         }

@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.ViewPostActivity;
+import com.example.udeys.theindianroute.Setting;
 import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -50,24 +49,22 @@ public class ProfileFragment extends Fragment {
     Button follow_status;
     boolean res = false;
     String follow_s;
-    String u_id;
-    ArrayList<String> post_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
+
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
 
         try {
             username = getArguments().getString("user_name");
             user_id = getArguments().getString("user_id");
-            u_id = sp.getString("user_id", null);
             res = true;
         } catch (Exception e) {
             Log.e("catch", e.toString());
         }
-        if (!res) {
+        if (res == false) {
 
             username = sp.getString("username", null);
             user_id = sp.getString("user_id", null);
@@ -93,7 +90,7 @@ public class ProfileFragment extends Fragment {
 
     private void initValue(String user_id) {
         try {
-            u_id = sp.getString("user_id", null);
+            String u_id = sp.getString("user_id", null);
             RequestParams params = new RequestParams();
 
             params.put("user_id", user_id);
@@ -144,35 +141,22 @@ public class ProfileFragment extends Fragment {
 
     private void decodeJson(String result) {
         try {
-            post_id = new ArrayList<>();
             JSONArray jArr = new JSONArray(result);
 
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
-                String id = obj.getString("id");
                 imagePath.add(path);
-                post_id.add(id);
-
-                // Log.e("path", id);
+                //Log.e("path", path);
                 //gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
             }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
-            Log.e("error", e.toString());
+            e.printStackTrace();
         }
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("position", String.valueOf(i));
-                Intent intent = new Intent(getActivity(), ViewPostActivity.class);
-                intent.putExtra("post_id", post_id.get(i));
-                startActivity(intent);
-            }
-        });
     }
 
     private void decodeNewJson(String result) {
@@ -192,7 +176,6 @@ public class ProfileFragment extends Fragment {
                 follow_status.setText("following");
             } else {
                 follow_status.setText("follow");
-
             }
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
@@ -212,9 +195,15 @@ public class ProfileFragment extends Fragment {
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
     }
 
-    private void follow_button() {
-        try {
 
+    private void follow_button() {
+        if(follow_status.getText().toString().equals("edit your profile")){
+            Intent i = new Intent(getActivity(), Setting.class);
+           startActivity(i);
+
+        }
+        try {
+            String u_id = sp.getString("user_id", null);
             RequestParams params = new RequestParams();
             String status = follow_status.getText().toString();
             params.put("user_id", u_id);
