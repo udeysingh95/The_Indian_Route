@@ -198,8 +198,9 @@ public class ProfileFragment extends Fragment {
 
     private void follow_button() {
         if(follow_status.getText().toString().equals("edit your profile")){
-            Intent i = new Intent(getActivity() , Setting.class);
-            startActivity(i);
+            Intent i = new Intent(getActivity(), Setting.class);
+           startActivity(i);
+
         }
         try {
             String u_id = sp.getString("user_id", null);

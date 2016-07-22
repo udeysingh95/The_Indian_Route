@@ -66,8 +66,6 @@ public class Setting extends Activity  implements View.OnClickListener{
         int id = v.getId();
         switch (id){
             case R.id.ic_cancel:
-                Intent i = new Intent(this , MenuActivity.class);
-                startActivity(i);
                 finish();
                 break;
             case R.id.ic_save:
@@ -110,8 +108,6 @@ public class Setting extends Activity  implements View.OnClickListener{
         client.get("http://indianroute.roms4all.com/update_setting.php", params, new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String res) {
-                        Intent i = new Intent(getApplicationContext() , MenuActivity.class);
-                        startActivity(i);
                         finish();
 
                     }
