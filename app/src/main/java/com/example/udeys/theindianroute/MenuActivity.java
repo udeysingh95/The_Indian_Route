@@ -1,5 +1,6 @@
 package com.example.udeys.theindianroute;
 
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
@@ -39,9 +43,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton hm, trp, pst, notif, prfl;      //menuBar
     ImageButton Logo, Search;
     EditText srch;
+    TextView title;
     Boolean search_state = false;
     FragmentTransaction ft;
     Intent intent = null;
+    LinearLayout home,trip,post,alert,passport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +60,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         srch = (EditText) findViewById(R.id.search_bar);
         Search = (ImageButton) findViewById(R.id.btn_search);
         Logo = (ImageButton) findViewById(R.id.toolbar_logo);
+        home = (LinearLayout) findViewById(R.id.home_button);
+        trip = (LinearLayout) findViewById(R.id.trip_button);
+        post = (LinearLayout) findViewById(R.id.post_button);
+        alert = (LinearLayout) findViewById(R.id.alert_button);
+        passport = (LinearLayout) findViewById(R.id.passport_button);
 
-
+        title = (TextView)findViewById(R.id.title);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
@@ -108,33 +119,45 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int id = v.getId();
-
-        switch (id) {
+       switch (id) {
             case R.id.home:
+                reduce_alpha();
+                home.setAlpha(1f);
+                title.setText("home");
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new HomeFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.trip:
+                reduce_alpha();
+                trip.setAlpha(1f);
+                title.setText("trip mode");
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new TripFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.post:
+                reduce_alpha();
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new CameraFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.notification:
+                reduce_alpha();
+                alert.setAlpha(1f);
+                title.setText("alerts");
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new NotificationFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
             case R.id.profile:
+                reduce_alpha();
+                passport.setAlpha(1f);
+                title.setText("passport");
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new ProfileFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -147,11 +170,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_search:
                 if (search_state == false) {
                     Search.setImageResource(R.drawable.ic_action_back);
+                    title.setVisibility(View.GONE);
                     srch.setVisibility(View.VISIBLE);
                     search_state = true;
                 } else {
                     Search.setImageResource(R.drawable.ic_action_search_dark);
-                    srch.setVisibility(View.INVISIBLE);
+                    srch.setVisibility(View.GONE);
+                    title.setVisibility(View.VISIBLE);
                     search_state = false;
                 }
                 break;
@@ -217,9 +242,19 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initFragments() {
+        home.setAlpha(1f);
         ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_1, new HomeFragment());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
+
+    private void reduce_alpha(){
+        home.setAlpha(0.5f);
+        trip.setAlpha(0.5f);
+        alert.setAlpha(0.5f);
+        passport.setAlpha(0.5f);
+    }
+
+
 }
