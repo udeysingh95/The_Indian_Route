@@ -100,7 +100,7 @@ public class ViewPostActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
+//comment
 
     public void jsonExtract(String res) {
         try {
