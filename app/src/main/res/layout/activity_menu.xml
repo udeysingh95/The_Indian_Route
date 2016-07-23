@@ -32,47 +32,144 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/home"
-            android:layout_width="wrap_content"
+        android:background="#2f241e"
+        android:weightSum="5"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_important" />
+            android:id="@+id/home_button"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageButton
+                android:id="@+id/home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="#2f241e"
+                android:src="@drawable/home" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="HOME"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="10dp"
+                />
 
-        <ImageButton
-            android:id="@+id/trip"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_split" />
+            android:id="@+id/trip_button"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageButton
+                android:id="@+id/trip"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="#2f241e"
+                android:src="@drawable/trip" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="TRIP"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="10dp"
+                />
 
-        <ImageButton
-            android:id="@+id/post"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_favorite" />
+            android:id="@+id/post_button"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageButton
+                android:id="@+id/post"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="#2f241e"
+                android:src="@drawable/post" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="POST"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="10dp"
+                />
 
-        <ImageButton
-            android:id="@+id/notification"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_search" />
+            android:id="@+id/alert_button"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageButton
+                android:id="@+id/notification"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="#2f241e"
+                android:src="@drawable/notifications" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="ALERTS"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="10dp"
+                />
 
-        <ImageButton
-            android:id="@+id/profile"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_go_to_today" />
+            android:id="@+id/passport_button"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <ImageButton
+                android:id="@+id/profile"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="#2f241e"
+                android:src="@drawable/profile" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:text="PASSPORT"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="10dp"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
