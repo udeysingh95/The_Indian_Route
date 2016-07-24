@@ -25,11 +25,11 @@
                     android:id="@+id/userpostimage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="35dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bc"
-                    android:layout_marginTop="35dp"
-                    android:layout_alignParentStart="true" />
+                    android:src="@drawable/bc" />
 
                 <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/userProfilePicture"
@@ -51,9 +51,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="20dp"
-                    android:text="usernmae"
+                    android:layout_marginTop="15dp"
                     android:layout_toEndOf="@+id/userProfilePicture"
+                    android:text="usernmae"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
@@ -64,41 +64,45 @@
                     android:layout_alignParentEnd="true"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
-                    android:id="@+id/comments"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
                     android:layout_alignBottom="@+id/userpostimage"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_toEndOf="@+id/userProfilePicture"
+                    android:layout_alignParentStart="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/icon_comment"
-                    android:id="@+id/icon_comment"
-                    android:layout_alignBottom="@+id/userpostimage"
-                    android:layout_toStartOf="@+id/comments" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/comments"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
-                    android:id="@+id/likes"
-                    android:layout_alignBottom="@+id/userpostimage"
-                    android:layout_toStartOf="@+id/icon_comment" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/icon_comment"
+                        android:layout_alignTop="@+id/comments"
+                        android:layout_alignParentEnd="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/icon_heart_empty"
-                    android:id="@+id/icon_like"
-                    android:layout_alignBottom="@+id/userpostimage"
-                    android:layout_toStartOf="@+id/likes" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/likes"
+                        android:layout_alignTop="@+id/comments"
+                        android:layout_alignParentEnd="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/icon_like"
+                        android:layout_alignTop="@+id/comments"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
 
 
             </RelativeLayout>
