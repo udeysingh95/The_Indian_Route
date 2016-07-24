@@ -15,14 +15,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.8">
+        android:layout_weight="1.8"
+        android:background="@drawable/background_blur">
 
 
         <fragment
             android:id="@+id/fragment_1"
             android:name="com.example.udeys.theindianroute.fragments.EmptyFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+
+            tools:layout="@layout/profilefragment" />
 
     </LinearLayout>
 
@@ -118,6 +121,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -144,7 +148,6 @@
                 />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="0dp"
