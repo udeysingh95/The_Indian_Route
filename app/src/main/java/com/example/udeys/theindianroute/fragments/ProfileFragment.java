@@ -27,6 +27,7 @@ import com.example.udeys.theindianroute.adapters.ImageAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -41,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     View view;
     TextView uname, posts;
-    ImageView iv;
+    RoundedImageView profilePicture;
     SharedPreferences sp;
     String username;
     String user_id;
@@ -78,7 +79,7 @@ public class ProfileFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gallery_images);
         follow_status = (Button) view.findViewById(R.id.follow_status);
         imagePath = new ArrayList<>();
-        iv = (ImageView) view.findViewById(R.id.PF);
+        profilePicture = (RoundedImageView)view.findViewById(R.id.PF);
         return view;
     }
 
@@ -201,7 +202,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(250, 300).centerCrop().into(iv);
+            Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(profilePicture);
 
         } catch (JSONException e) {
             e.printStackTrace();
