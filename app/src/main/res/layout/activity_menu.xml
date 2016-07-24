@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="com.example.udeys.theindianroute.MenuActivity">
+    tools:context="com.example.udeys.theindianroute.MenuActivity"
+    android:background="@drawable/background_blur"
+    >
 
     <include
         android:id="@+id/my_toolbar"
@@ -15,8 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.8"
-        android:background="@drawable/background_blur">
+        android:layout_weight="1.8">
 
 
         <fragment
@@ -35,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:background="#2f241e"
+        android:background="#802f241e"
         android:weightSum="5"
         android:orientation="horizontal"
         >
@@ -52,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
-                android:background="#2f241e"
+                android:background="@android:color/transparent"
                 android:src="@drawable/home" />
             <TextView
                 android:layout_width="match_parent"
@@ -79,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
-                android:background="#2f241e"
+                android:background="@android:color/transparent"
                 android:src="@drawable/trip" />
             <TextView
                 android:layout_width="match_parent"
@@ -100,13 +101,13 @@
             android:id="@+id/post_button"
             android:alpha="1"
             android:orientation="vertical"
-            android:background="#fff"
+            android:background="#CCffffff"
             android:weightSum="1">
             <ImageButton
                 android:id="@+id/post"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#fff"
+                android:background="@android:color/transparent"
                 android:layout_weight="0.7"
 
                 android:src="@drawable/post" />
@@ -135,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
-                android:background="#2f241e"
+                android:background="@android:color/transparent"
                 android:src="@drawable/notifications" />
             <TextView
                 android:layout_width="match_parent"
@@ -162,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
-                android:background="#2f241e"
+                android:background="@android:color/transparent"
                 android:src="@drawable/profile" />
             <TextView
                 android:layout_width="match_parent"
