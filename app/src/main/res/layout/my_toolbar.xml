@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:background="#2f241e">
+        android:background="@android:color/transparent">
 
 
 

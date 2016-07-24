@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
-        android:background="#802f241e"
+        android:background="#B32f241e"
         android:weightSum="5"
         android:orientation="horizontal"
         >
