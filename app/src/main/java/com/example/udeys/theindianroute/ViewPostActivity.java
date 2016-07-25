@@ -2,7 +2,6 @@ package com.example.udeys.theindianroute;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,7 +34,8 @@ public class ViewPostActivity extends AppCompatActivity {
     com.makeramen.roundedimageview.RoundedImageView pp;
     ImageView post;
     ImageButton back_btn;
-    TextView user_name, post_story, like, comment, post_like, post_comment;
+    TextView user_name, post_story, post_like, post_comment;
+    ImageView like, comment;
     static int state;
 
     @Nullable
@@ -45,38 +45,35 @@ public class ViewPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_viewpost);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         user_id = sp.getString("user_id", null);
+        posts_id = getIntent().getStringExtra("post_id");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
         setSupportActionBar(myToolbar);
-        pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.vpuserProfilePicture);
+        pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.userProfilePicture);
         Typeface fa = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         back_btn = (ImageButton) findViewById(R.id.btn_back);
-        post = (ImageView) findViewById(R.id.vpuserpostimage);
-        user_name = (TextView) findViewById(R.id.vpusername);
-        like = (TextView) findViewById(R.id.icon_like);
-        comment = (TextView) findViewById(R.id.icon_comment);
+        post = (ImageView) findViewById(R.id.userpostimage);
+        user_name = (TextView) findViewById(R.id.username);
+        like = (ImageView) findViewById(R.id.icon_like);
+        comment = (ImageView) findViewById(R.id.icon_comment);
         post_like = (TextView) findViewById(R.id.likes);
-        like.setTypeface(fa);
-        like.setTextSize(30);
+        like.setImageResource(R.drawable.not_liked);
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (state == 0) {
-                    like.setText(R.string.icon_heart_filled);
-                    like.setTextColor(Color.RED);
+                    like.setImageResource(R.drawable.liked);
                     state = 1;
                 } else {
-                    like.setText(R.string.icon_heart_empty);
-                    like.setTextColor(Color.BLACK);
+                    like.setImageResource(R.drawable.not_liked);
                     state = 0;
                 }
                 post_reaction(state, user_id, posts_id);
             }
         });
-        post_comment = (TextView) findViewById(R.id.Comments);
-        comment.setTypeface(fa);
-        comment.setTextSize(30);
-        post_story = (TextView) findViewById(R.id.story);
-        posts_id = getIntent().getStringExtra("post_id");
+        post_comment = (TextView) findViewById(R.id.comments);
+        comment.setImageResource(R.drawable.comment);
+        post_story = (TextView) findViewById(R.id.post_story);
+
         extractData();
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +81,6 @@ public class ViewPostActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +121,6 @@ public class ViewPostActivity extends AppCompatActivity {
     public void jsonExtract(String res) {
         try {
             JSONArray jArr = new JSONArray(res);
-
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 username = obj.getString("username");
@@ -156,12 +150,14 @@ public class ViewPostActivity extends AppCompatActivity {
             params.put("state", setstate);
             params.put("user_id", user_id);
             params.put("post_id", post_id);
+            Log.d("post_id", "" + post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             client.get("http://indianroute.roms4all.com/post_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);
                         }
+
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                             Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
@@ -180,7 +176,7 @@ public class ViewPostActivity extends AppCompatActivity {
             String num = obj.getString("reaction");
             post_like.setText(num);
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

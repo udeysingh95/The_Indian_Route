@@ -83,10 +83,9 @@ public class PostAdapter extends ArrayAdapter {
             row = layoutInflater.inflate(R.layout.timelinerowlayout, parent, false);
             postHolder = new PostHolder();
             postHolder.username = (TextView) row.findViewById(R.id.username);
-            postHolder.story_username = (TextView) row.findViewById(R.id.story_username);
             postHolder.story = (TextView) row.findViewById(R.id.post_story);
-            postHolder.reaction = (TextView) row.findViewById(R.id.icon_like);
-            postHolder.comment = (TextView) row.findViewById(R.id.icon_comment);
+            postHolder.reaction = (ImageView) row.findViewById(R.id.icon_like);
+            postHolder.comment = (ImageView) row.findViewById(R.id.icon_comment);
             postHolder.no_of_reactions = (TextView) row.findViewById(R.id.likes);
             postHolder.no_of_comments = (TextView) row.findViewById(R.id.comments);
             postHolder.userPostImage = (ImageView) row.findViewById(R.id.userpostimage);
@@ -103,7 +102,6 @@ public class PostAdapter extends ArrayAdapter {
         user_id = Posts.getUser_id();
         postHolder.username.setTypeface(samarn);
         postHolder.username.setText(Posts.getUsername());
-        postHolder.story_username.setText(Posts.getUsername());
         postHolder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,26 +117,20 @@ public class PostAdapter extends ArrayAdapter {
             }
         });
         postHolder.story.setText(Posts.getStory());
-        postHolder.reaction.setTypeface(fa);
-        postHolder.reaction.setTextSize(30);
         postHolder.no_of_comments.setText(String.valueOf(Posts.getComment()));
         if (state == 1) {
-            postHolder.reaction.setText(R.string.icon_heart_filled);
-            postHolder.reaction.setTextColor(Color.RED);
+            postHolder.reaction.setImageResource(R.drawable.liked);
         } else {
-            postHolder.reaction.setText(R.string.icon_heart_empty);
-            postHolder.reaction.setTextColor(Color.WHITE);
+            postHolder.reaction.setImageResource(R.drawable.not_liked);
         }
         postHolder.reaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (state == 0) {
-                    postHolder.reaction.setText(R.string.icon_heart_filled);
-                    postHolder.reaction.setTextColor(Color.RED);
+                    postHolder.reaction.setImageResource(R.drawable.liked);
                     state = 1;
                 } else {
-                    postHolder.reaction.setText(R.string.icon_heart_empty);
-                    postHolder.reaction.setTextColor(Color.BLACK);
+                    postHolder.reaction.setImageResource(R.drawable.not_liked);
                     state = 0;
                 }
                 post_reaction(state, user_id, Posts.getPost_id());
@@ -146,8 +138,7 @@ public class PostAdapter extends ArrayAdapter {
             }
         });
         postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction()));
-        postHolder.comment.setTypeface(fa);
-        postHolder.comment.setTextSize(30);
+        postHolder.comment.setImageResource(R.drawable.comment);
         postHolder.comment.setFocusableInTouchMode(false);
         postHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,19 +225,19 @@ public class PostAdapter extends ArrayAdapter {
 
         if (diff < 60) {
             time = Long.toString(diff / 1000 % 60);  //<60 print this value.
-            time += " seconds ago";
+            time += " secs";
             Log.d("sec", "" + time);
         } else if (diff < 3600) {
             time = Long.toString(diff / (60 * 1000) % 60); // <3600 print this value
-            time += " minutes ago";
+            time += " mins";
             Log.d("min", "" + time);
         } else if (diff < 86400) {
             time = Long.toString(diff / (60 * 60 * 1000));
-            time += " hours ago";
+            time += "hrs";
             Log.d("hr", "" + time);
         } else {
             time = Long.toString((diff / (60 * 60 * 1000)) / 24);
-            time += " days ago";
+            time += "d";
             Log.d("day", "" + time);
         }
 
@@ -255,8 +246,8 @@ public class PostAdapter extends ArrayAdapter {
 
 
     static class PostHolder {
-        TextView username, reaction, comment, no_of_reactions, no_of_comments, story, story_username, post_time;
-        ImageView userPostImage;
+        TextView username, no_of_reactions, no_of_comments, story, post_time;
+        ImageView userPostImage,reaction,comment;
         com.makeramen.roundedimageview.RoundedImageView userprofilePicture;
         ProgressBar progressBar;
 
