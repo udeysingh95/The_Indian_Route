@@ -142,7 +142,7 @@ public class ViewPostActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+//
     public void post_reaction(int setstate, String user_id, String post_id) {
 
         try {
