@@ -33,10 +33,12 @@ import cz.msebera.android.httpclient.Header;
  * Created by udeys on 5/3/2016.
  */
 
-public class Login extends Activity {
-    Button log;
+public class Login extends Activity implements View.OnClickListener{
+    Button log , facebook_dummy;
     EditText username, passsword;
     String user, pass;
+    LoginButton loginButton;
+
 
     private CallbackManager callbackManager = null;
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -52,27 +54,7 @@ public class Login extends Activity {
                 in.putExtra("NAME", userId);
                 startActivity(in);
             }
-            /*
-            GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(
-                    loginResult.getAccessToken(),
-                    //AccessToken.getCurrentAccessToken(),
-                    "//friends",
-                    null,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            Intent intent = new Intent(getApplicationContext(),MyApplication.class);
-                            try {
-                                //Toast.makeText(getApplicationContext(),"sending friend list",Toast.LENGTH_SHORT).show();
-                                JSONArray rawName = response.getJSONObject().getJSONArray("data");
-                                intent.putExtra("jsondata", rawName.toString());
-                                startActivity(intent);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            ).executeAsync();*/
+
         }
 
         @Override
@@ -98,6 +80,7 @@ public class Login extends Activity {
         setContentView(R.layout.login);
         username = (EditText) findViewById(R.id.username);
         passsword = (EditText) findViewById(R.id.password);
+        facebook_dummy = (Button) findViewById(R.id.facebook);
         log = (Button) findViewById(R.id.login);
 
         log.setOnClickListener(new View.OnClickListener() {
@@ -110,12 +93,15 @@ public class Login extends Activity {
             }
         });
 
+
+
+
         callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, callback);
 
-
+        facebook_dummy.setOnClickListener(this);
     }
 
     @Override
@@ -206,4 +192,14 @@ public class Login extends Activity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.facebook:
+                loginButton.performClick();
+                break;
+            default:
+        }
+    }
 }
