@@ -28,8 +28,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="35dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bc" />
+                    android:scaleType="centerCrop" />
 
                 <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/userProfilePicture"
@@ -38,6 +37,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/ppplaceholder"
                     app:riv_border_color="#333333"
                     app:riv_border_width="2dip"
@@ -51,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:layout_toEndOf="@+id/userProfilePicture"
                     android:text="usernmae"
@@ -62,47 +63,48 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/username"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_alignBottom="@+id/userpostimage"
-                    android:layout_toEndOf="@+id/userProfilePicture"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignStart="@+id/userProfilePicture"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/comments"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/icon_comment"
-                        android:layout_alignTop="@+id/comments"
-                        android:layout_alignParentEnd="true" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/likes"
-                        android:layout_alignTop="@+id/comments"
-                        android:layout_alignParentEnd="true" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                    <ImageView
                         android:id="@+id/icon_like"
-                        android:layout_alignTop="@+id/comments"
-                        android:layout_alignParentEnd="true" />
-                </RelativeLayout>
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
+
+                    <TextView
+                        android:id="@+id/likes"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
+
+                    <ImageView
+                        android:id="@+id/icon_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="@string/icon_comment" />
+
+                    <TextView
+                        android:id="@+id/comments"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
+
+                </LinearLayout>
 
 
             </RelativeLayout>
@@ -112,8 +114,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
@@ -123,21 +124,11 @@
 
 
                 <TextView
-                    android:id="@+id/story_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Small Text"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <TextView
                     android:id="@+id/post_story"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/story_username"
+                    android:layout_marginLeft="5dp"
                     android:text="Small Text"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </RelativeLayout>

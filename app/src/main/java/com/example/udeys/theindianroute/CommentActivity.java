@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
@@ -90,12 +89,12 @@ public class CommentActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                                    Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                                 }
                             }
                     );
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 commentNotification(HomeFragment.user_id, post_id);
 
@@ -119,12 +118,12 @@ public class CommentActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -161,12 +160,12 @@ public class CommentActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "" + res, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

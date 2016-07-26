@@ -47,7 +47,7 @@ public class IndianRouteMap extends Fragment implements OnMapReadyCallback {
         view = inflater.inflate(R.layout.indianroute_map, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();// needed to get the map to display immediately
+        mMapView.onResume();// needed to get the maps to display immediately
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {

@@ -206,10 +206,10 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            //Intent i = new Intent(getApplication(), MenuActivity.class);
-                            //startActivity(i);
-                            //finish();
-                            Log.d("posted", res);
+                            Intent i = new Intent(getApplication(), MenuActivity.class);
+                            startActivity(i);
+                            finish();
+                            Log.e("posted", res);
                         }
 
                         @Override

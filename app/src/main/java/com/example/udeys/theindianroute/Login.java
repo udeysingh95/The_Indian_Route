@@ -97,7 +97,7 @@ public class Login extends Activity implements View.OnClickListener{
 
 
         callbackManager = CallbackManager.Factory.create();
-         loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, callback);
 

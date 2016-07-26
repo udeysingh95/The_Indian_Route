@@ -8,58 +8,70 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#fff"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:background="#ccc"
-            android:id="@+id/notifyuserProfilePicture" />
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/notifyuserProfilePicture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ppplaceholder"
+            app:riv_border_color="#333333"
+            app:riv_border_width="2dip"
+            app:riv_corner_radius="5dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true"
+            app:riv_tile_mode="repeat" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:background="#fbf"
-            android:weightSum="2"
-            android:orientation="vertical">
+            android:layout_weight="1.6"
+            android:background="@android:color/transparent"
+            android:orientation="vertical"
+            android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.3"
-                android:background="#000">
+                android:background="@android:color/transparent" />
 
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.6"
-                android:background="#000"
-                android:weightSum="1"
-                android:orientation="horizontal">
-                <TextView
+                android:background="@android:color/transparent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+
+                <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.05"
-                    android:id="@+id/paddinLeft"/>
-               <TextView
-                   android:layout_width="0dp"
-                   android:layout_height="match_parent"
-                   android:layout_weight="0.7"
-                   android:hint="udeysingh95"
-                   android:textSize="17dp"
-                   android:id="@+id/username"/>
+                    android:layout_weight="0.15"/>
+
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:hint="5 min"
-                    android:id="@+id/time"/>
+                    android:textStyle="bold"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="#fff"/>
+
+
+                <TextView
+                    android:id="@+id/notification_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:lines="2"/>
+
 
             </LinearLayout>
 
@@ -67,36 +79,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
-                android:background="#000"/>
+                android:background="@android:color/transparent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.9"
-                android:weightSum="1"
-                android:background="#000"
-                android:orientation="horizontal">
+                android:background="@android:color/transparent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.05"
-                    />
-                <TextView
+                    android:layout_weight="0.05" />
+
+
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.95"
-                    android:textSize="15.5dp"
-                    android:id="@+id/notification_details"
-                    android:hint="commented on your post"/>
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_action_time"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.40"
+                    android:hint="5 min"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
 
             </LinearLayout>
         </LinearLayout>
+
         <ImageView
+            android:id="@+id/notifypostPicture"
             android:layout_width="0dp"
+            android:padding="10dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="#ccc"
-            android:id="@+id/notifypostPicture"/>
+            android:background="@android:color/transparent" />
     </LinearLayout>
 
 
