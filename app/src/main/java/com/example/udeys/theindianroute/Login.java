@@ -89,15 +89,7 @@ public class Login extends Activity implements View.OnClickListener{
 
 
 
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user = username.getText().toString().trim();
-                pass = passsword.getText().toString().trim();
-                makeJsonArrayReq();
-
-            }
-        });
+        log.setOnClickListener(this);
         create_acc.setOnClickListener(this);
         f_pass.setOnClickListener(this);
 
@@ -203,6 +195,11 @@ public class Login extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
+            case R.id.login:
+                user = username.getText().toString().trim();
+                pass = passsword.getText().toString().trim();
+                makeJsonArrayReq();
+                break;
             case R.id.facebook:
                 loginButton.performClick();
                 break;
