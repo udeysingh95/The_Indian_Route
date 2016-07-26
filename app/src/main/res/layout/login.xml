@@ -12,14 +12,12 @@
         android:layout_height="0dp"
         android:layout_weight="1.5">
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/the_indian_route_tint_yell"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
-            app:riv_tile_mode="repeat"
-            android:layout_marginTop="30dp"/>
+            android:paddingTop="10dp" />
 
 
     </LinearLayout>
