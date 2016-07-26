@@ -1,6 +1,8 @@
 package com.example.udeys.theindianroute;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -23,6 +26,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected static int res = 0;
     EditText name, uname, passowrd, repassword, email;
     Button reg;
+    TextView terms;
+    TextView male, female;
     Bitmap bp;
     String bas;
 
@@ -40,15 +45,47 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         passowrd = (EditText) findViewById(R.id.password);
         repassword = (EditText) findViewById(R.id.repassword);
         email = (EditText) findViewById(R.id.email);
+        male = (TextView) findViewById(R.id.male);
+        female = (TextView) findViewById(R.id.female);
+        terms = (TextView) findViewById(R.id.terms);
 
+        terms.setPaintFlags(terms.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         reg = (Button) findViewById(R.id.register);
-
+        male.setOnClickListener(this);
+        female.setOnClickListener(this);
+        terms.setOnClickListener(this);
         reg.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.male:
+                female.setBackgroundResource(0);
+                female.setTextColor(Color.parseColor("#888888"));
+                male.setBackgroundResource(R.drawable.login_edittext);
+                male.setTextColor(Color.parseColor("#cccccc"));
+                break;
+            case R.id.female:
+                male.setBackgroundResource(0);
+                male.setTextColor(Color.parseColor("#888888"));
+                female.setBackgroundResource(R.drawable.login_edittext);
+                female.setTextColor(Color.parseColor("#cccccc"));
+                break;
+            case R.id.register:
+                register_me();
+                break;
+            case R.id.terms:
+                Toast.makeText(Register.this, "terms and conditions", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+        }
+    }
+
+    private void register_me() {
+
         String nm, unm, pass, eml, repass, device_token;
 
         nm = name.getText().toString();
@@ -92,6 +129,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         hit_data(nm, unm, pass, eml, device_token);
 
     }
+
+
 
     public void hit_data(final String name, final String username, final String email, final String password, final String device_token) {
         try {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -38,6 +39,7 @@ public class Login extends Activity implements View.OnClickListener{
     EditText username, passsword;
     String user, pass;
     LoginButton loginButton;
+    TextView create_acc, f_pass;
 
 
     private CallbackManager callbackManager = null;
@@ -82,6 +84,10 @@ public class Login extends Activity implements View.OnClickListener{
         passsword = (EditText) findViewById(R.id.password);
         facebook_dummy = (Button) findViewById(R.id.facebook);
         log = (Button) findViewById(R.id.login);
+        create_acc = (TextView) findViewById(R.id.create);
+        f_pass = (TextView) findViewById(R.id.pass);
+
+
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +98,8 @@ public class Login extends Activity implements View.OnClickListener{
 
             }
         });
-
+        create_acc.setOnClickListener(this);
+        f_pass.setOnClickListener(this);
 
 
 
@@ -198,6 +205,12 @@ public class Login extends Activity implements View.OnClickListener{
         switch (id){
             case R.id.facebook:
                 loginButton.performClick();
+                break;
+            case R.id.create:
+                Intent i = new Intent(this, Register.class);
+                startActivity(i);
+                break;
+            case R.id.pass:
                 break;
             default:
         }
