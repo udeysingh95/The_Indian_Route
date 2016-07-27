@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="#40888888"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -11,14 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5">
-
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/the_indian_route_tint_yell"
-            android:layout_marginTop="10dp"/>
+            android:paddingTop="10dp"/>
+
+
     </LinearLayout>
 
     <LinearLayout
