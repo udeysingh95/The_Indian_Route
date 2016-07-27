@@ -29,6 +29,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Gitesh on 04-07-2016.
  */
 public class ViewPostActivity extends AppCompatActivity {
+    static int state;
     public String user_id;
     String posts_id, username, profile_pic, post_pic, story, check_in, reaction;
     com.makeramen.roundedimageview.RoundedImageView pp;
@@ -36,7 +37,6 @@ public class ViewPostActivity extends AppCompatActivity {
     ImageButton back_btn;
     TextView user_name, post_story, post_like, post_comment;
     ImageView like, comment;
-    static int state;
 
     @Nullable
     @Override
@@ -133,7 +133,11 @@ public class ViewPostActivity extends AppCompatActivity {
                 Log.d("username", "" + username);
             }
             Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
-            Picasso.with(getApplicationContext()).load(post_pic).resize(320, 240).into(post);
+            try {
+                Picasso.with(getApplicationContext()).load(post_pic).resize(320, 240).into(post);
+            } catch (Exception e) {
+                Log.e("Error", e.toString());
+            }
             //post_comment.setText();
             post_like.setText(reaction);
             user_name.setText(username);
