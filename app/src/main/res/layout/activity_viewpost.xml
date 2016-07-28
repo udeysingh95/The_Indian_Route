@@ -28,17 +28,16 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/userpostimage"
+                    android:id="@+id/vpuserpostimage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="35dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bc" />
+                    android:scaleType="centerCrop" />
 
                 <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/userProfilePicture"
+                    android:id="@+id/vpuserProfilePicture"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentStart="true"
@@ -57,12 +56,12 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toEndOf="@+id/userProfilePicture"
                     android:text="usernmae"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_alignTop="@+id/vpuserProfilePicture"
+                    android:layout_toEndOf="@+id/vpuserProfilePicture"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp" />
 
                 <TextView
                     android:id="@+id/post_time"
@@ -106,7 +105,7 @@
                         android:text="@string/icon_comment" />
 
                     <TextView
-                        android:id="@+id/comments"
+                        android:id="@+id/vpcomments"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5" />

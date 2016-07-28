@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,10 @@ public class NotificationFragment extends Fragment {
                 bundle.putString("user_name", user_name);
                 if (action.contentEquals("1") || action.contentEquals("2")) {
                     Intent intent = new Intent(getActivity(), ViewPostActivity.class);
-                    intent.putExtra("bundle", bundle);
+                    intent.putExtra("post_id",post_id);
+                    intent.putExtra("user_id",follower_id);
+                    intent.putExtra("action",action);
+                    intent.putExtra("user_name",user_name);
                     startActivity(intent);
                     /*ViewPostActivity ViewPostActivity = new ViewPostActivity();
                     ViewPostActivity.setArguments(bundle);

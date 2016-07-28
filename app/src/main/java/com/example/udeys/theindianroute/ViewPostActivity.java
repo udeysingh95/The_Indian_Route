@@ -31,11 +31,11 @@ import cz.msebera.android.httpclient.Header;
 public class ViewPostActivity extends AppCompatActivity {
     static int state;
     public String user_id;
-    String posts_id, username, profile_pic, post_pic, story, check_in, reaction;
+    String posts_id, username, profile_pic, post_pic, story, check_in, reaction,no_of_comments;
     com.makeramen.roundedimageview.RoundedImageView pp;
     ImageView post;
     ImageButton back_btn;
-    TextView user_name, post_story, post_like, post_comment;
+    TextView user_name, post_story, post_like, post_comment,comment_no;
     ImageView like, comment;
 
     @Nullable
@@ -48,14 +48,16 @@ public class ViewPostActivity extends AppCompatActivity {
         posts_id = getIntent().getStringExtra("post_id");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
         setSupportActionBar(myToolbar);
-        pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.userProfilePicture);
-        Typeface fa = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+        pp = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.vpuserProfilePicture);
+        Typeface fa = Typeface.createFromAsset(getAssets(), "SAMARN__.TTF");
         back_btn = (ImageButton) findViewById(R.id.btn_back);
-        post = (ImageView) findViewById(R.id.userpostimage);
+        post = (ImageView) findViewById(R.id.vpuserpostimage);
         user_name = (TextView) findViewById(R.id.username);
+        user_name.setTypeface(fa);
         like = (ImageView) findViewById(R.id.icon_like);
         comment = (ImageView) findViewById(R.id.icon_comment);
         post_like = (TextView) findViewById(R.id.likes);
+        comment_no = (TextView)findViewById(R.id.vpcomments);
         like.setImageResource(R.drawable.not_liked);
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +73,9 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
         post_comment = (TextView) findViewById(R.id.comments);
+
         comment.setImageResource(R.drawable.comment);
         post_story = (TextView) findViewById(R.id.post_story);
-
-        extractData();
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +91,8 @@ public class ViewPostActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        extractData();
 
     }
 
@@ -129,7 +132,8 @@ public class ViewPostActivity extends AppCompatActivity {
                 check_in = obj.getString("check_in");
                 story = obj.getString("story");
                 reaction = obj.getString("reaction_no");
-                Log.d("pic", "" + profile_pic);
+                no_of_comments = obj.getString("comment");
+                Log.d("comment_no", "" + no_of_comments);
                 Log.d("username", "" + username);
             }
             Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
@@ -140,7 +144,9 @@ public class ViewPostActivity extends AppCompatActivity {
             }
             //post_comment.setText();
             post_like.setText(reaction);
+            comment_no.setText(no_of_comments);
             user_name.setText(username);
+            post_story.setText(story);
 
         } catch (JSONException e) {
             e.printStackTrace();
