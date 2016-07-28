@@ -10,8 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.helperClasses.comments;
+import com.example.udeys.theindianroute.helperClasses.CommonListClass;
 import com.example.udeys.theindianroute.helperClasses.posts;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,8 @@ public class commentsAdapter extends ArrayAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.commentrowlayout, parent, false);
             commentHolder = new commentHolder();
+            commentHolder.userProfilePic = (com.makeramen.roundedimageview.RoundedImageView)row.findViewById(R.id.cuserProfilePicture);
+            commentHolder.username = (TextView)row.findViewById(R.id.list_username);
             commentHolder.commentersComments = (TextView) row.findViewById(R.id.commenters_comments);
             commentHolder.post_comment = (Button) row.findViewById(R.id.post_comment);
             commentHolder.writecomment = (EditText) row.findViewById(R.id.write_comment);
@@ -62,16 +65,19 @@ public class commentsAdapter extends ArrayAdapter {
         } else {
             commentHolder = (commentHolder) row.getTag();
         }
-        final comments Comments = (comments) this.getItem(position);
-        commentHolder.commentersComments.setText(Comments.getComments());
+        final CommonListClass CommonListClass = (CommonListClass) this.getItem(position);
+        commentHolder.commentersComments.setText(CommonListClass.getComments());
+        commentHolder.username.setText(CommonListClass.getUsername());
+        Picasso.with(getContext()).load(CommonListClass.getProfilepic()).into(commentHolder.userProfilePic);
 
 
         return row;
     }
 
     static class commentHolder {
-        TextView commentersComments;
+        TextView commentersComments,username;
         EditText writecomment;
         Button post_comment;
+        com.makeramen.roundedimageview.RoundedImageView userProfilePic;
     }
 }

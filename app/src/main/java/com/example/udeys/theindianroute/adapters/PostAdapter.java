@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.CommentActivity;
+import com.example.udeys.theindianroute.CommonList;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
 import com.example.udeys.theindianroute.helperClasses.posts;
@@ -118,6 +119,7 @@ public class PostAdapter extends ArrayAdapter {
         });
         postHolder.story.setText(Posts.getStory());
         postHolder.no_of_comments.setText(String.valueOf(Posts.getComment()));
+
         if (state == 1) {
             postHolder.reaction.setImageResource(R.drawable.liked);
         } else {
@@ -138,6 +140,16 @@ public class PostAdapter extends ArrayAdapter {
             }
         });
         postHolder.no_of_reactions.setText(String.valueOf(Posts.getReaction()));
+        postHolder.no_of_reactions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CommonList.class);
+                intent.putExtra("post_id",Posts.getPost_id());
+                intent.putExtra("list_type","p");
+                intent.putExtra("list_type","likes");
+                getContext().startActivity(intent);
+            }
+        });
         postHolder.comment.setImageResource(R.drawable.comment);
         postHolder.comment.setFocusableInTouchMode(false);
         postHolder.comment.setOnClickListener(new View.OnClickListener() {

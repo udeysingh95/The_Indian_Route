@@ -10,31 +10,50 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:padding="5dp">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/users_commented_image"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3" />
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cuserProfilePicture"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0.2"
+                android:src="@drawable/ppplaceholder"
+                app:riv_border_color="#333333"
+                app:riv_border_width="2dip"
+                app:riv_corner_radius="5dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                app:riv_tile_mode="repeat" />
 
             <TextView
-                android:id="@+id/commenters_username"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/list_username"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/cuserProfilePicture"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
                 android:id="@+id/commenters_comments"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.4" />
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/list_username"
+                android:layout_marginLeft="5dp" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

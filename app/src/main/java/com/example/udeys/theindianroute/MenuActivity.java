@@ -1,6 +1,5 @@
 package com.example.udeys.theindianroute;
 
-import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,16 +45,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     Boolean search_state = false;
     FragmentTransaction ft;
     Intent intent = null;
-    LinearLayout home,trip,post,alert,passport;
+    LinearLayout home, trip, post, alert, passport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         srch = (EditText) findViewById(R.id.search_bar);
         Search = (ImageButton) findViewById(R.id.btn_search);
@@ -67,7 +62,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         alert = (LinearLayout) findViewById(R.id.alert_button);
         passport = (LinearLayout) findViewById(R.id.passport_button);
 
-        title = (TextView)findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.title);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
@@ -120,7 +115,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int id = v.getId();
-       switch (id) {
+        switch (id) {
             case R.id.home:
                 reduce_alpha();
                 home.setAlpha(1f);
@@ -250,7 +245,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ft.commit();
     }
 
-    private void reduce_alpha(){
+    private void reduce_alpha() {
         home.setAlpha(0.5f);
         trip.setAlpha(0.5f);
         alert.setAlpha(0.5f);

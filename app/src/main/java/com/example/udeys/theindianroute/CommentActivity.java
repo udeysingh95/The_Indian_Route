@@ -2,7 +2,6 @@ package com.example.udeys.theindianroute;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
-import com.example.udeys.theindianroute.helperClasses.comments;
+import com.example.udeys.theindianroute.helperClasses.CommonListClass;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -44,8 +43,6 @@ public class CommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comment);
         post_id = getIntent().getStringExtra("post_id");
         username = getIntent().getStringExtra("username");
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.back_bar);
-        setSupportActionBar(myToolbar);
         post_comment = (Button) findViewById(R.id.post_comment);
         btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +66,8 @@ public class CommentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String co = write_comment.getText().toString();
                 write_comment.setText("");
-                comments comments = new comments(co);
-                commentsAdapter.add(comments);
+                CommonListClass CommonListClass = new CommonListClass(co);
+                commentsAdapter.add(CommonListClass);
                 commentsAdapter.notifyDataSetChanged();
 
 
@@ -103,7 +100,6 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
-
     public void requestComments() {
         try {
             RequestParams params = new RequestParams();
@@ -130,12 +126,15 @@ public class CommentActivity extends AppCompatActivity {
     public void decodeCommentsJSON(String res) {
         try {
             JSONArray jArr = new JSONArray(res);
-            String commentersUsername, comment;
+            String commentersUsername, comment, userprofilepic;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 comment = obj.getString("comment");
-                comments Comments = new comments(comment);
-                commentsAdapter.add(Comments);
+                userprofilepic = obj.getString("profilePicture");
+                commentersUsername = obj.getString("username");
+                Log.d("pp", "" + userprofilepic);
+                CommonListClass CommonListClass = new CommonListClass(comment, userprofilepic, commentersUsername);
+                commentsAdapter.add(CommonListClass);
 
             }
 

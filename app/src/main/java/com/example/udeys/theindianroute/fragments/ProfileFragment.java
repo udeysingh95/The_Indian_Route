@@ -16,10 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.udeys.theindianroute.CommonList;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.Setting;
 import com.example.udeys.theindianroute.ViewPostActivity;
@@ -45,7 +46,7 @@ public class ProfileFragment extends Fragment {
     RoundedImageView profilePicture;
     SharedPreferences sp;
     String username;
-    String user_id;
+    String user_id, profile_id;
     int no_of_post = 0;
     GridView gridView;
     ArrayList<String> imagePath;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     boolean res = false;
     String follow_s;
     ArrayList<String> post_id;
+    LinearLayout check_followers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,8 +80,9 @@ public class ProfileFragment extends Fragment {
         posts = (TextView) view.findViewById(R.id.number_of_post);
         gridView = (GridView) view.findViewById(R.id.gallery_images);
         follow_status = (Button) view.findViewById(R.id.follow_status);
+        check_followers = (LinearLayout)view.findViewById(R.id.check_follwers);
         imagePath = new ArrayList<>();
-        profilePicture = (RoundedImageView)view.findViewById(R.id.PF);
+        profilePicture = (RoundedImageView) view.findViewById(R.id.PF);
         return view;
     }
 
@@ -89,6 +92,16 @@ public class ProfileFragment extends Fragment {
 
         initValue(user_id);    //fetch profile
         initValues();  //fetch Posts
+
+        check_followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CommonList.class);
+                i.putExtra("profile_id",profile_id);
+                i.putExtra("list_type","followers");
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -178,11 +191,12 @@ public class ProfileFragment extends Fragment {
         try {
             JSONArray jArr = new JSONArray(result);
             String userprofilePicture;
-
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
+            Log.d("pp", "" + userprofilePicture);
             no_of_post = Integer.valueOf(obj.getString("post_count"));
             follow_s = obj.getString("following");
+            profile_id = obj.getString("user_id");
 
             if (user_id.matches(sp.getString("user_id", null))) {
                 follow_status.setText("edit your profile");
@@ -212,9 +226,9 @@ public class ProfileFragment extends Fragment {
 
 
     private void follow_button() {
-        if(follow_status.getText().toString().equals("edit your profile")){
+        if (follow_status.getText().toString().equals("edit your profile")) {
             Intent i = new Intent(getActivity(), Setting.class);
-           startActivity(i);
+            startActivity(i);
 
         }
         try {
