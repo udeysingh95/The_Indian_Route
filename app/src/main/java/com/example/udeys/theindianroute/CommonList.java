@@ -3,6 +3,7 @@ package com.example.udeys.theindianroute;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -41,10 +42,11 @@ public class CommonList extends Activity {
         user_id = sp.getString("user_id", null);
         listView = (ListView)findViewById(R.id.common_list);
         title = (TextView)findViewById(R.id.title);
-        title.setText("FOLLOWERS");
         if (listType.contentEquals("likes")) {
+            title.setText("LIKES");
             fetch_likers();
         } else {
+            title.setText("FOLLOWERS");
             fetch_followers();
         }
 
@@ -66,11 +68,14 @@ public class CommonList extends Activity {
             RequestParams params = new RequestParams();
             params.put("post_id", post_id);
             params.put("type", postType);
+            params.put("user_id", user_id);
+            Log.d("fetch",post_id+" "+postType+" "+user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_reaction.php", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/fetch_reactors.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             fetch(res);
+
 
                         }
 

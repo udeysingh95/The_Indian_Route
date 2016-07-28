@@ -145,7 +145,7 @@ public class PostAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CommonList.class);
                 intent.putExtra("post_id",Posts.getPost_id());
-                intent.putExtra("list_type","p");
+                intent.putExtra("type","p");
                 intent.putExtra("list_type","likes");
                 getContext().startActivity(intent);
             }
