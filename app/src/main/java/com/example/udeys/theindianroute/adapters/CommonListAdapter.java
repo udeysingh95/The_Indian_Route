@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +63,14 @@ public class CommonListAdapter extends ArrayAdapter {
         Picasso.with(getContext()).load(commonListClass.getProfilepic()).into(itemHolder.pp);
         status = commonListClass.getStatus();
         if(status.contentEquals("1")){
-            itemHolder.status.setText("following");
+            itemHolder.status.setText("Following");
+            itemHolder.status.setBackgroundResource(R.drawable.roundedbutton);
+            itemHolder.status.setTextColor(Color.parseColor("#000000"));
         }
         else {
-            itemHolder.status.setText("follow");
+            itemHolder.status.setText("Follow");
+            itemHolder.status.setBackgroundResource(R.drawable.roundedbutton_empty);
+            itemHolder.status.setTextColor(Color.parseColor("#ffdf32"));
         }
 
         return row;
