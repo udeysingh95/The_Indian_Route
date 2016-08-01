@@ -3,17 +3,23 @@ package com.example.udeys.theindianroute;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -24,13 +30,15 @@ import cz.msebera.android.httpclient.Header;
 
 public class Setting extends Activity  implements View.OnClickListener{
 
-    ImageView cancel , save;
-    ImageView pp;
-    EditText name, username, website, email, gender, phone;
-    Switch notification;
+    ImageButton cancel;
+    EditText website, email, phone;
+    SwitchCompat notification;
     LinearLayout l1;
-    String id = "22";
+    Button save;
+    String id = "22" , gender;
+    TextView title , name , username , male , female;
     SharedPreferences sp;
+    RoundedImageView pp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +48,22 @@ public class Setting extends Activity  implements View.OnClickListener{
         sp = this.getSharedPreferences("user_details", MODE_PRIVATE);
         id = sp.getString("user_id", null);
 
-        cancel = (ImageView) findViewById(R.id.ic_cancel);
-        save = (ImageView) findViewById(R.id.ic_save);
-        pp = (ImageView) findViewById(R.id.profile_picture);
-        notification = (Switch) findViewById(R.id.not_button);
-        name = (EditText)findViewById(R.id.name);
-        username = (EditText)findViewById(R.id.username);
+        title = (TextView) findViewById(R.id.title);
+        title.setText("Settings");
+
+        cancel = (ImageButton) findViewById(R.id.btn_back);
+        save = (Button) findViewById(R.id.ic_save);
+
+        pp = (RoundedImageView) findViewById(R.id.profile_picture);
+
+        notification = (SwitchCompat) findViewById(R.id.not_button);
+        name = (TextView)findViewById(R.id.name);
+        username = (TextView)findViewById(R.id.username);
+
         email = (EditText)findViewById(R.id.email);
         phone = (EditText)findViewById(R.id.phone);
-        gender = (EditText)findViewById(R.id.gender);
+        male = (TextView) findViewById(R.id.male);
+        female = (TextView) findViewById(R.id.female);
         website = (EditText)findViewById(R.id.website);
         l1 = (LinearLayout) findViewById(R.id.logout);
 
@@ -56,6 +71,8 @@ public class Setting extends Activity  implements View.OnClickListener{
         cancel.setOnClickListener(this);
         save.setOnClickListener(this);
         l1.setOnClickListener(this);
+        male.setOnClickListener(this);
+        female.setOnClickListener(this);
 
     }
 
@@ -63,7 +80,7 @@ public class Setting extends Activity  implements View.OnClickListener{
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
-            case R.id.ic_cancel:
+            case R.id.btn_back:
                 finish();
                 break;
             case R.id.ic_save:
@@ -72,9 +89,22 @@ public class Setting extends Activity  implements View.OnClickListener{
             case R.id.logout:
                 logout();
                 break;
+            case R.id.male:
+                male.setBackgroundResource(R.drawable.login_edittext);
+                male.setTextColor(Color.parseColor("#ccffffff"));
+                female.setBackgroundResource(0);
+                female.setTextColor(Color.parseColor("#888888"));
+                gender = "M";
+                break;
+            case R.id.female:
+                male.setBackgroundResource(0);
+                male.setTextColor(Color.parseColor("#888888"));
+                female.setBackgroundResource(R.drawable.login_edittext);
+                female.setTextColor(Color.parseColor("#ccffffff"));
+                gender = "F";
+                break;
         }
     }
-
 
     public void logout(){
         sp.edit().remove("user_id").commit();
@@ -99,7 +129,7 @@ public class Setting extends Activity  implements View.OnClickListener{
         params.put("name", name.getText());
         params.put("email", email.getText());
         params.put("website", website.getText());
-        params.put("gender", gender.getText());
+        params.put("gender", gender);
         params.put("phone", phone.getText());
         params.put("notification", notifications);
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
@@ -119,6 +149,7 @@ public class Setting extends Activity  implements View.OnClickListener{
         );
 
     }
+
     public  void getDetails(){
                 RequestParams params = new RequestParams();
                 params.put("id", id);
@@ -151,9 +182,21 @@ public class Setting extends Activity  implements View.OnClickListener{
             name.setText(obj.getString("name"));
             email.setText(obj.getString("email"));
             phone.setText(obj.getString("phone"));
-            gender.setText(obj.getString("gender"));
+
+            if(obj.getString("gender").equals("M")){
+                male.setBackgroundResource(R.drawable.login_edittext);
+                male.setTextColor(Color.parseColor("#ccffffff"));
+                female.setBackgroundResource(0);
+                female.setTextColor(Color.parseColor("#888888"));
+                gender = "M";
+            }
+            else{
+                gender = "F";
+            }
+
             username.setText(obj.getString("username"));
             website.setText(obj.getString("username"));
+
             int not = Integer.parseInt(obj.getString("notification"));
             if(not == 1){
                 notification.setChecked(true);
@@ -164,7 +207,7 @@ public class Setting extends Activity  implements View.OnClickListener{
 
             //may throw some error
 
-            Picasso.with(getApplicationContext()).load(userprofilePicture).resize(250, 300).centerCrop().into(pp);
+            Picasso.with(getApplicationContext()).load(userprofilePicture).fit().centerCrop().into(pp);
 
 
         } catch (JSONException e) {
