@@ -1,181 +1,135 @@
 package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
-import android.graphics.Color;
-import android.os.AsyncTask;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.udeys.theindianroute.R;
-import com.example.udeys.theindianroute.path.HttpConnection;
-import com.example.udeys.theindianroute.path.PathJSONParser;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.example.udeys.theindianroute.helperClasses.GooglePlacesReadTask;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by udeys on 6/18/2016.
  */
 
-public class TripFragment extends Fragment implements OnMapReadyCallback {
+public class TripFragment extends Fragment implements View.OnClickListener {
 
+    private static final String GOOGLE_API_KEY = "AIzaSyBU5MYsR4tlII9AWFRuKI12gEcJ6Ve9n64";
     View view;
-
-    MapView mMapView;
-    LatLng CHANDIGARH = new LatLng(30.733315, 76.779418);
-    LatLng DELHI = new LatLng(28.613939, 77.209021);
-    LatLng KURUKSHETRA = new LatLng(29.969512, 76.878282);
-    private GoogleMap googleMap;
+    Button btnStart, btnData;
+    EditText destPlace;
+    GoogleMap googleMap = null;
+    double latitude = 0;
+    double longitude = 0;
+    String place;
+    String type;
+    private SQLiteDatabase db = null;
+    private int PROXIMITY_RADIUS = 20000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
 
         view = inflater.inflate(R.layout.tripfragment, container, false);
-        mMapView = (MapView) view.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();// needed to get the maps to display immediately
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mMapView.getMapAsync(this);
+
 
         return view;
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        btnStart = (Button) view.findViewById(R.id.trpStart);
+        btnData = (Button) view.findViewById(R.id.btnData);
+        destPlace = (EditText) view.findViewById(R.id.trpDest);
 
-        addMarkers();
-        // Add a marker in Elante and move the camera
-        //LatLng sydney = new LatLng(30.7108825,76.766128);
-        //googleMap.addMarker(new MarkerOptions().position(sydney).title("ELANTE"));
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
+        btnData.setOnClickListener(this);
+        btnStart.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-    private void addMarkers() {
-        //Toast.makeText(getActivity(), "addMarker", Toast.LENGTH_SHORT).show();
-        if (googleMap != null) {
-            googleMap.addMarker(new MarkerOptions().position(CHANDIGARH).title("First Point"));
-            googleMap.addMarker(new MarkerOptions().position(DELHI).title("Third Point"));
-            googleMap.addMarker(new MarkerOptions().position(KURUKSHETRA).title("Second Point"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CHANDIGARH, 7));
+        switch (id) {
+            case R.id.trpStart:
+                destPlace.setVisibility(View.VISIBLE);
+                btnData.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btnData:
+                getNearbyPlaces();
+
         }
 
-        String url = getMapsApiDirectionsUrl();
-        ReadTask downloadTask = new ReadTask();
-        downloadTask.execute(url);
     }
 
-    private String getMapsApiDirectionsUrl() {
-        String waypoints = "waypoints=optimize:true|"
-                + CHANDIGARH.latitude + "," + CHANDIGARH.longitude
-                + "|" + "|" + DELHI.latitude + ","
-                + DELHI.longitude + "|" + KURUKSHETRA.latitude + ","
-                + KURUKSHETRA.longitude;
+    private void getNearbyPlaces() {
+        String ddest = destPlace.getText().toString();
+        StringBuilder table_query = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+        table_query.append("NEARBY");
+        table_query.append(" (Latitude double,Longitude double,Place_Name text,Vicinity text,Type text)");
+        Log.e("tb", table_query.toString());
 
-        String sensor = "sensor=false";
-        String params = waypoints + "&" + sensor;
-        String output = "json";
-        String url = "http://maps.googleapis.com/maps/api/directions/json?origin=" + CHANDIGARH.latitude + "," + CHANDIGARH.longitude
-                + "&destination=" + DELHI.latitude + "," + DELHI.longitude + "&waypoints=optimize:true|"
-                + DELHI.latitude + "," + DELHI.longitude
-                + "|" + KURUKSHETRA.latitude + "," + KURUKSHETRA.longitude
-                + "&sensor=true";
-        return url;
+        try {
+            db = SQLiteDatabase.openOrCreateDatabase("MapData.db", null);
+            db.execSQL(table_query.toString());
+        } catch (Exception e) {
+            Log.e("db", e.toString());
+        }
+
+        ArrayList<Double> latlng = getLocationFromAddress(getActivity(), ddest);
+        latitude = latlng.get(0);
+        longitude = latlng.get(1);
+        type = "hospital|gas_station";
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&types=" + type);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
+        Log.e("url", googlePlacesUrl.toString());
+        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
+        Object[] toPass = new Object[2];
+        toPass[0] = googleMap;
+        toPass[1] = googlePlacesUrl.toString();
+        googlePlacesReadTask.execute(toPass);
     }
 
-    private class ReadTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... url) {
-            String data = "";
-            try {
-                HttpConnection http = new HttpConnection();
-                data = http.readUrl(url[0]);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
+    public ArrayList<Double> getLocationFromAddress(Context context, String strAddress) {
+
+        ArrayList<Double> latlng = new ArrayList<>();
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
             }
-            return data;
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            latlng.add(location.getLatitude());
+            latlng.add(location.getLongitude());
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            new ParserTask().execute(result);
-        }
+        return latlng;
     }
-
-    private class ParserTask extends
-            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(
-                String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                PathJSONParser parser = new PathJSONParser();
-                routes = parser.parse(jObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
-            ArrayList<LatLng> points = null;
-            PolylineOptions polyLineOptions = null;
-
-            // traversing through routes
-
-            if (routes != null) {
-
-                for (int i = 0; i < routes.size(); i++) {
-                    points = new ArrayList<>();
-                    polyLineOptions = new PolylineOptions();
-                    List<HashMap<String, String>> path = routes.get(i);
-
-                    for (int j = 0; j < path.size(); j++) {
-                        HashMap<String, String> point = path.get(j);
-
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lng = Double.parseDouble(point.get("lng"));
-                        LatLng position = new LatLng(lat, lng);
-
-                        points.add(position);
-                    }
-
-                    polyLineOptions.addAll(points);
-                    polyLineOptions.width(2);
-                    polyLineOptions.color(Color.GRAY);
-                }
-
-                googleMap.addPolyline(polyLineOptions);
-            }
-        }
-    }
-
-
 }
