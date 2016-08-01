@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class ImageAdapter extends BaseAdapter {
     ArrayList<String> imagePath;
     private Context mContext;
+
 
     // Constructor
     public ImageAdapter(Context c, ArrayList<String> imagePath) {
@@ -40,12 +42,14 @@ public class ImageAdapter extends BaseAdapter {
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        int width= mContext.getResources().getDisplayMetrics().widthPixels;
+        width = (width - 10) / 3;
 
         if (convertView == null) {
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(160, 120));
+            imageView.setLayoutParams(new GridView.LayoutParams(width, width));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
+            imageView.setPadding(2, 2, 2, 2);
         } else {
             imageView = (ImageView) convertView;
         }

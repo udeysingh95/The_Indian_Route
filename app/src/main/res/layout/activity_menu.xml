@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:weightSum="2"
     tools:context="com.example.udeys.theindianroute.MenuActivity"
-    android:background="@drawable/background"
-    >
+    android:background="#000">
 
     <include
         android:id="@+id/my_toolbar"

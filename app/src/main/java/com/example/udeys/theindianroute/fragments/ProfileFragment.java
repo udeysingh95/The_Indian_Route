@@ -8,8 +8,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     View view;
     TextView uname, posts;
@@ -63,6 +65,12 @@ public class ProfileFragment extends Fragment {
 
         sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
 
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int grid_col_width = (size.x - 6) / 3;
+
+
         try {
             username = getArguments().getString("user_name");
             user_id = getArguments().getString("user_id");
@@ -83,6 +91,7 @@ public class ProfileFragment extends Fragment {
         check_followers = (LinearLayout)view.findViewById(R.id.check_follwers);
         imagePath = new ArrayList<>();
         profilePicture = (RoundedImageView) view.findViewById(R.id.PF);
+        gridView.setColumnWidth(grid_col_width);
         return view;
     }
 
@@ -93,15 +102,7 @@ public class ProfileFragment extends Fragment {
         initValue(user_id);    //fetch profile
         initValues();  //fetch Posts
 
-        check_followers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CommonList.class);
-                i.putExtra("profile_id",profile_id);
-                i.putExtra("list_type","followers");
-                startActivity(i);
-            }
-        });
+        check_followers.setOnClickListener(this);
 
     }
 
@@ -161,22 +162,21 @@ public class ProfileFragment extends Fragment {
             post_id = new ArrayList<>();
             JSONArray jArr = new JSONArray(result);
 
-
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
                 String id = obj.getString("id");
                 imagePath.add(path);
                 post_id.add(id);
-                //Log.e("path", path);
-                //gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
             }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         gridView.setAdapter(new ImageAdapter(getActivity(), imagePath));
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -209,12 +209,7 @@ public class ProfileFragment extends Fragment {
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
 
-            follow_status.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    follow_button();
-                }
-            });
+            follow_status.setOnClickListener(this);
 
             Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(profilePicture);
 
@@ -268,5 +263,23 @@ public class ProfileFragment extends Fragment {
         }
 
     }
+
+    @Override
+    public void onClick(View v) {
+            int id = v.getId();
+        switch (id){
+            case R.id.check_follwers:
+                Intent i = new Intent(getActivity(), CommonList.class);
+                i.putExtra("profile_id",profile_id);
+                i.putExtra("list_type", "followers");
+                startActivity(i);
+                break;
+            case R.id.follow_status:
+                follow_button();
+                break;
+
+        }
+    }
+
 
 }

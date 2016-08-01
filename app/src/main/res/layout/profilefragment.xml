@@ -350,7 +350,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.1"
-        android:background="#C1C1C1"
+        android:background="#E62f241e"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -358,20 +358,20 @@
             android:id="@+id/gallery_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.92"
-            android:background="#C1C1C1"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <GridView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/gallery_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnWidth="120dp"
-                android:gravity="center"
-                android:horizontalSpacing="1dp"
                 android:numColumns="3"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="1dp" />
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:verticalScrollbarPosition="right"
+                android:scrollbars="vertical"/>
         </LinearLayout>
 
     </LinearLayout>
