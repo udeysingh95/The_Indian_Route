@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_weight="0.05">
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cuserProfilePicture"
@@ -37,15 +39,13 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:id="@+id/commenters_comments"
-            android:layout_marginLeft="10dp"
-            android:layout_alignTop="@+id/list_username"
-            android:layout_toEndOf="@+id/list_username"
-            android:layout_centerVertical="true" />
+            android:layout_below="@+id/cuserProfilePicture"
+            android:layout_alignStart="@+id/list_username" />
 
 
     </RelativeLayout>

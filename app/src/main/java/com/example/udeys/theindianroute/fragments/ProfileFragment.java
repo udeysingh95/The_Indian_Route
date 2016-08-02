@@ -168,6 +168,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 String id = obj.getString("id");
                 imagePath.add(path);
                 post_id.add(id);
+                Log.d("pic",path);
             }
 
         } catch (JSONException e) {
