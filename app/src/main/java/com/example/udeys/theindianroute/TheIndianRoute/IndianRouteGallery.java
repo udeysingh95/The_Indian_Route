@@ -40,16 +40,12 @@ public class IndianRouteGallery extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.indianroute_gallery, container, false);
         gridView = (GridView) view.findViewById(R.id.gridview);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String id = String.valueOf(post_id.get(position));
-                /*ViewPostActivity viewPostActivity = new ViewPostActivity();
-                viewPostActivity.setArguments(bundle);
-                FragmentTransaction ft = getFragmentManager().beginTransaction()
-                        .replace(R.id.indian_route_fragment, viewPostActivity)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();*/
+
                 Intent intent = new Intent(getActivity(), ViewPostActivity.class);
                 intent.putExtra("post_id", id);
                 startActivity(intent);
@@ -62,7 +58,6 @@ public class IndianRouteGallery extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initValues();
-
     }
 
     private void initValues() {

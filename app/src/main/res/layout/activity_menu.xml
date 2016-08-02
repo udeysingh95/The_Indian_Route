@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:weightSum="2"
     tools:context="com.example.udeys.theindianroute.MenuActivity"
-    android:background="#000">
+    android:background="@drawable/background">
 
     <include
         android:id="@+id/my_toolbar"
@@ -37,8 +37,7 @@
         android:layout_weight="0.2"
         android:background="#B32f241e"
         android:weightSum="5"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"

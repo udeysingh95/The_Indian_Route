@@ -4,60 +4,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="2"
+
     tools:context="com.example.udeys.theindianroute.TheIndianRoute.IndianRoute">
 
     <include
         android:id="@+id/back_bar"
         layout="@layout/back_bar" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.8">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:id="@+id/parent_layout">
+
 
 
         <fragment
             android:id="@+id/indian_route_fragment"
             android:name="com.example.udeys.theindianroute.fragments.EmptyFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/frag1"
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_important" />
+            tools:layout="@layout/indianroute_gallery" />
 
-        <ImageButton
-            android:id="@+id/frag2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_split" />
+        <LinearLayout
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#BF000000"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_alignParentBottom="true"
+            android:animateLayoutChanges="true">
 
-        <ImageButton
-            android:id="@+id/frag3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#ccc"
-            android:src="@drawable/ic_action_favorite" />
+            <LinearLayout
+                android:id="@+id/frag1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.99"
+                android:alpha="0.5"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <ImageButton
+                    android:id="@+id/home"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.7"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/grid" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:text="Gallery"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.01"
+                android:alpha="0.5"
+                android:background="#fff" />
+
+            <LinearLayout
+                android:id="@+id/frag2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.99"
+                android:alpha="0.5"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <ImageButton
+                    android:id="@+id/notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.7"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/maps" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:text="Map"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.01"
+                android:alpha="0.5"
+                android:background="#fff" />
 
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/frag3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="0.5"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <ImageButton
+                    android:id="@+id/event"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.7"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/events" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:text="Events"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
 
 </LinearLayout>

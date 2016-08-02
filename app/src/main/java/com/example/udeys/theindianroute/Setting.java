@@ -207,7 +207,7 @@ public class Setting extends Activity  implements View.OnClickListener{
 
             //may throw some error
 
-            Picasso.with(getApplicationContext()).load(userprofilePicture).fit().centerCrop().into(pp);
+            Picasso.with(getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(pp);
 
 
         } catch (JSONException e) {

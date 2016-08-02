@@ -18,14 +18,16 @@
         android:layout_height="0dp"
         android:background="#602f241e"
         android:layout_weight="2.5"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:weightSum="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@android:color/transparent">
 
 
             <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,7 +37,7 @@
                 android:layout_weight="1.7"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ppplaceholder"
-                app:riv_border_color="#BFffffff"
+                app:riv_border_color="#90ffffff"
                 app:riv_border_width="2dp"
                 app:riv_mutate_background="true"
                 app:riv_oval="true"
@@ -55,7 +57,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
             android:weightSum="3"
             android:orientation="vertical">
 
@@ -69,6 +71,7 @@
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:text="Udey Singh" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -83,14 +86,15 @@
                     android:textSize="15dp"
                     android:gravity="bottom"
                     android:textColor="#fff"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
                     android:text="udeysingh95"
                     android:drawableEnd="@drawable/edit"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"/>
 
             </LinearLayout>
-
-
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -99,7 +103,7 @@
                 android:textSize="12dp"
                 android:textColor="#fff"
                 android:paddingTop="5dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1.5"
                 android:text="bio comes here" />
 
 

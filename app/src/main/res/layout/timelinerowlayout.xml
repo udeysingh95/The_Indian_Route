@@ -74,7 +74,8 @@
                     android:layout_alignBottom="@+id/userpostimage"
                     android:layout_alignStart="@+id/userProfilePicture"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    android:weightSum="5"
+                    android:background="#30000000">
 
                     <View
                         android:layout_width="0dp"
