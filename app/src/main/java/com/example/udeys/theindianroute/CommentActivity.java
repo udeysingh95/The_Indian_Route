@@ -30,7 +30,7 @@ import cz.msebera.android.httpclient.Header;
 public class CommentActivity extends AppCompatActivity {
     Button post_comment;
     EditText write_comment;
-    TextView user;
+    TextView user,title;
     commentsAdapter commentsAdapter;
     ListView commnetslists;
     String post_id, username;
@@ -52,6 +52,8 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
         write_comment = (EditText) findViewById(R.id.write_comment);
+        title = (TextView)findViewById(R.id.title);
+        title.setText("Comments");
         requestComments();
 
         commnetslists = (ListView) findViewById(R.id.comments_lists);
