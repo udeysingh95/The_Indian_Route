@@ -1,5 +1,6 @@
 package com.example.udeys.theindianroute;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -49,7 +50,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         female = (TextView) findViewById(R.id.female);
         terms = (TextView) findViewById(R.id.terms);
 
-        terms.setPaintFlags(terms.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        terms.setPaintFlags(terms.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         reg = (Button) findViewById(R.id.register);
         male.setOnClickListener(this);
         female.setOnClickListener(this);
@@ -111,28 +112,25 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             passowrd.setError("You Forgot To Put Your Password");
             status = false;
         }
+        if (!pass.contentEquals(repass)) {
+            repassword.setError("Password doesn't match");
+            status = false;
+        }
+        if (repassword.length() == 0) {
+            repassword.setError("You Forgot To Put Your Re-Password");
+            status = false;
+        }
         if (status == true) {
-            /*
-            * After validating data
-            * */
+            hit_data(nm, unm, pass, eml, device_token);
         }
 
         Log.e("token", device_token);
 
 
-
-
-        /*
-        * validated data send to the server.
-        * flag boolean varidable to check the response from the server.
-        * */
-        hit_data(nm, unm, pass, eml, device_token);
-
     }
 
 
-
-    public void hit_data(final String name, final String username, final String email, final String password, final String device_token) {
+    public void hit_data(final String name, final String username, final String password, final String email, final String device_token) {
         try {
             AsyncHttpClient client = new AsyncHttpClient();
             /*
@@ -150,10 +148,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             } catch (Exception e) {
                 Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/try.php", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Toast.makeText(Register.this, "success" + res, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override
@@ -166,7 +165,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         } catch (Exception e) {
             Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+        finish();
     }
+
 
 }
 

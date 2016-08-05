@@ -31,11 +31,11 @@ import cz.msebera.android.httpclient.Header;
 public class ViewPostActivity extends AppCompatActivity {
     static int state;
     public String user_id;
-    String posts_id, username, profile_pic, post_pic, story, check_in, reaction,no_of_comments;
+    String posts_id, username, profile_pic, post_pic, story, check_in, reaction,no_of_comments,pt;
     com.makeramen.roundedimageview.RoundedImageView pp;
     ImageView post;
     ImageButton back_btn;
-    TextView user_name, post_story, post_like, post_comment,comment_no;
+    TextView user_name, post_story, post_like, post_comment,comment_no,post_time;
     ImageView like, comment;
 
     @Nullable
@@ -53,6 +53,7 @@ public class ViewPostActivity extends AppCompatActivity {
         back_btn = (ImageButton) findViewById(R.id.btn_back);
         post = (ImageView) findViewById(R.id.vpuserpostimage);
         user_name = (TextView) findViewById(R.id.username);
+        post_time = (TextView)findViewById(R.id.post_time);
         user_name.setTypeface(fa);
         like = (ImageView) findViewById(R.id.icon_like);
         comment = (ImageView) findViewById(R.id.icon_comment);
