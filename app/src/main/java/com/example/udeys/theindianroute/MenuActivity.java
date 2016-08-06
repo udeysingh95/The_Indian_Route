@@ -1,14 +1,15 @@
 package com.example.udeys.theindianroute;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -107,10 +108,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 // TODO Auto-generated method stub
             }
         });
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -168,12 +166,18 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     Search.setImageResource(R.drawable.ic_action_back);
                     title.setVisibility(View.GONE);
                     srch.setVisibility(View.VISIBLE);
+                    srch.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                     search_state = true;
                 } else {
                     Search.setImageResource(R.drawable.ic_action_search_dark);
                     srch.setVisibility(View.GONE);
                     title.setVisibility(View.VISIBLE);
                     search_state = false;
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    View view = getCurrentFocus();
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 break;
 
@@ -234,7 +238,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ft.replace(R.id.fragment_1, searchFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-
     }
 
     private void initFragments() {

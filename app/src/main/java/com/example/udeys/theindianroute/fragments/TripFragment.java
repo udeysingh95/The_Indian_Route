@@ -69,13 +69,23 @@ public class TripFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btnData:
                 getNearbyPlaces();
-
+                StringBuilder table_query = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+                table_query.append("NEARBY");
+                table_query.append(" (Latitude double,Longitude double,Place_Name text,Vicinity text,Type text)");
+                Log.e("tb", table_query.toString());
+                try {
+                    db = SQLiteDatabase.openOrCreateDatabase("MapData.db", null);
+                    db.execSQL(table_query.toString());
+                } catch (Exception e) {
+                    Log.e("db", e.toString());
+                }
         }
 
     }
 
     private void getNearbyPlaces() {
         String ddest = destPlace.getText().toString();
+        /*
         StringBuilder table_query = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
         table_query.append("NEARBY");
         table_query.append(" (Latitude double,Longitude double,Place_Name text,Vicinity text,Type text)");
@@ -87,7 +97,7 @@ public class TripFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             Log.e("db", e.toString());
         }
-
+        */
         ArrayList<Double> latlng = getLocationFromAddress(getActivity(), ddest);
         latitude = latlng.get(0);
         longitude = latlng.get(1);

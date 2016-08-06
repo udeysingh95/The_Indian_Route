@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.udeys.theindianroute.R;
@@ -22,9 +23,11 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
 
     View view;
+    EditText search;
+    ListView listView;
+    boolean search_state = false;
     ArrayList<String> user_name;
     ArrayList<String> user_id;
-    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +36,6 @@ public class SearchFragment extends Fragment {
         view = inflater.inflate(R.layout.searchfragment, container, false);
         listView = (ListView) view.findViewById(R.id.users);
         try {
-            user_name = new ArrayList<>();
-            user_id = new ArrayList<>();
             user_name = getArguments().getStringArrayList("user_name");
             user_id = getArguments().getStringArrayList("user_id");
             Log.e("search try", "success");

@@ -10,9 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,8 +105,8 @@ public class Setting extends Activity  implements View.OnClickListener{
     }
 
     public void logout(){
-        sp.edit().remove("user_id").commit();
-        sp.edit().remove("username").commit();
+        sp.edit().remove("user_id").apply();
+        sp.edit().remove("username").apply();
 
         Intent i = new Intent(this , Splash.class);
         startActivity(i);
