@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +19,10 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -151,7 +156,32 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+                            Log.d("log", res);
+                            String username = "", user_id = "";
+                            if (res.contentEquals("Username already exists"))
+                                Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
+                            else {
+                                try {
+                                    JSONArray jArr = new JSONArray(res);
+
+                                    JSONObject obj = jArr.getJSONObject(0);
+                                    username = obj.getString("username");
+                                    user_id = obj.getString("user_id");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
+                                SharedPreferences.Editor ed = sp.edit();
+                                ed.clear();
+                                ed.putString("user_id", user_id);
+                                ed.putString("username", username);
+                                ed.commit();
+                                Intent intent = new Intent(getApplication(), MenuActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                            }
+
 
                         }
 
@@ -165,9 +195,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         } catch (Exception e) {
             Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 
