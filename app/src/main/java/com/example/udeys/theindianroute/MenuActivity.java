@@ -120,6 +120,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new HomeFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
             case R.id.trip:
@@ -129,6 +130,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new TripFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
             case R.id.post:
@@ -136,6 +138,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new CameraFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
             case R.id.notification:
@@ -144,6 +147,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 title.setText("alerts");
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new NotificationFragment());
+                ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
                 break;
@@ -154,6 +158,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new ProfileFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
             case R.id.toolbar_logo:
