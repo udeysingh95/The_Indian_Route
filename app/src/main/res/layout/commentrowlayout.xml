@@ -2,53 +2,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
 
 
-    <RelativeLayout
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:paddingLeft="5dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cuserProfilePicture"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_weight="0.1"
+        android:src="@drawable/ppplaceholder"
+        app:riv_border_color="#60ffffff"
+        app:riv_border_width="2dp"
+        app:riv_corner_radius="5dp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat" />
+
+    <TextView
+        android:id="@+id/list_username"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@+id/cuserProfilePicture"
+        android:text="Username"
+        android:textStyle="bold"/>
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:paddingLeft="70dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_weight="0.05">
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/commenters_comments"
+        android:layout_below="@+id/cuserProfilePicture" />
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cuserProfilePicture"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_weight="0.2"
-            android:src="@drawable/ppplaceholder"
-            app:riv_border_color="#333333"
-            app:riv_border_width="2dip"
-            app:riv_corner_radius="5dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
-            app:riv_tile_mode="repeat" />
-
-        <TextView
-            android:id="@+id/list_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/cuserProfilePicture"
-            android:text="Username"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/commenters_comments"
-            android:layout_below="@+id/cuserProfilePicture"
-            android:layout_alignStart="@+id/list_username" />
-
-
-    </RelativeLayout>
+</LinearLayout>
 
 
 </LinearLayout>

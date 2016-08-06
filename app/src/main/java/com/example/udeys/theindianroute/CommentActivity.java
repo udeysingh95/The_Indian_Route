@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
@@ -37,6 +39,7 @@ public class CommentActivity extends AppCompatActivity {
     ImageView post_image, pp;
     ImageButton btn_back;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
         write_comment = (EditText) findViewById(R.id.write_comment);
+
         title = (TextView)findViewById(R.id.title);
         title.setText("Comments");
         requestComments();
@@ -62,6 +66,8 @@ public class CommentActivity extends AppCompatActivity {
 
         commnetslists.setAdapter(commentsAdapter);
         commnetslists.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
+
 
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
