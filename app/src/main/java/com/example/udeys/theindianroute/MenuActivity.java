@@ -67,7 +67,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         String username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
-        //Log.e("sharedpred", username + " " + user_id);
         initFragments();
 
         hm = (ImageButton) findViewById(R.id.home);
@@ -178,6 +177,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     View view = getCurrentFocus();
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    hm.performClick();
                 }
                 break;
 

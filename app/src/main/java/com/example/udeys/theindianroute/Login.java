@@ -80,7 +80,9 @@ public class Login extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.login);
+
         username = (EditText) findViewById(R.id.username);
         passsword = (EditText) findViewById(R.id.password);
         facebook_dummy = (Button) findViewById(R.id.facebook);
@@ -134,10 +136,7 @@ public class Login extends Activity implements View.OnClickListener{
             client.post("http://indianroute.roms4all.com/login.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            //called when response HTTP status is "200"
-                            Toast.makeText(Login.this, "success", Toast.LENGTH_SHORT).show();
-                            Log.e("success", res);
-                            
+
                             decodeJson(res);
 
                         }

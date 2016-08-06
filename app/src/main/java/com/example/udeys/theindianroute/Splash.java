@@ -37,8 +37,6 @@ public class Splash extends Activity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Toast.makeText(getApplicationContext(), "GRANTED", Toast.LENGTH_LONG).show();
-
                 } else {
 
                     // permission denied, boo! Disable the
@@ -55,7 +53,7 @@ public class Splash extends Activity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Toast.makeText(getApplicationContext(), "GRANTED", Toast.LENGTH_LONG).show();
+
 
                 } else {
 
@@ -73,7 +71,6 @@ public class Splash extends Activity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Toast.makeText(getApplicationContext(), "GRANTED", Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -91,7 +88,7 @@ public class Splash extends Activity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Toast.makeText(getApplicationContext(), "GRANTED", Toast.LENGTH_LONG).show();
+
 
                 } else {
 
@@ -109,7 +106,6 @@ public class Splash extends Activity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
-                    Toast.makeText(getApplicationContext(), "GRANTED", Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -233,6 +229,23 @@ public class Splash extends Activity {
             }
         }
 
+        setContentView(R.layout.splash);
+
+        im1 = (ImageView) findViewById(R.id.foot1);
+        im2 = (ImageView) findViewById(R.id.foot2);
+        im3 = (ImageView) findViewById(R.id.foot3);
+        im4 = (ImageView) findViewById(R.id.foot4);
+        im5 = (ImageView) findViewById(R.id.foot5);
+
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.fade);
+        a.setRepeatCount(10);
+        im1.startAnimation(a);
+
+        //fade1();
+        fade2();
+        fade3();
+        fade4();
+        fade5();
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
         if (sp.contains("user_id")) {
@@ -244,27 +257,6 @@ public class Splash extends Activity {
             startActivity(intent);
             finish();
         }
-
-
-        setContentView(R.layout.splash);
-
-        im1 = (ImageView) findViewById(R.id.foot1);
-        im2 = (ImageView) findViewById(R.id.foot2);
-        im3 = (ImageView) findViewById(R.id.foot3);
-        im4 = (ImageView) findViewById(R.id.foot4);
-        im5 = (ImageView) findViewById(R.id.foot5);
-
-
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.fade);
-        a.setRepeatCount(1000);
-        im1.startAnimation(a);
-
-
-        //fade1();
-        fade2();
-        fade3();
-        fade4();
-        fade5();
 
 
     }

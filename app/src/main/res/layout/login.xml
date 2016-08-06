@@ -146,6 +146,7 @@
                 android:drawableLeft="@drawable/facebook"
                 android:paddingLeft="15dp"
                 android:textAllCaps="false"/>
+
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
             android:layout_width="match_parent"

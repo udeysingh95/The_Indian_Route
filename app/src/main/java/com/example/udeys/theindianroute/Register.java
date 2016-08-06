@@ -35,7 +35,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     TextView terms;
     TextView male, female;
     Bitmap bp;
-    String bas;
+    String gen = "F";
 
     public final static boolean isValidEmail(CharSequence target) {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
@@ -73,12 +73,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 female.setTextColor(Color.parseColor("#888888"));
                 male.setBackgroundResource(R.drawable.login_edittext);
                 male.setTextColor(Color.parseColor("#cccccc"));
+                gen = "M";
                 break;
             case R.id.female:
                 male.setBackgroundResource(0);
                 male.setTextColor(Color.parseColor("#888888"));
                 female.setBackgroundResource(R.drawable.login_edittext);
                 female.setTextColor(Color.parseColor("#cccccc"));
+                gen = "F";
                 break;
             case R.id.register:
                 register_me();

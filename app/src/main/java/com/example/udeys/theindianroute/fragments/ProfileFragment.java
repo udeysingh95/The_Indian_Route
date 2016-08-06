@@ -92,6 +92,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         imagePath = new ArrayList<>();
         profilePicture = (RoundedImageView) view.findViewById(R.id.PF);
         gridView.setColumnWidth(grid_col_width);
+        uname.setText(username);
         return view;
     }
 

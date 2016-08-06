@@ -33,21 +33,19 @@
             android:id="@+id/write_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
+            android:hint="Write a Comment..."
             android:background="@drawable/comment_field"
-            android:drawableLeft="@drawable/profile"
-            android:paddingStart="5dp"/>
-
+            android:drawableLeft="@drawable/comment_1"
+            android:paddingStart="5dp"
+            android:drawablePadding="10dp"/>
         <Button
-            android:id="@+id/post_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:text="Comment"
-            android:textSize="16dp"
-            android:textAllCaps="false"
-            android:textColor="#BF000000"
-            android:background="@drawable/comment_button"/>
+            android:layout_weight="0"
+            android:id="@+id/post_comment"/>
+
+
 
     </LinearLayout>
 

@@ -6,7 +6,9 @@ package com.example.udeys.theindianroute.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ public class NotificationFragment extends Fragment {
     ListView notificationList;
     notificationAdapter notAdapter;
     String user_id = "22";
+    SharedPreferences sp;
 
     @Override
 
@@ -48,6 +51,9 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        sp = this.getActivity().getSharedPreferences("user_details", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+
         fetch_notification();
         notificationList = (ListView) view.findViewById(R.id.notification_list);
         notAdapter = new notificationAdapter(getActivity(), R.layout.single_notification);
