@@ -202,7 +202,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * Bind parameters here
             * */
             RequestParams params = new RequestParams();
-            Log.d("user_id: " , id);
+            Log.e("user_id: ", id);
             params.put("user_id" , id);
             params.put("check_in", checkin);
             params.put("story", story);
