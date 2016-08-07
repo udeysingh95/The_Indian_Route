@@ -175,6 +175,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     ed.putString("user_id", user_id);
                                     ed.putString("username", username);
                                     ed.commit();
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
