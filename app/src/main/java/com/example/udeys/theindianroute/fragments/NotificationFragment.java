@@ -37,7 +37,7 @@ public class NotificationFragment extends Fragment {
     View view;
     ListView notificationList;
     notificationAdapter notAdapter;
-    String user_id = "22";
+    String user_id;
     SharedPreferences sp;
 
     @Override

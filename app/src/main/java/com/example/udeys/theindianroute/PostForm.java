@@ -48,7 +48,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     String story, checkin = "";
     EditText c;
     MultiAutoCompleteTextView sto;
-    String username ,user_id;
+    String user_id;
     String hash_tag;
     String filename;
     File i;
@@ -65,14 +65,18 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        username = sp.getString("username", null);
         user_id = sp.getString("user_id", null);
+
         setContentView(R.layout.activity_post_form);
+
         sto = (MultiAutoCompleteTextView) findViewById(R.id.post_story);
+
         sto.setTokenizer(new SpaceTokenizer());
         c = (EditText) findViewById(R.id.post_checkin);
         listView = (ListView) findViewById(R.id.mini_list);
+
         sto.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -92,6 +96,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
             }
         });
+
         push_post = (Button) findViewById(R.id.push_post);
         filename = getIntent().getStringExtra("post_image");
         push_post.setOnClickListener(this);
@@ -187,7 +192,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         c.setText(checkin);
         i = get();
-        //Log.d("file", "" + i);
+        Log.d("file", "" + i);
         pushPost();
     }
 
@@ -198,12 +203,13 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * Bind parameters here
             * */
             RequestParams params = new RequestParams();
+            Log.d("pushPost: " , user_id);
             params.put("user_id" , user_id);
             params.put("check_in", checkin);
             params.put("story", story);
             params.put("image", i);
 
-            client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
+            client.post("http://requestb.in/x9izh2x9", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Intent i = new Intent(getApplication(), MenuActivity.class);
