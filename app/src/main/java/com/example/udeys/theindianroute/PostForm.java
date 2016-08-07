@@ -48,7 +48,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
     String story, checkin = "";
     EditText c;
     MultiAutoCompleteTextView sto;
-    String user_id;
+    String id;
     String hash_tag;
     String filename;
     File i;
@@ -67,7 +67,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        user_id = sp.getString("user_id", null);
+        id = sp.getString("user_id", null);
 
         setContentView(R.layout.activity_post_form);
 
@@ -203,8 +203,8 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * Bind parameters here
             * */
             RequestParams params = new RequestParams();
-            Log.d("pushPost: " , user_id);
-            params.put("user_id" , user_id);
+            Log.d("user_id: " , id);
+            params.put("user_id" , id);
             params.put("check_in", checkin);
             params.put("story", story);
             params.put("image", i);
