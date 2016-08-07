@@ -178,9 +178,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         ed.putString("username", name);
                                         ed.commit();
 
-                                        /*Intent i = new Intent(getApplication(), MenuActivity.class);
+                                        Intent i = new Intent(getApplication(), MenuActivity.class);
                                         startActivity(i);
-                                        finish();*/
+                                        finish();
                                     } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), "sp failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }

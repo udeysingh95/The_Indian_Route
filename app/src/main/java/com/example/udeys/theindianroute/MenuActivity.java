@@ -181,7 +181,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     search_state = false;
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     View view = getCurrentFocus();
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(srch.getWindowToken(), 0);
                     hm.performClick();
                 }
                 break;
