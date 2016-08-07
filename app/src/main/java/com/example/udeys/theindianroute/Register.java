@@ -159,7 +159,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.d("log", res);
-                            String username = "", user_id = "";
+                            String username, user_id;
                             if (res.contentEquals("Username already exists"))
                                 Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
                             else {
@@ -169,15 +169,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     JSONObject obj = jArr.getJSONObject(0);
                                     username = obj.getString("username");
                                     user_id = obj.getString("user_id");
+
+                                    SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
+                                    SharedPreferences.Editor ed = sp.edit();
+                                    ed.putString("user_id", user_id);
+                                    ed.putString("username", username);
+                                    ed.commit();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-                                SharedPreferences.Editor ed = sp.edit();
-                                ed.clear();
-                                ed.putString("user_id", user_id);
-                                ed.putString("username", username);
-                                ed.commit();
+
                                 Intent intent = new Intent(getApplication(), MenuActivity.class);
                                 startActivity(intent);
                                 finish();
