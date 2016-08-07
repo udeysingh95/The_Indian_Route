@@ -33,7 +33,7 @@
             android:id="@+id/write_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:hint="Write a Comment..."
             android:background="@drawable/comment_field"
             android:drawableLeft="@drawable/comment_1"
@@ -42,8 +42,11 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:id="@+id/post_comment"/>
+            android:layout_weight="0.2"
+            android:id="@+id/post_comment"
+            android:text="Comment"
+            android:textAllCaps="false"
+            android:background="@drawable/comment_button"/>
 
 
 

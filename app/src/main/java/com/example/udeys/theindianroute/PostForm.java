@@ -201,7 +201,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             params.put("user_id" , user_id);
             params.put("check_in", checkin);
             params.put("story", story);
-            // params.put("image", i);
+            params.put("image", i);
 
             client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
