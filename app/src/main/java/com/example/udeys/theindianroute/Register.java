@@ -158,7 +158,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.d("log", res);
+                            Log.e("log", res);
                             String username, user_id;
                             if (res.contentEquals("Username already exists"))
                                 Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
@@ -169,9 +169,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     JSONObject obj = jArr.getJSONObject(0);
                                     username = obj.getString("username");
                                     user_id = obj.getString("user_id");
+                                    Toast.makeText(getApplicationContext(), "" + user_id, Toast.LENGTH_SHORT).show();
+                                    Log.e("user_id", user_id);
 
                                     SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
                                     SharedPreferences.Editor ed = sp.edit();
+                                    ed.clear();
                                     ed.putString("user_id", user_id);
                                     ed.putString("username", username);
                                     ed.commit();
