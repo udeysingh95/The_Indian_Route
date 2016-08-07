@@ -67,8 +67,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        id = sp.getString("user_id", null);
-
+        id = sp.getString("user_id", "62");
         setContentView(R.layout.activity_post_form);
 
         sto = (MultiAutoCompleteTextView) findViewById(R.id.post_story);
