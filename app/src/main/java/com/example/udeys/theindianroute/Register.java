@@ -150,6 +150,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 params.put("user_email", email);
                 params.put("user_password", password);
                 params.put("Notification", "1");
+                params.put("gender",gen);
                 params.put("device_token", device_token);
 
             } catch (Exception e) {
@@ -158,34 +159,38 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.e("log", res);
-                            String username, user_id;
                             if (res.contentEquals("Username already exists"))
                                 Toast.makeText(Register.this, "" + res, Toast.LENGTH_SHORT).show();
                             else {
+                                String name = null;
+                                String user_id = null;
+
                                 try {
                                     JSONArray jArr = new JSONArray(res);
-
                                     JSONObject obj = jArr.getJSONObject(0);
-                                    username = obj.getString("username");
+                                    name = obj.getString("username");
                                     user_id = obj.getString("user_id");
-                                    Toast.makeText(getApplicationContext(), "" + user_id, Toast.LENGTH_SHORT).show();
-                                    Log.e("user_id", user_id);
+                                    try {
+                                        SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
+                                        SharedPreferences.Editor ed = sp.edit();
+                                        ed.clear();
+                                        ed.putString("user_id", user_id);
+                                        ed.putString("username", name);
+                                        ed.commit();
 
-                                    SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-                                    SharedPreferences.Editor ed = sp.edit();
-                                    ed.clear();
-                                    ed.putString("user_id", user_id);
-                                    ed.putString("username", username);
-                                    ed.commit();
+                                        /*Intent i = new Intent(getApplication(), MenuActivity.class);
+                                        startActivity(i);
+                                        finish();*/
+                                    } catch (Exception e) {
+                                        Toast.makeText(getApplicationContext(), "sp failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
 
                                 } catch (JSONException e) {
+                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
 
-                                Intent intent = new Intent(getApplication(), MenuActivity.class);
-                                startActivity(intent);
-                                finish();
 
                             }
 
