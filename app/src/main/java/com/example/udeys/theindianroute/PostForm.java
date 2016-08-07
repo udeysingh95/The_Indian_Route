@@ -67,7 +67,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("user_details", MODE_PRIVATE);
-        id = sp.getString("user_id", "62");
+        id = sp.getString("user_id", null);
         setContentView(R.layout.activity_post_form);
 
         sto = (MultiAutoCompleteTextView) findViewById(R.id.post_story);
@@ -202,13 +202,13 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * Bind parameters here
             * */
             RequestParams params = new RequestParams();
-            Log.d("user_id: " , id);
+            Log.e("user_id: ", id);
             params.put("user_id" , id);
             params.put("check_in", checkin);
             params.put("story", story);
             params.put("image", i);
 
-            client.post("http://requestb.in/x9izh2x9", params, new TextHttpResponseHandler() {
+            client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Intent i = new Intent(getApplication(), MenuActivity.class);
