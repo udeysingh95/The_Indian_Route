@@ -21,6 +21,7 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -120,19 +121,19 @@ public class Login extends Activity implements View.OnClickListener{
      * Making Json Array request
      */
     private void makeJsonArrayReq() {
-
         try {
             /*
             * Asynchttpclient library
             * */
+            String device_token = FirebaseInstanceId.getInstance().getToken();
             AsyncHttpClient client = new AsyncHttpClient();
-            /*
-            * Bind Parameters
-            * */
+
             RequestParams params = new RequestParams();
             try {
                 params.put("username", user);
                 params.put("password", pass);
+                params.put("device_token" , device_token);
+
 
             } catch (Exception e) {
                 Toast.makeText(Login.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -140,14 +141,11 @@ public class Login extends Activity implements View.OnClickListener{
             client.post("http://indianroute.roms4all.com/login.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-
                             decodeJson(res);
-
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                             Toast.makeText(Login.this, res, Toast.LENGTH_SHORT).show();
                         }
                     }
