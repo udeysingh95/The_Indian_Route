@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,24 +29,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="35dp"
+                    android:src="@drawable/postplaceholder"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop" />
-
-                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/userProfilePicture"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ppplaceholder"
-                    app:riv_border_color="#333333"
-                    app:riv_border_width="2dip"
-                    app:riv_corner_radius="5dip"
-                    app:riv_mutate_background="true"
-                    app:riv_oval="true"
-                    app:riv_tile_mode="repeat" />
 
                 <TextView
                     android:id="@+id/username"
@@ -109,6 +95,22 @@
                         android:layout_weight="0.5" />
 
                 </LinearLayout>
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/userProfilePicture"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ppplaceholder"
+                    app:riv_border_color="#333333"
+                    app:riv_border_width="2dip"
+                    app:riv_corner_radius="5dip"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true"
+                    app:riv_tile_mode="repeat"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="9dp" />
 
 
             </RelativeLayout>

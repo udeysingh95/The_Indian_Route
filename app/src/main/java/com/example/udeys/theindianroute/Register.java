@@ -176,7 +176,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         ed.clear();
                                         ed.putString("user_id", user_id);
                                         ed.putString("username", name);
-                                        ed.commit();
+                                        ed.apply();
 
                                         Intent i = new Intent(getApplication(), MenuActivity.class);
                                         startActivity(i);
