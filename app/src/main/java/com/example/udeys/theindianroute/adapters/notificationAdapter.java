@@ -73,17 +73,11 @@ public class notificationAdapter extends ArrayAdapter {
 
     }
 
-    static class notificationHolder {
-        TextView t1, t2, t3;
-        ImageView i1, i2;
-    }
-
     public String post_time(String post_time) {
-        String time;
+        String time = "";
         String start;
         start = post_time;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
-        Log.e("timestamp", timeStamp);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
         Date d1 = null;
@@ -96,7 +90,7 @@ public class notificationAdapter extends ArrayAdapter {
         } catch (Exception e) {
             Log.e("date catch", e.toString());
         }
-        // Get msec from each, and subtract.
+
         long diff = 0;
         try {
             diff = d2.getTime() - d1.getTime();
@@ -104,25 +98,47 @@ public class notificationAdapter extends ArrayAdapter {
             Log.e("catch", e.toString());
         }
 
-        if (diff < 60) {
-            time = Long.toString(diff / 1000 % 60);  //<60 print this value.
-            time += " seconds ago";
-            Log.d("sec", "" + time);
-        } else if (diff < 3600) {
-            time = Long.toString(diff / (60 * 1000) % 60); // <3600 print this value
-            time += " minutes ago";
-            Log.d("min", "" + time);
-        } else if (diff < 86400) {
-            time = Long.toString(diff / (60 * 60 * 1000));
-            time += " hours ago";
-            Log.d("hr", "" + time);
-        } else {
-            time = Long.toString((diff / (60 * 60 * 1000)) / 24);
-            time += " days ago";
-            Log.d("day", "" + time);
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = 0;
+        long elapsedHours = 0;
+        long elapsedMinutes = 0;
+        long elapsedSeconds = 0;
+
+        elapsedDays = diff / daysInMilli;
+        diff = diff % daysInMilli;
+
+        elapsedHours = diff / hoursInMilli;
+        diff = diff % hoursInMilli;
+
+        elapsedMinutes = diff / minutesInMilli;
+        diff = diff % minutesInMilli;
+
+        elapsedSeconds = diff / secondsInMilli;
+
+        if (elapsedDays == 0 && elapsedHours == 0 && elapsedMinutes == 0) {
+            time = String.valueOf(elapsedSeconds);
+            time += "secs";
+        } else if (elapsedDays == 0 && elapsedHours == 0 && elapsedMinutes > 0) {
+            time = String.valueOf(elapsedMinutes);
+            time += "mins";
+        } else if (elapsedDays == 0 && elapsedHours > 0) {
+            time = String.valueOf(elapsedHours);
+            time += "hrs";
+        } else if (elapsedDays > 0) {
+            time = String.valueOf(elapsedDays);
+            time += "d";
         }
 
         return time;
+    }
+
+    static class notificationHolder {
+        TextView t1, t2, t3;
+        ImageView i1, i2;
     }
 
 }

@@ -7,6 +7,9 @@
     android:weightSum="2"
     tools:context="com.example.udeys.theindianroute.PostActivity">
 
+    <include
+        android:id="@+id/back_bar"
+        layout="@layout/back_bar"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +20,7 @@
             android:id="@+id/post_fragment"
             android:name="com.example.udeys.theindianroute.fragments.EmptyFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="410dp" />
 
     </LinearLayout>
 

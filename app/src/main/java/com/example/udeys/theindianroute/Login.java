@@ -1,12 +1,11 @@
 package com.example.udeys.theindianroute;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -80,6 +79,7 @@ public class Login extends Activity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -91,10 +91,6 @@ public class Login extends Activity implements View.OnClickListener{
         log = (Button) findViewById(R.id.login);
         create_acc = (TextView) findViewById(R.id.create);
         f_pass = (TextView) findViewById(R.id.pass);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        View view = getCurrentFocus();
-        imm.hideSoftInputFromWindow(username.getWindowToken(), 0);
-
 
 
         log.setOnClickListener(this);

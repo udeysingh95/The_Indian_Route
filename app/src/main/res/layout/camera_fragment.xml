@@ -4,10 +4,16 @@
     android:layout_height="500dp"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/surface"
-        layout="@layout/main"
+    <SurfaceView
+        android:id="@+id/surface_camera"
         android:layout_width="match_parent"
-        android:layout_height="420dp" />
+        android:layout_height="360dp"></SurfaceView>
+
+    <Button
+        android:id="@+id/btncapture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="CAPTURE IMAGE" />
 
 </LinearLayout>

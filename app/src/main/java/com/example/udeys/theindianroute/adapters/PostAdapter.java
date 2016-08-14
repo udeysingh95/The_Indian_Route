@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -210,11 +209,10 @@ public class PostAdapter extends ArrayAdapter {
     }
 
     public String post_time(String post_time) {
-        String time;
+        String time = "";
         String start;
         start = post_time;
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
-        Log.e("timestamp", timeStamp);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
         Date d1 = null;
@@ -227,7 +225,7 @@ public class PostAdapter extends ArrayAdapter {
         } catch (Exception e) {
             Log.e("date catch", e.toString());
         }
-        // Get msec from each, and subtract.
+
         long diff = 0;
         try {
             diff = d2.getTime() - d1.getTime();
@@ -235,22 +233,39 @@ public class PostAdapter extends ArrayAdapter {
             Log.e("catch", e.toString());
         }
 
-        if (diff < 60) {
-            time = Long.toString(diff / 1000 % 60);  //<60 print this value.
-            time += " secs";
-            Log.d("sec", "" + time);
-        } else if (diff < 3600) {
-            time = Long.toString(diff / (60 * 1000) % 60); // <3600 print this value
-            time += " mins";
-            Log.d("min", "" + time);
-        } else if (diff < 86400) {
-            time = Long.toString(diff / (60 * 60 * 1000));
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = 0;
+        long elapsedHours = 0;
+        long elapsedMinutes = 0;
+        long elapsedSeconds = 0;
+
+        elapsedDays = diff / daysInMilli;
+        diff = diff % daysInMilli;
+
+        elapsedHours = diff / hoursInMilli;
+        diff = diff % hoursInMilli;
+
+        elapsedMinutes = diff / minutesInMilli;
+        diff = diff % minutesInMilli;
+
+        elapsedSeconds = diff / secondsInMilli;
+
+        if (elapsedDays == 0 && elapsedHours == 0 && elapsedMinutes == 0) {
+            time = String.valueOf(elapsedSeconds);
+            time += "secs";
+        } else if (elapsedDays == 0 && elapsedHours == 0 && elapsedMinutes > 0) {
+            time = String.valueOf(elapsedMinutes);
+            time += "mins";
+        } else if (elapsedDays == 0 && elapsedHours > 0) {
+            time = String.valueOf(elapsedHours);
             time += "hrs";
-            Log.d("hr", "" + time);
-        } else {
-            time = Long.toString((diff / (60 * 60 * 1000)) / 24);
+        } else if (elapsedDays > 0) {
+            time = String.valueOf(elapsedDays);
             time += "d";
-            Log.d("day", "" + time);
         }
 
         return time;

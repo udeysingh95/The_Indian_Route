@@ -4,6 +4,7 @@ package com.example.udeys.theindianroute.fragments;
  * Created by udeys on 6/17/2016.
  */
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -58,8 +60,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     ArrayList<String> post_id;
     LinearLayout check_followers;
 
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        hideKeyboard(getActivity());
 
         view = inflater.inflate(R.layout.profilefragment, container, false);
 
@@ -167,13 +183,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
                 String id = obj.getString("id");
+                Log.e("path", path);
                 imagePath.add(path);
                 post_id.add(id);
-                Log.d("pic",path);
+                //Log.e("pic",path);
             }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
+            Log.e("json catch", e.toString());
             e.printStackTrace();
         }
 

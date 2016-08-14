@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.udeys.theindianroute.CompressFilter;
 import com.example.udeys.theindianroute.R;
@@ -39,6 +40,9 @@ public class GalleryFragment extends Fragment {
             String imagefilename = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             imagePath.add(imagefilename);
             Log.e("TAG", "filepath: " + imagefilename);
+        }
+        if (imagePath.size() == 0) {
+            Toast.makeText(getActivity(), "0 Images in gallery", Toast.LENGTH_SHORT).show();
         }
         gridview.setAdapter(new GalleryAdapter(getActivity(), imagePath));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

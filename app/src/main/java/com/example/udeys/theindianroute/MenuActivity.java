@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udeys.theindianroute.TheIndianRoute.IndianRoute;
-import com.example.udeys.theindianroute.fragments.CameraFragment;
 import com.example.udeys.theindianroute.fragments.HomeFragment;
 import com.example.udeys.theindianroute.fragments.NotificationFragment;
 import com.example.udeys.theindianroute.fragments.ProfileFragment;
@@ -135,11 +134,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.post:
                 reduce_alpha();
-                ft = getFragmentManager().beginTransaction();
+                startActivity(new Intent(getApplicationContext(), PostActivity.class));
+                /*ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_1, new CameraFragment());
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.addToBackStack(null);
-                ft.commit();
+                ft.commit();*/
                 break;
             case R.id.notification:
                 reduce_alpha();
@@ -176,6 +176,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     search_state = true;
                 } else {
                     Search.setImageResource(R.drawable.ic_action_search_dark);
+                    srch.setText("");
                     srch.setVisibility(View.GONE);
                     title.setVisibility(View.VISIBLE);
                     search_state = false;
