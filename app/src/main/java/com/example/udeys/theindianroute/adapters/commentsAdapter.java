@@ -1,6 +1,7 @@
 package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,11 @@ public class commentsAdapter extends ArrayAdapter {
         final CommonListClass CommonListClass = (CommonListClass) this.getItem(position);
         commentHolder.commentersComments.setText(CommonListClass.getComments());
         commentHolder.username.setText(CommonListClass.getUsername());
-        Picasso.with(getContext()).load(CommonListClass.getProfilepic()).into(commentHolder.userProfilePic);
+        Log.e("commentsAdap-pp", CommonListClass.getProfilepic());
+        if (CommonListClass.getProfilepic().equals("http://theindianroute.net/uploads/users_profile_pictures/"))
+            Picasso.with(getContext()).load(R.drawable.dummyprofile).placeholder(R.drawable.ppplaceholder).into(commentHolder.userProfilePic);
+        else
+            Picasso.with(getContext()).load(CommonListClass.getProfilepic()).into(commentHolder.userProfilePic);
 
 
         return row;

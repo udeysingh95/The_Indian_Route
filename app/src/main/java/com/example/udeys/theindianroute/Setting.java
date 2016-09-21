@@ -3,9 +3,13 @@ package com.example.udeys.theindianroute;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import cz.msebera.android.httpclient.Header;
 
 public class Setting extends Activity  implements View.OnClickListener{
@@ -34,9 +41,11 @@ public class Setting extends Activity  implements View.OnClickListener{
     LinearLayout l1;
     Button save;
     String id = "22" , gender;
-    TextView title , name , username , male , female;
+    TextView title, name, username, male, female, editBtn;
     SharedPreferences sp;
     RoundedImageView pp;
+    File imageFile;
+    Uri imageUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,8 @@ public class Setting extends Activity  implements View.OnClickListener{
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Settings");
+
+        editBtn = (TextView) findViewById(R.id.editBtn);
 
         cancel = (ImageButton) findViewById(R.id.btn_back);
         save = (Button) findViewById(R.id.ic_save);
@@ -71,6 +82,7 @@ public class Setting extends Activity  implements View.OnClickListener{
         l1.setOnClickListener(this);
         male.setOnClickListener(this);
         female.setOnClickListener(this);
+        editBtn.setOnClickListener(this);
 
     }
 
@@ -101,7 +113,73 @@ public class Setting extends Activity  implements View.OnClickListener{
                 female.setTextColor(Color.parseColor("#ccffffff"));
                 gender = "F";
                 break;
+            case R.id.editBtn:
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+                break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    imageUri = imageReturnedIntent.getData();
+                    imageFile = new File(getRealPathFromURI(imageUri));
+                    uploadProfileImage();
+                    //Log.e("path-settings",imageFile.toString());
+
+                }
+        }
+    }
+
+    private void uploadProfileImage() {
+
+        try {
+            AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+            RequestParams params = new RequestParams();
+            params.put("user_id", id);
+            params.put("image", imageFile);
+
+            client.post("http://theindianroute.net/post_profile_picture.php", params, new TextHttpResponseHandler() {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.e("fail-settings", responseString);
+                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String res) {
+                    Log.e("result-settings", res);
+                    Toast.makeText(getApplicationContext(), "success\n" + res, Toast.LENGTH_LONG).show();
+                    Picasso.with(getApplicationContext()).load(imageUri).resize(300, 300).centerCrop().into(pp);
+                }
+            });
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    * Gives exact path in phone storage
+    * */
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
     public void logout(){
@@ -131,7 +209,7 @@ public class Setting extends Activity  implements View.OnClickListener{
         params.put("phone", phone.getText());
         params.put("notification", notifications);
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-        client.get("http://indianroute.roms4all.com/update_setting.php", params, new TextHttpResponseHandler() {
+        client.get("http://theindianroute.net/update_setting.php", params, new TextHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String res) {
                         Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
@@ -152,7 +230,7 @@ public class Setting extends Activity  implements View.OnClickListener{
                 RequestParams params = new RequestParams();
                 params.put("id", id);
                 AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-                client.get("http://indianroute.roms4all.com/setting.php", params, new TextHttpResponseHandler() {
+        client.get("http://theindianroute.net/setting.php", params, new TextHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, String res) {
 
@@ -205,7 +283,10 @@ public class Setting extends Activity  implements View.OnClickListener{
 
             //may throw some error
 
-            Picasso.with(getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(pp);
+            if (userprofilePicture.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
+                Picasso.with(getApplicationContext()).load(R.drawable.dummyprofile).resize(300, 300).centerCrop().into(pp);
+            else
+                Picasso.with(getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(pp);
 
 
         } catch (JSONException e) {

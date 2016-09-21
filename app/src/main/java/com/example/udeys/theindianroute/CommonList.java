@@ -3,7 +3,6 @@ package com.example.udeys.theindianroute;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -70,7 +69,7 @@ public class CommonList extends Activity {
             params.put("type", postType);
             params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_reaction.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             fetch(res);
@@ -95,7 +94,7 @@ public class CommonList extends Activity {
             params.put("profile_id", profile_id);
             params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_follower.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_follower.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             fetch(res);

@@ -1,7 +1,6 @@
 package com.example.udeys.theindianroute.TheIndianRoute;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +12,8 @@ import android.widget.Toast;
 
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.EventsAdapter;
-import com.example.udeys.theindianroute.adapters.notificationAdapter;
 import com.example.udeys.theindianroute.helperClasses.Event;
-import com.example.udeys.theindianroute.helperClasses.notification;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -55,7 +51,7 @@ public class Events extends Fragment {
     private void fetch_events() {
         try {
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_event.php", new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_event.php", new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             extractEvents(res);

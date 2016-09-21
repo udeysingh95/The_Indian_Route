@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +101,7 @@ public class NotificationFragment extends Fragment {
             RequestParams params = new RequestParams();
             params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_notification.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_notification.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             extractNotifictaion(res);

@@ -161,8 +161,14 @@ public class PostAdapter extends ArrayAdapter {
             }
         });
         postHolder.post_time.setText(post_time(Posts.getPost_time()));
-        Picasso.with(getContext())
-                .load(Posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
+        String user_pp = Posts.getUserProfilePicture();
+
+        if (user_pp.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
+            Picasso.with(getContext()).load(R.drawable.dummyprofile).placeholder(R.drawable.ppplaceholder)
+                    .into(postHolder.userprofilePicture);
+
+        else
+            Picasso.with(getContext()).load(Posts.getUserProfilePicture()).placeholder(R.drawable.ppplaceholder)
                 .into(postHolder.userprofilePicture);
         Picasso.with(getContext())
                 .load(Posts.getPictue())
@@ -178,7 +184,7 @@ public class PostAdapter extends ArrayAdapter {
             params.put("user_id", user_id);
             params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/post_reaction.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/post_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);

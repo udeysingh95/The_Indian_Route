@@ -74,8 +74,9 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
                 if (storeByteImage(data)) {
                     camera.startPreview();
                     getActivity().setResult(FOTO_MODE, imgIntent);
+                    Log.e("camera", "starting intent");
                     Intent intent = new Intent(getActivity(), CompressFilter.class);
-                    intent.putExtra("path", filename);
+                    intent.putExtra("path - camera", filename);
                     startActivity(intent);
                     //getActivity().finish();
                 }
@@ -192,7 +193,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         }
 
 
-        if (Build.VERSION.SDK_INT < 22) {
+        if (Build.VERSION.SDK_INT < 21) {
             view = inflater.inflate(R.layout.camera_fragment, container, false);
             try {
                 if (camera != null)
@@ -255,6 +256,13 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
                         bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
                         //filename = "";
                         storeByteImage(bitmap);
+                        Log.e("filename", filename);
+                        File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
+                        if (file1.delete())
+                            Log.e("TAG", "Deleted");
+                        Intent intent = new Intent(getActivity(), CompressFilter.class);
+                        intent.putExtra("path", filename);
+                        startActivity(intent);
 
                         //viewHolder.imageView.setImageBitmap(bitmap);
                         //Toast.makeText(getActivity(), selectedImage.toString(), Toast.LENGTH_LONG).show();
@@ -266,13 +274,13 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
                 }
             default:
                 //Toast.makeText(getActivity(), "Filename" +filename, Toast.LENGTH_SHORT).show();
-                Log.e("filename", filename);
+                /*Log.e("filename", filename);
                 File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
                 if (file1.delete())
                     Log.e("TAG", "Deleted");
                 Intent intent = new Intent(getActivity(), CompressFilter.class);
                 intent.putExtra("path", filename);
-                startActivity(intent);
+                startActivity(intent);*/
 
         }
 

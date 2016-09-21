@@ -66,7 +66,7 @@ public class IndianRouteGallery extends Fragment {
             RequestParams params = new RequestParams();
             params.put("user_id", "22");
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_gallery.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/fetch_gallery.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();

@@ -61,16 +61,16 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textStyle="bold"
                     android:layout_marginEnd="5dp"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/notification_details"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:lines="2"/>
+                    android:lines="4" />
 
 
             </LinearLayout>
@@ -105,10 +105,10 @@
                     android:id="@+id/time"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_weight="0.40"
-                    android:hint="5 min"
                     android:gravity="center"
-                    android:layout_gravity="center"/>
+                    android:hint="5 min" />
 
             </LinearLayout>
         </LinearLayout>
@@ -116,10 +116,10 @@
         <ImageView
             android:id="@+id/notifypostPicture"
             android:layout_width="0dp"
-            android:padding="10dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:padding="10dp" />
     </LinearLayout>
 
 

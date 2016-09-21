@@ -2,6 +2,7 @@ package com.example.udeys.theindianroute.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,13 @@ public class CommonListAdapter extends ArrayAdapter {
         }
         final CommonListClass commonListClass = (CommonListClass) this.getItem(position);
         itemHolder.username.setText(commonListClass.getUsername());
-        Picasso.with(getContext()).load(commonListClass.getProfilepic()).into(itemHolder.pp);
+        String user_pp = commonListClass.getProfilepic();
+
+        if (user_pp.equals("http://theindianroute.net/uploads/users_profile_pictures/")) {
+            Log.e("user_pp-if", user_pp);
+            Picasso.with(getContext()).load(R.drawable.dummyprofile).placeholder(R.drawable.ppplaceholder).into(itemHolder.pp);
+        } else
+            Picasso.with(getContext()).load(user_pp).into(itemHolder.pp);
         status = commonListClass.getStatus();
         if(status.contentEquals("1")){
             itemHolder.status.setText("Following");

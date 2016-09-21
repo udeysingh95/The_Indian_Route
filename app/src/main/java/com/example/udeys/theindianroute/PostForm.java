@@ -208,7 +208,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             params.put("story", story);
             params.put("image", i);
 
-            client.post("http://indianroute.roms4all.com/post.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Intent i = new Intent(getApplication(), MenuActivity.class);
@@ -275,7 +275,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/fetch_hash.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_hash.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.e("succes", res);

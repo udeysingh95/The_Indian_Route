@@ -67,7 +67,13 @@ public class notificationAdapter extends ArrayAdapter {
         notificationHolder.t1.setText(Notification.getUsername());
         notificationHolder.t2.setText(Notification.getNotify());
         notificationHolder.t3.setText(post_time(Notification.getTimeStamp()));
-        Picasso.with(getContext()).load(Notification.getPp()).into(notificationHolder.i1);
+        String pp = Notification.getPp();
+        if (pp.equals("http://theindianroute.net/uploads/users_profile_pictures/")) {
+            Picasso.with(getContext()).load(R.drawable.dummyprofile).into(notificationHolder.i1);
+        } else {
+            Picasso.with(getContext()).load(Notification.getPp()).into(notificationHolder.i1);
+            Log.e("na-pp", "in else");
+        }
         Picasso.with(getContext()).load(Notification.getPost_pic()).into(notificationHolder.i2);
         return row;
 

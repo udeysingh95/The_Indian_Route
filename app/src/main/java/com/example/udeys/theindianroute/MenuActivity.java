@@ -197,7 +197,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             RequestParams params = new RequestParams();
             params.put("search", cs.toString());
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/search_temp.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/search_temp.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             Toast.makeText(getApplicationContext(), "" + responseString, Toast.LENGTH_SHORT).show();

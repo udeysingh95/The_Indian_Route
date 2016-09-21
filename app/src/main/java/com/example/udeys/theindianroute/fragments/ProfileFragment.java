@@ -131,7 +131,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             params.put("user_id", user_id);
             params.put("u_id", u_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_profile.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/fetch_profile.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();
@@ -155,7 +155,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             RequestParams params = new RequestParams();
             params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_gallery.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/fetch_gallery.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             //Toast.makeText(getActivity(), "success" +res, Toast.LENGTH_LONG).show();
@@ -183,7 +183,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 JSONObject obj = jArr.getJSONObject(count);
                 String path = obj.getString("picture");
                 String id = obj.getString("id");
-                Log.e("path", path);
+                //Log.e("path", path);
                 imagePath.add(path);
                 post_id.add(id);
                 //Log.e("pic",path);
@@ -213,7 +213,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             String userprofilePicture;
             JSONObject obj = jArr.getJSONObject(0);
             userprofilePicture = obj.getString("userProfilePicture");
-            Log.d("pp", "" + userprofilePicture);
+            Log.e("pp-profile", "" + userprofilePicture);
             no_of_post = Integer.valueOf(obj.getString("post_count"));
             follow_s = obj.getString("following");
             profile_id = obj.getString("user_id");
@@ -231,7 +231,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             follow_status.setOnClickListener(this);
 
-            Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(profilePicture);
+            if (userprofilePicture.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
+                Picasso.with(getActivity().getApplicationContext()).load(R.drawable.dummyprofile).resize(300, 300).centerCrop().into(profilePicture);
+            else
+                Picasso.with(getActivity().getApplicationContext()).load(userprofilePicture).resize(300, 300).centerCrop().into(profilePicture);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -254,7 +257,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             params.put("profile_id", user_id);
             params.put("status", status);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/follow_unfollow.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/follow_unfollow.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decode_status(res);

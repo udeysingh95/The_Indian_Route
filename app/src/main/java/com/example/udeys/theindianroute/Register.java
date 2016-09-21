@@ -147,6 +147,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             * */
             RequestParams params = new RequestParams();
             try {
+                Log.e("register", "sending data");
                 params.put("username", username);
                 params.put("name", name);
                 params.put("user_email", email);
@@ -158,7 +159,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             } catch (Exception e) {
                 Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/register.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/register.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             if (res.contentEquals("Username already exists"))
@@ -187,16 +188,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         Toast.makeText(getApplicationContext(), "sp failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
 
-
                                 } catch (JSONException e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
-
-
                             }
-
-
                         }
 
                         @Override
@@ -210,8 +206,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }
 
 

@@ -134,7 +134,7 @@ public class Login extends Activity implements View.OnClickListener{
             } catch (Exception e) {
                 Toast.makeText(Login.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            client.post("http://indianroute.roms4all.com/login.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/login.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);

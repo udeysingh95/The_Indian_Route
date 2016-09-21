@@ -103,7 +103,7 @@ public class ViewPostActivity extends AppCompatActivity {
             RequestParams params = new RequestParams();
             params.put("post_id", posts_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/view_post.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/view_post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             jsonExtract(res);
@@ -137,7 +137,12 @@ public class ViewPostActivity extends AppCompatActivity {
                 Log.d("comment_no", "" + no_of_comments);
                 Log.d("username", "" + username);
             }
-            Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
+            if (profile_pic.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
+                Picasso.with(getApplicationContext()).load(R.drawable.dummyprofile).placeholder(R.drawable.ppplaceholder)
+                        .into(pp);
+
+            else
+                Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
             try {
                 Picasso.with(getApplicationContext()).load(post_pic).resize(320, 240).into(post);
             } catch (Exception e) {
@@ -163,7 +168,7 @@ public class ViewPostActivity extends AppCompatActivity {
             params.put("post_id", post_id);
             Log.d("post_id", "" + post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/post_reaction.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/post_reaction.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);

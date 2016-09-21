@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.udeys.theindianroute.adapters.commentsAdapter;
@@ -85,7 +83,7 @@ public class CommentActivity extends AppCompatActivity {
                     params.put("user_id", HomeFragment.user_id);
                     params.put("comment", co);
                     AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-                    client.get("http://indianroute.roms4all.com/post_comment.php", params, new TextHttpResponseHandler() {
+                    client.get("http://theindianroute.net/post_comment.php", params, new TextHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, String res) {
                                     Log.d("success", "" + res);
@@ -113,7 +111,7 @@ public class CommentActivity extends AppCompatActivity {
             RequestParams params = new RequestParams();
             params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.post("http://indianroute.roms4all.com/fetch_comment.php", params, new TextHttpResponseHandler() {
+            client.post("http://theindianroute.net/fetch_comment.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeCommentsJSON(res);
@@ -140,7 +138,7 @@ public class CommentActivity extends AppCompatActivity {
                 comment = obj.getString("comment");
                 userprofilepic = obj.getString("profilePicture");
                 commentersUsername = obj.getString("username");
-                Log.d("pp", "" + userprofilepic);
+                Log.e("pp", "" + userprofilepic);
                 CommonListClass CommonListClass = new CommonListClass(comment, userprofilepic, commentersUsername);
                 commentsAdapter.add(CommonListClass);
 
@@ -158,7 +156,7 @@ public class CommentActivity extends AppCompatActivity {
             params.put("user_id", user_id);
             params.put("post_id", post_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/comment_push_notification.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/comment_push_notification.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             Log.d("on success", "" + res);

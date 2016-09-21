@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
+    android:orientation="vertical"
     android:weightSum="10"
     tools:context="com.example.udeys.theindianroute.Setting">
 
@@ -16,26 +16,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#602f241e"
         android:layout_weight="2.5"
-        android:weightSum="3"
-        android:orientation="horizontal">
+        android:background="#602f241e"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
-            android:weightSum="2"
+            android:background="@android:color/transparent"
             android:orientation="vertical"
-            android:background="@android:color/transparent">
+            android:weightSum="2">
 
 
             <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_picture"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.7"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1.7"
                 android:src="@drawable/ppplaceholder"
                 app:riv_border_color="#90ffffff"
                 app:riv_border_width="2dp"
@@ -44,13 +44,13 @@
                 app:riv_tile_mode="repeat" />
 
             <TextView
+                android:id="@+id/editBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textColor="#fff"
-                android:textAlignment="center"
+                android:layout_weight="0.3"
                 android:text="edit"
-                android:id="@+id/textView4"
-                android:layout_weight="0.3" />
+                android:textAlignment="center"
+                android:textColor="#fff" />
 
         </LinearLayout>
 
@@ -58,37 +58,37 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.8"
-            android:weightSum="3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="3">
 
             <TextView
+                android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:id="@+id/name"
-                    android:textSize="20dp"
-                    android:textColor="#fff"
-                    android:gravity="center_vertical"
-                    android:textStyle="bold"
                     android:layout_weight="1"
-                    android:text="Udey Singh" />
+                android:gravity="center_vertical"
+                android:text="Udey Singh"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:weightSum="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
+                    android:id="@+id/username"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/username"
-                    android:textSize="15dp"
-                    android:gravity="bottom"
-                    android:textColor="#fff"
                     android:layout_weight="0.7"
+                    android:drawableEnd="@drawable/edit"
+                    android:gravity="bottom"
                     android:text="udeysingh95"
-                    android:drawableEnd="@drawable/edit"/>
+                    android:textColor="#fff"
+                    android:textSize="15dp" />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -97,14 +97,14 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/bio"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/bio"
-                android:textSize="12dp"
-                android:textColor="#fff"
-                android:paddingTop="5dp"
                 android:layout_weight="1.5"
-                android:text="bio comes here" />
+                android:paddingTop="5dp"
+                android:text="bio comes here"
+                android:textColor="#fff"
+                android:textSize="12dp" />
 
 
         </LinearLayout>
@@ -119,8 +119,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Tap on any field to edit"
             android:gravity="center"
+            android:text="Tap on any field to edit"
             android:textSize="15dp"/>
     </LinearLayout>
 
@@ -146,98 +146,98 @@
                 android:id="@+id/website"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:hint="www.myportfolio.com"
+                android:background="@drawable/login_edittext"
                 android:drawableLeft="@drawable/s_web"
                 android:drawablePadding="10dp"
-                android:background="@drawable/login_edittext"
-                android:layout_marginTop="5dp"/>
+                android:hint="www.myportfolio.com"
+                android:paddingLeft="10dp" />
 
             <EditText
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingLeft="15dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:hint="+91-9876543210"
+                android:background="@drawable/login_edittext"
                 android:drawableLeft="@drawable/s_phone"
                 android:drawablePadding="10dp"
-                android:background="@drawable/login_edittext"
-                android:layout_marginTop="5dp"/>
+                android:hint="+91-9876543210"
+                android:paddingLeft="15dp" />
 
             <EditText
                 android:id="@+id/email"
-                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:hint="email@website.com"
+                android:background="@drawable/login_edittext"
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="15dp"
-                android:background="@drawable/login_edittext"
-                android:layout_marginTop="5dp"/>
+                android:hint="email@website.com"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/gender_back"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
                 <TextView
                     android:id="@+id/male"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:paddingLeft="5dp"
                     android:text="Male"
                     android:textColor="#888"
-                    android:gravity="center"
                     android:textSize="20dp"/>
                 <TextView
                     android:id="@+id/female"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_edittext"
+                    android:gravity="center"
                     android:paddingLeft="5dp"
                     android:text="Female"
-                    android:gravity="center"
-                    android:textSize="20dp"
                     android:textColor="#ccffffff"
-                    android:background="@drawable/login_edittext"/>
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edittext"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:background="@drawable/login_edittext">
+                android:weightSum="2">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.4"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/notifications"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="Notifications"
                     android:textColor="#90ffffff"
-                    android:gravity="center_vertical"
-                    android:textSize="17dp"
-                    android:clickable="false"
-                    android:drawablePadding="15dp"
-                    android:drawableLeft="@drawable/notifications"/>
+                    android:textSize="17dp" />
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/not_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5"
                     android:layout_alignParentRight="true"
+                    android:layout_weight="0.5"
                     android:checked="true"
                     android:theme="@style/SCBSwitch" />
 
@@ -249,14 +249,14 @@
                 android:id="@+id/ic_save"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_gravity="center"
-                android:text="Confirm"
-                android:textSize="20dp"
-                android:textColor="#3d4047"
-                android:background="@drawable/roundedbutton"
                 android:layout_marginTop="5dp"
-                android:textAllCaps="false"/>
+                android:layout_weight="1"
+                android:background="@drawable/roundedbutton"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textColor="#3d4047"
+                android:textSize="20dp" />
 
 
         </LinearLayout>
@@ -288,17 +288,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="About us"
-                android:textSize="12dp"
                 android:layout_weight="1"
-                android:gravity="center|left"/>
+                android:gravity="center|left"
+                android:text="About us"
+                android:textSize="12dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="Privacy Policy"
-                android:textSize="12dp"
                 android:layout_weight="1"
-                android:gravity="left"/>
+                android:gravity="left"
+                android:text="Privacy Policy"
+                android:textSize="12dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -325,17 +325,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="Terms and Conditions"
-                android:textSize="12dp"
                 android:layout_weight="1"
-                android:gravity="center|right"/>
+                android:gravity="center|right"
+                android:text="Terms and Conditions"
+                android:textSize="12dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="Privacy Policy"
-                android:textSize="12dp"
                 android:layout_weight="1"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:text="Privacy Policy"
+                android:textSize="12dp" />
 
 
         </LinearLayout>

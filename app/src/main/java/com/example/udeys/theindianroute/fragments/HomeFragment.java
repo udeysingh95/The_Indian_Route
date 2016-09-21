@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +27,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -111,7 +106,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             RequestParams params = new RequestParams();
             params.put("user_id", user_id);
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-            client.get("http://indianroute.roms4all.com/fetch_following_post.php", params, new TextHttpResponseHandler() {
+            client.get("http://theindianroute.net/fetch_following_post.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
                             decodeJson(res);

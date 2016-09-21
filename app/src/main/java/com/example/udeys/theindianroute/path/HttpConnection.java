@@ -32,7 +32,7 @@ public class HttpConnection {
             data = sb.toString();
             br.close();
         } catch (Exception e) {
-            Log.e("Exception while reading url", e.toString());
+            Log.e("Exception reading url", e.toString());
         } finally {
             iStream.close();
             urlConnection.disconnect();
