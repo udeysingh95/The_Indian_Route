@@ -232,12 +232,21 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
         imageUri = Uri.fromFile(photo);
 
-        startActivityForResult(intent, 100);
+        try {
+            Log.e("error", "in try");
+            startActivityForResult(intent, 100);
+        } catch (Exception e) {
+            Log.e("error", e.toString());
+        }
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.e("onActivityResult", "entered");
+
         //Toast.makeText(getActivity(), "req"+requestCode, Toast.LENGTH_SHORT).show();
         //Bitmap bp = (Bitmap) data.getExtras().get("data");
         //storeByteImage(bp);

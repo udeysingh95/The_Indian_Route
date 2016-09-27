@@ -42,7 +42,7 @@ public class GalleryFragment extends Fragment {
             Log.e("TAG", "filepath: " + imagefilename);
         }
         if (imagePath.size() == 0) {
-            Toast.makeText(getActivity(), "0 Images in gallery", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "0 Images in gallery", Toast.LENGTH_LONG).show();
         }
         gridview.setAdapter(new GalleryAdapter(getActivity(), imagePath));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

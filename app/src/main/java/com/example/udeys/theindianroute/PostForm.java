@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -191,11 +193,35 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         c.setText(checkin);
         i = get();
-        Log.d("file", "" + i);
+        Log.e("file", "" + i);
+        processImage(i);
         pushPost();
     }
 
+    private void processImage(File image) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        String path = image.toString();
+        BitmapFactory.decodeFile(path, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+
+        if (imageWidth < 320) {
+            Bitmap newImage = BitmapFactory.decodeFile(path);
+            newImage = Bitmap.createScaledBitmap(newImage, imageHeight, 320, true);
+        } else if (imageWidth > 1080) {
+            Bitmap newImage = BitmapFactory.decodeFile(path);
+            newImage = Bitmap.createScaledBitmap(newImage, imageHeight, 1080, true);
+        }
+
+        imageHeight = options.outHeight;
+        imageWidth = options.outWidth;
+        Log.e("imageHeight", String.valueOf(imageHeight));
+        Log.e("imageWidth", String.valueOf(imageWidth));
+    }
+
     public void pushPost() {
+
         try {
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             /*
