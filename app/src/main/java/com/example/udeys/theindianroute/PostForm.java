@@ -38,8 +38,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -100,12 +103,13 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         push_post = (Button) findViewById(R.id.push_post);
         filename = getIntent().getStringExtra("post_image");
+        Log.e("filename-postform", filename);
         push_post.setOnClickListener(this);
 
         try {
             getLocationFromGPS();
         } catch (Exception e) {
-            Log.e("post catch", e.toString());
+            //Log.e("post catch", e.toString());
         }
     }
 
@@ -169,14 +173,14 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
             lon = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
         } else if (locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null) {
-            Log.e("TAG", "Inside NETWORK");
+            //Log.e("TAG", "Inside NETWORK");
 
             lat = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
             lon = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
 
         } else {
 
-            Log.e("TAG", "else +++++++ ");
+            //Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
         }
@@ -192,41 +196,84 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             checkin = getLocation();
 
         c.setText(checkin);
-        i = get();
-        Log.e("file", "" + i);
-        processImage(i);
+        //i = get();
+        //Log.e("file", "" + i);
+        processImage(filename);
         pushPost();
     }
 
-    private void processImage(File image) {
+    private void processImage(String image) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        String path = image.toString();
+        String path = image;
         BitmapFactory.decodeFile(path, options);
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
+        /*
+        Log.e("processImage","before");
+        Log.e("imageHeight", String.valueOf(imageHeight));
+        Log.e("imageWidth", String.valueOf(imageWidth));*/
 
         if (imageWidth < 320) {
             Bitmap newImage = BitmapFactory.decodeFile(path);
-            newImage = Bitmap.createScaledBitmap(newImage, imageHeight, 320, true);
+            newImage = Bitmap.createScaledBitmap(newImage, 320, imageHeight, true);
+            path = saveBitmap(newImage);
         } else if (imageWidth > 1080) {
             Bitmap newImage = BitmapFactory.decodeFile(path);
-            newImage = Bitmap.createScaledBitmap(newImage, imageHeight, 1080, true);
+            newImage = Bitmap.createScaledBitmap(newImage, 1920, 1080, true);
+            path = saveBitmap(newImage);
         }
+
+        BitmapFactory.decodeFile(path, options);
 
         imageHeight = options.outHeight;
         imageWidth = options.outWidth;
+        /*
+        Log.e("processImage","after");
         Log.e("imageHeight", String.valueOf(imageHeight));
-        Log.e("imageWidth", String.valueOf(imageWidth));
+        Log.e("imageWidth", String.valueOf(imageWidth));*/
+    }
+
+    private String saveBitmap(Bitmap bitmap) {
+        String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+
+        String path = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
+        //Log.e("path",path);
+        if (bitmap != null) {
+            try {
+                FileOutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(path); //here is set your file path where you want to save or also here you can set file object directly
+
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream); // bitmap is your Bitmap instance, if you want to compress it you can compress reduce percentage
+                    // PNG is a lossless format, the compression factor (100) is ignored
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (outputStream != null) {
+                            outputStream.close();
+                        }
+                    } catch (IOException e) {
+                        //Log.e("finally-catch",e.toString());
+                    }
+                }
+            } catch (Exception e) {
+                // Log.e("outer-catch",e.toString());
+            }
+        }
+        return path;
     }
 
     public void pushPost() {
 
-        try {
+       /* try {
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             /*
             * Bind parameters here
             * */
+
+            /*
             RequestParams params = new RequestParams();
             Log.e("user_id: ", id);
             params.put("user_id" , id);
@@ -253,7 +300,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         } catch (Exception e) {
             Toast.makeText(PostForm.this, "4" + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     private File get() {
@@ -296,7 +343,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             * */
             RequestParams params = new RequestParams();
             try {
-                Log.e("hash_tag", hash_tag);
+                // Log.e("hash_tag", hash_tag);
                 params.put("hash", hash_tag);
             } catch (Exception e) {
                 //Toast.makeText(this, "1" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -304,7 +351,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             client.post("http://theindianroute.net/fetch_hash.php", params, new TextHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, String res) {
-                            Log.e("succes", res);
+                            // Log.e("succes", res);
                             decodeHashTag(res);
                         }
 
@@ -336,7 +383,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 }
 
             } catch (JSONException e) {
-                Log.e("catch", e.toString());
+                // Log.e("catch", e.toString());
             }
             ArrayAdapter adapter = new ArrayAdapter<>(PostForm.this, android.R.layout.simple_list_item_1, hashtag);
             sto.setAdapter(adapter);

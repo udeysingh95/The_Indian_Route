@@ -33,7 +33,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.udeys.theindianroute.CompressFilter;
+import com.example.udeys.theindianroute.PostForm;
 import com.example.udeys.theindianroute.R;
 
 import java.io.File;
@@ -41,8 +41,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by udeys on 6/17/2016.
@@ -50,6 +50,7 @@ import java.util.Date;
 
 public class CameraFragment extends Fragment implements SurfaceHolder.Callback, View.OnClickListener {
     static final int FOTO_MODE = 0;
+    private static final int TAKE_PICTURE = 1;
     View view;
     double lat;
     double lon;
@@ -75,8 +76,8 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
                     camera.startPreview();
                     getActivity().setResult(FOTO_MODE, imgIntent);
                     Log.e("camera", "starting intent");
-                    Intent intent = new Intent(getActivity(), CompressFilter.class);
-                    intent.putExtra("path - camera", filename);
+                    Intent intent = new Intent(getActivity(), PostForm.class);
+                    intent.putExtra("post_image", filename);
                     startActivity(intent);
                     //getActivity().finish();
                 }
@@ -180,14 +181,14 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
             lon = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
         } else if (locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null) {
-            Log.e("TAG", "Inside NETWORK");
+            //Log.e("TAG", "Inside NETWORK");
 
             lat = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
             lon = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
 
         } else {
 
-            Log.e("TAG", "else +++++++ ");
+            //Log.e("TAG", "else +++++++ ");
             lat = -1;
             lon = -1;
         }
@@ -220,90 +221,43 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c.getTime());
-        file = String.format("/TIR%d.jpeg", System.currentTimeMillis());
-        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), file);
-        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file;
-        Log.e("path", filename);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+        File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                Uri.fromFile(photo));
         imageUri = Uri.fromFile(photo);
-
-        try {
-            Log.e("error", "in try");
-            startActivityForResult(intent, 100);
-        } catch (Exception e) {
-            Log.e("error", e.toString());
-        }
-
+        startActivityForResult(intent, TAKE_PICTURE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.e("onActivityResult", "entered");
-
-        //Toast.makeText(getActivity(), "req"+requestCode, Toast.LENGTH_SHORT).show();
-        //Bitmap bp = (Bitmap) data.getExtras().get("data");
-        //storeByteImage(bp);
-
-
         switch (requestCode) {
-            case 100:
-                Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
+            case TAKE_PICTURE:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri selectedImage = imageUri;
                     getActivity().getContentResolver().notifyChange(selectedImage, null);
                     ContentResolver cr = getActivity().getContentResolver();
                     Bitmap bitmap;
-
                     try {
-                        bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
-                        //filename = "";
+                        bitmap = android.provider.MediaStore.Images.Media
+                                .getBitmap(cr, selectedImage);
                         storeByteImage(bitmap);
-                        Log.e("filename", filename);
-                        File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
-                        if (file1.delete())
-                            Log.e("TAG", "Deleted");
-                        Intent intent = new Intent(getActivity(), CompressFilter.class);
-                        intent.putExtra("path", filename);
-                        startActivity(intent);
 
-                        //viewHolder.imageView.setImageBitmap(bitmap);
-                        //Toast.makeText(getActivity(), selectedImage.toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), selectedImage.toString(),Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Failed to load", Toast.LENGTH_SHORT)
+                        Toast.makeText(getActivity(), "Failed to load" + e.toString(), Toast.LENGTH_SHORT)
                                 .show();
                         Log.e("Camera", e.toString());
                     }
                 }
-            default:
-                //Toast.makeText(getActivity(), "Filename" +filename, Toast.LENGTH_SHORT).show();
-                /*Log.e("filename", filename);
-                File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + file);
-                if (file1.delete())
-                    Log.e("TAG", "Deleted");
-                Intent intent = new Intent(getActivity(), CompressFilter.class);
-                intent.putExtra("path", filename);
-                startActivity(intent);*/
-
         }
-
     }
+
 
     public void storeByteImage(Bitmap bp) {
 
-        /*String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
-        File filename = new File(myDir, "man.jpeg");*/
-
-        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
-        Log.e("TAG", "filename = " + filename);
+        String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        filename = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
@@ -318,21 +272,10 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
             fileOutputStream.close();
 
             Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
-            ExifInterface exif = new ExifInterface(filename.toString());
-            createExifData(exif, lat, lon);
-            exif.saveAttributes();
+            Intent intent = new Intent(getActivity(), PostForm.class);
+            intent.putExtra("post_image", filename);
+            startActivity(intent);
 
-
-            /*Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
-            while (cursor.moveToNext()) {
-                String imagefilename = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                Long latitide = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
-                Long longitude = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
-
-                Log.e("TAG", "filepath: " + imagefilename + " latitude = " + latitide + "  longitude = " + longitude);
-            }*/
-
-            //return true;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -359,47 +302,28 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
     public boolean storeByteImage(byte[] data) {
 
-        /*
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
-        File filename = new File(myDir, "man.jpeg");
-        */
-        filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + String.format("/TIR%d.jpeg", System.currentTimeMillis());
-        Log.e("TAG", "filename = " + filename);
-
+        String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        filename = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             try {
                 fileOutputStream.write(data);
-                Log.e("TAG", "Image file created, size in bytes = " + data.length);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("TAG-byte-catch", "error " + e.toString());
             }
             fileOutputStream.flush();
             fileOutputStream.close();
 
             //Toast.makeText(getActivity(), "lat: " + lat + " ,lng: " + lon, Toast.LENGTH_SHORT).show();
 
-            Log.e("TAG", "lat =" + lat + "  lon :" + lon);
             ExifInterface exif = new ExifInterface(filename.toString());
             createExifData(exif, lat, lon);
             exif.saveAttributes();
-
-            /*Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
-            while (cursor.moveToNext()) {
-                String imagefilename = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                Long latitide = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LATITUDE));
-                Long longitude = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.LONGITUDE));
-
-                Log.e("TAG", "filepath: " + imagefilename + " latitude = " + latitide + "  longitude = " + longitude);
-            }*/
-
             return true;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.e("TAG-byte-catch", "error " + e.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -443,7 +367,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
 
         exif.setAttribute(ExifInterface.TAG_DATETIME, (new Date(System.currentTimeMillis())).toString()); // set the date & time
 
-        Log.e("TAG", "Information : lat =" + lattude + "  lon =" + longitude + "  make = " + make + "  model =" + model + "  imei=" + imei + " time =" + (new Date(System.currentTimeMillis())).toString());
+        Log.d("TAG", "Information : lat =" + lattude + "  lon =" + longitude + "  make = " + make + "  model =" + model + "  imei=" + imei + " time =" + (new Date(System.currentTimeMillis())).toString());
     }
 
     protected boolean isRouteDisplayed() {

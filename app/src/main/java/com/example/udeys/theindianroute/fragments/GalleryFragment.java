@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.udeys.theindianroute.CompressFilter;
+import com.example.udeys.theindianroute.PostForm;
 import com.example.udeys.theindianroute.R;
 import com.example.udeys.theindianroute.adapters.GalleryAdapter;
 
@@ -49,8 +49,8 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Log.e("Path", imagePath.get(position));
-                Intent intent = new Intent(getActivity(), CompressFilter.class);
-                intent.putExtra("path", imagePath.get(position));
+                Intent intent = new Intent(getActivity(), PostForm.class);
+                intent.putExtra("post_image", imagePath.get(position));
                 startActivity(intent);
             }
         });
