@@ -198,11 +198,13 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         c.setText(checkin);
         //i = get();
         //Log.e("file", "" + i);
-        processImage(filename);
+        filename = processImage(filename);
+        i = get();
+        Log.e("file", "" + i);
         pushPost();
     }
 
-    private void processImage(String image) {
+    private String processImage(String image) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         String path = image;
@@ -212,7 +214,11 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         /*
         Log.e("processImage","before");
         Log.e("imageHeight", String.valueOf(imageHeight));
-        Log.e("imageWidth", String.valueOf(imageWidth));*/
+        Log.e("imageWidth", String.valueOf(imageWidth));
+
+        Bitmap newImage = BitmapFactory.decodeFile(path);
+        newImage = Bitmap.createScaledBitmap(newImage, imageWidth, imageHeight, true);
+        path = saveBitmap(newImage);*/
 
         if (imageWidth < 320) {
             Bitmap newImage = BitmapFactory.decodeFile(path);
@@ -223,21 +229,15 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
             newImage = Bitmap.createScaledBitmap(newImage, 1920, 1080, true);
             path = saveBitmap(newImage);
         }
-
-        BitmapFactory.decodeFile(path, options);
-
-        imageHeight = options.outHeight;
-        imageWidth = options.outWidth;
-        /*
-        Log.e("processImage","after");
-        Log.e("imageHeight", String.valueOf(imageHeight));
-        Log.e("imageWidth", String.valueOf(imageWidth));*/
+        Log.e("path", path);
+        return path;
     }
 
     private String saveBitmap(Bitmap bitmap) {
         String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
 
         String path = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
+        String ret = "TIR" + sdf + ".jpeg";
         //Log.e("path",path);
         if (bitmap != null) {
             try {
@@ -262,18 +262,18 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
                 // Log.e("outer-catch",e.toString());
             }
         }
-        return path;
+        return ret;
     }
 
     public void pushPost() {
 
-       /* try {
+        try {
             AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
             /*
             * Bind parameters here
             * */
 
-            /*
+
             RequestParams params = new RequestParams();
             Log.e("user_id: ", id);
             params.put("user_id" , id);
@@ -300,7 +300,7 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
 
         } catch (Exception e) {
             Toast.makeText(PostForm.this, "4" + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
     private File get() {

@@ -253,32 +253,46 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         }
     }
 
+    public boolean dir_exists(String dir_path) {
+        boolean ret = false;
+        File dir = new File(dir_path);
+        if (dir.exists() && dir.isDirectory())
+            ret = true;
+        return ret;
+    }
+
 
     public void storeByteImage(Bitmap bp) {
 
         String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+
+        String dir_path = Environment.getExternalStorageDirectory() + "/TheIndianRoute";
+
+        if (!dir_exists(dir_path)) {
+            File directory = new File(dir_path);
+            directory.mkdir();
+        }
+
         filename = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             try {
                 fileOutputStream = new FileOutputStream(filename);
-                bp.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream); // bmp is your Bitmap instance
-                // PNG is a lossless format, the compression factor (100) is ignored
+                bp.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), PostForm.class);
             intent.putExtra("post_image", filename);
             startActivity(intent);
 
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.d("catch", e.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -303,6 +317,14 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     public boolean storeByteImage(byte[] data) {
 
         String sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String dir_path = Environment.getExternalStorageDirectory() + "/TheIndianRoute";
+
+        if (!dir_exists(dir_path)) {
+            File directory = new File(dir_path);
+            if (directory.mkdir())
+                Log.e("mkdir", String.valueOf(directory.mkdir()));
+        }
+
         filename = Environment.getExternalStoragePublicDirectory("TheIndianRoute/TIR") + sdf + ".jpeg";
 
         try {
