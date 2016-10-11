@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import id.zelory.compressor.Compressor;
 
 public class PostForm extends AppCompatActivity implements View.OnClickListener {
 
@@ -92,7 +93,6 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         sto.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
 
             }
 
@@ -206,8 +206,18 @@ public class PostForm extends AppCompatActivity implements View.OnClickListener 
         c.setText(checkin);
         //i = get();
         //Log.e("file", "" + i);
-        filename = compressImage(filename);
         i = new File(filename);
+        i = new Compressor.Builder(this)
+                .setMaxHeight(1080)
+                .setMaxWidth(1920)
+                .setQuality(80)
+                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                .build()
+                .compressToFile(i);
+        //filename = compressImage(filename);
+        //i = new File(filename);
         Log.e("file", "" + i);
         pushPost();
     }

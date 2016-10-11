@@ -12,16 +12,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#D9ffffff"
+        android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="3">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
             android:background="@drawable/border"
             android:orientation="vertical">
 
@@ -58,13 +57,13 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username"
-                    android:textColor="#555"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_alignTop="@+id/vpuserProfilePicture"
-                    android:layout_toEndOf="@+id/vpuserProfilePicture"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_toEndOf="@+id/vpuserProfilePicture"
+                    android:text="Username"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#555" />
 
                 <TextView
                     android:id="@+id/post_time"
@@ -80,9 +79,9 @@
                     android:layout_height="30dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
+                    android:background="#30000000"
                     android:orientation="horizontal"
-                    android:weightSum="5"
-                    android:background="#30000000">
+                    android:weightSum="5">
 
                     <View
                         android:layout_width="0dp"
@@ -140,8 +139,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="5dp"
                     android:text="Story Come here"
-                    android:textColor="#555555"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#555555" />
             </RelativeLayout>
 
         </LinearLayout>
