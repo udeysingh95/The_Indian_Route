@@ -301,6 +301,7 @@ public class Setting extends Activity  implements View.OnClickListener{
             }
 
             //may throw some error
+            Log.e("userpp", userprofilePicture);
 
             if (userprofilePicture.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
                 Picasso.with(getApplicationContext()).load(R.drawable.dummyprofile).resize(300, 300).centerCrop().into(pp);

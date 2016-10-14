@@ -5,6 +5,10 @@
     android:orientation="vertical"
     tools:context="com.example.udeys.theindianroute.ViewPostActivity">
 
+    <include
+        android:id="@+id/back_bar"
+        layout="@layout/back_bar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +16,6 @@
         android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="3">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,10 +146,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <include
-        android:id="@+id/back_bar"
-        layout="@layout/back_bar"></include>
 
 
 </LinearLayout>
