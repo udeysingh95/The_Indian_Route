@@ -149,12 +149,6 @@ public class ViewPostActivity extends AppCompatActivity {
             else
                 Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
             try {
-                Picasso.with(getApplicationContext()).load(post_pic).resize(320, 240).into(post);
-            } catch (Exception e) {
-                Log.e("Error", e.toString());
-            }
-
-            try {
                 URL url = new URL(post_pic);
 
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -163,8 +157,14 @@ public class ViewPostActivity extends AppCompatActivity {
 
                 Log.e("image-height", String.valueOf(imageHeight));
                 Log.e("image-width", String.valueOf(imageWidth));
+
+                post.getLayoutParams().height = imageHeight;
+                post.getLayoutParams().width = imageWidth;
+                post.requestLayout();
+
+                Picasso.with(getApplicationContext()).load(post_pic).into(post);
             } catch (Exception e) {
-                Log.e("catch", e.toString());
+                Log.e("Error", e.toString());
             }
 
             //post_comment.setText();
