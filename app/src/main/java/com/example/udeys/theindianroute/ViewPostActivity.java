@@ -2,6 +2,8 @@ package com.example.udeys.theindianroute;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.URL;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -141,6 +145,7 @@ public class ViewPostActivity extends AppCompatActivity {
                 Picasso.with(getApplicationContext()).load(R.drawable.dummyprofile).placeholder(R.drawable.ppplaceholder)
                         .into(pp);
 
+
             else
                 Picasso.with(getApplicationContext()).load(profile_pic).into(pp);
             try {
@@ -148,6 +153,20 @@ public class ViewPostActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("Error", e.toString());
             }
+
+            try {
+                URL url = new URL(post_pic);
+
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                int imageHeight = bmp.getHeight();
+                int imageWidth = bmp.getWidth();
+
+                Log.e("image-height", String.valueOf(imageHeight));
+                Log.e("image-width", String.valueOf(imageWidth));
+            } catch (Exception e) {
+                Log.e("catch", e.toString());
+            }
+
             //post_comment.setText();
             post_like.setText(reaction);
             comment_no.setText(no_of_comments);
