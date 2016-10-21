@@ -220,6 +220,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             if (user_id.matches(sp.getString("user_id", null))) {
                 follow_status.setText("edit your profile");
+                follow_status.setOnClickListener(this);
 
             } else if (follow_s.contentEquals("1")) {
                 follow_status.setText("following");
@@ -229,7 +230,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             uname.setText(username);
             posts.setText(String.valueOf(no_of_post));
 
-            follow_status.setOnClickListener(this);
+
 
             if (userprofilePicture.equals("http://theindianroute.net/uploads/users_profile_pictures/"))
                 Picasso.with(getActivity().getApplicationContext()).load(R.drawable.dummyprofile).resize(300, 300).centerCrop().into(profilePicture);
@@ -244,7 +245,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
     private void follow_button() {
-        if (follow_status.getText().toString().equals("edit your profile")) {
+        if (user_id.matches(sp.getString("user_id", null))) {
+            Log.e("clicked","button");
             Intent i = new Intent(getActivity(), Setting.class);
             startActivity(i);
 
@@ -298,6 +300,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 startActivity(i);
                 break;
             case R.id.follow_status:
+
                 follow_button();
                 break;
 
